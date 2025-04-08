@@ -1,0 +1,54 @@
+:root {
+  --base: #cfcfcf;
+  --text: #212121;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base: #212121;
+    --text: #cfcfcf;
+  }
+}
+
+html {
+  color-scheme: dark light;
+}
+/* CSS-only solution using :has()
+   the JS version is commented out lower down */
+:root:has(#theme [value="☀️"]:checked) {
+  color-scheme: light;
+  --base: #cfcfcf;
+  --text: #212121;
+}
+
+:root:has(#theme [value="🌑"]:checked) {
+  color-scheme: dark;
+  --base: #212121;
+  --text: #cfcfcf;
+}
+
+:root:has(#theme [value="🙃"]:checked) {
+  --base: hotpink;
+  --text: dodgerblue;
+}
+
+body {
+  color: var(--text);
+  background-color: var(--base);
+}
+
+body {
+  font-family: system-ui;
+  font-size: 1.5rem;
+}
+
+input,
+select {
+  font: inherit;
+}
+
+.with-scrollbar {
+  height: 300px;
+  border: 5px solid hsl(0 0 50% / 0.5);
+  overflow-y: scroll;
+}
