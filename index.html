@@ -4,27 +4,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="./script.js" defer></script>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <div>
-        <label>Theme:
-      <select data-theme-picker name="themepicker" id="theme">
-        <option value="💻">System</option>
-        <option value="☀️">Light</option>
-        <option value="🌑">Dark</option>
-      </select>
-    </label>
+      <label
+        >Theme:
+        <select data-theme-picker name="themepicker" id="theme">
+          <option value="💻">System</option>
+          <option value="☀️">Light</option>
+          <option value="🌑">Dark</option>
+        </select>
+      </label>
     </div>
-    <div>
-        <div class = "box">
-            <div class="login">
-                <h1>Login</h1>
-            </div>
-            <div class="register">
-                <h1>Register</h1>
-            </div>
+    <div class="box">
+      <span class="floating-circle"></span>
+      <div style="position: absolute; flex-direction: row; display: flex; width: 100%;">
+        <div class="login" style="justify-content: center;">
+          <div style="display: flex; gap: 10em; ">
+            <h1>Login</h1>
+            
+            <form action="" class="forms">
+              <input
+                type="email"
+                name="email"
+                id="email-login"
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                name="password"
+                id="password-login"
+                placeholder="Password"
+              />
+              <input type="submit" value="Login" />
+              <input type="button" value="Register" />
+            </form>
+          </div>
         </div>
+        <div class="register">
+          <div style="display: flex; gap: 5em; visibility: hidden;" >
+            <h1>Register</h1>
+            <form action="" class="forms">
+              <input
+                type="text"
+                name="fname"
+                id="fname"
+                placeholder="Full Name"
+              />
+              <input
+                type="email"
+                name="email"
+                id="email-login"
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                name="password"
+                id="password-login"
+                placeholder="Password"
+              />
+              <input
+                type="password"
+                name="repassword"
+                id="password-login"
+                placeholder="Re-Type Password"
+              />
+              <input type="submit" value="Submit" />
+              <button>Google</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

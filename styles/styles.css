@@ -1,6 +1,7 @@
 :root {
   --base: #cfcfcf;
   --text: #212121;
+  --shadow: #e3e1e1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,14 +20,15 @@ html {
   color-scheme: light;
   --base: #cfcfcf;
   --text: #212121;
+  --shadow: #212020;
 }
 
 :root:has(#theme [value="🌑"]:checked) {
   color-scheme: dark;
   --base: #212121;
   --text: #cfcfcf;
+  --shadow: #e3e1e1;
 }
-
 
 body {
   color: var(--text);
@@ -48,19 +50,40 @@ select {
   border: 5px solid hsl(0 0 50% / 0.5);
   overflow-y: scroll;
 }
-.box{
-    min-width: 200px;
-    min-height: 300px;
-    max-width: 500px;
-    background-color: black;
-    margin-inline: auto;
-    display: flex;
+.box {
+  min-width: 800px;
+  min-height: 300px;
+  background-color: var(--base);
+  margin-inline: auto;
+  display: flex;
+  box-shadow: 0 0 10px var(--shadow);
+  border-radius: 5px;
+  flex-direction: row;
+  gap: 3em;
+  overflow:hidden ;
 }
-.login, .register {
-    height: auto;
-    min-width: 100px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    border: solid white 1px;
+.login,
+.register {
+  min-height: 300px;
+  width:inherit;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  /* border: solid; */
+  position: absolute;
+}
+.forms {
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+}
+.floating-circle {
+  height: 500px;
+  min-width: 800px;
+  background-color: #bbb;
+  border-radius: 50%;
+  /* position: absolute; */
+  margin-left: -50%;
+  z-index: 20;
 }
