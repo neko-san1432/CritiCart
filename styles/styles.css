@@ -27,10 +27,6 @@ html {
   --text: #cfcfcf;
 }
 
-:root:has(#theme [value="🙃"]:checked) {
-  --base: hotpink;
-  --text: dodgerblue;
-}
 
 body {
   color: var(--text);
@@ -51,4 +47,20 @@ select {
   height: 300px;
   border: 5px solid hsl(0 0 50% / 0.5);
   overflow-y: scroll;
+}
+.box{
+    min-width: 200px;
+    min-height: 300px;
+    max-width: 500px;
+    background-color: black;
+    margin-inline: auto;
+    display: flex;
+}
+.login, .register {
+    height: auto;
+    min-width: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: solid white 1px;
 }

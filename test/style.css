@@ -1,0 +1,13 @@
+@import url();
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'san-serif','san-serif';
+    box-sizing: border-box;}
+body{
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;    
+    align-items: center;
+    background: ;
+}
