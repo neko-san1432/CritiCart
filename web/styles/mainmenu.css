@@ -1,0 +1,31 @@
+body{
+    display: flex;
+}
+.main-panel{}
+.left-panel{}
+
+@for $i from 1 through 10{
+    .food-product#{$i}{
+
+    }
+}
+@for $i from 1 through 10{
+    .food-product#{$i}{
+        
+    }
+}
+@for $i from 1 through 10{
+    .food-product#{$i}{
+        
+    }
+}
+@for $i from 1 through 10{
+    .food-product#{$i}{
+        
+    }
+}
+@for $i from 1 through 10{
+    .food-product#{$i}{
+        
+    }
+}
