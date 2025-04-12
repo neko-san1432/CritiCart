@@ -14,8 +14,6 @@
 html {
   color-scheme: dark light;
 }
-/* CSS-only solution using :has()
-   the JS version is commented out lower down */
 :root:has(#theme [value="☀️"]:checked) {
   color-scheme: light;
   --base: #cfcfcf;
@@ -37,12 +35,24 @@ body {
 
 body {
   font-family: system-ui;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
 }
-
+button {
+  transition: background-color 0.2s ease;
+  border: 2px var(--text) solid;
+  background-color: transparent;
+  width: 300px;
+  height: 40px;
+}
+button:hover {
+  background-color: var(--text);
+  cursor: pointer;
+  color: var(--base);
+}
 input,
 select {
   font: inherit;
+  /* border-radius: 5px; */
 }
 
 .with-scrollbar {
@@ -51,39 +61,69 @@ select {
   overflow-y: scroll;
 }
 .box {
-  min-width: 800px;
-  min-height: 300px;
+  width: 400px;
+  height: 500px;
   background-color: var(--base);
-  margin-inline: auto;
   display: flex;
-  box-shadow: 0 0 10px var(--shadow);
-  border-radius: 5px;
-  flex-direction: row;
-  gap: 3em;
-  overflow:hidden ;
+  border: 2px var(--text) solid;
+  overflow: hidden;
 }
 .login,
 .register {
-  min-height: 300px;
-  width:inherit;
+  height: 100%;
+  width: 400px;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  /* border: solid; */
-  position: absolute;
 }
 .forms {
   display: flex;
-  gap: 1em;
   flex-direction: column;
 }
-.floating-circle {
-  height: 500px;
-  min-width: 800px;
-  background-color: #bbb;
-  border-radius: 50%;
-  /* position: absolute; */
-  margin-left: -50%;
-  z-index: 20;
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tinput {
+  position: relative;
+  width: 300px; /* fixed width for centering */
+  height: 50px;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-size: 1em;
+  padding: 0 15px;
+  border: solid 2px;
+  background: transparent;
+  transition: 0.1s ease;
+}
+
+.labeline {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: var(--text);
+  background-color: var(--base);
+  padding: 0 5px;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+input:focus {
+  border: 4px solid;
+}
+
+input:focus + .labeline,
+input:valid + .labeline {
+  top: -9px;
+  transform: translateY(0) scale(0.88);
+  z-index: 2;
 }
