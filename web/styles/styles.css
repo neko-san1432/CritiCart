@@ -1,32 +1,4 @@
-:root {
-  --base: #cfcfcf;
-  --text: #212121;
-  --shadow: #e3e1e1;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --base: #212121;
-    --text: #cfcfcf;
-  }
-}
-
-html {
-  color-scheme: dark light;
-}
-:root:has(#theme [value="☀️"]:checked) {
-  color-scheme: light;
-  --base: #cfcfcf;
-  --text: #212121;
-  --shadow: #212020;
-}
-
-:root:has(#theme [value="🌑"]:checked) {
-  color-scheme: dark;
-  --base: #212121;
-  --text: #cfcfcf;
-  --shadow: #e3e1e1;
-}
 
 body {
   color: var(--text);
@@ -35,7 +7,6 @@ body {
 
 body {
   font-family: system-ui;
-  /* font-size: 1.5rem; */
 }
 button {
   transition: background-color 0.2s ease;
@@ -52,7 +23,6 @@ button:hover {
 input,
 select {
   font: inherit;
-  /* border-radius: 5px; */
 }
 
 .with-scrollbar {
@@ -89,7 +59,7 @@ select {
 
 .tinput {
   position: relative;
-  width: 300px; /* fixed width for centering */
+  width: 300px;
   height: 50px;
 }
 

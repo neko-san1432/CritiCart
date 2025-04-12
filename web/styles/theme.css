@@ -1,0 +1,29 @@
+:root {
+  --base: #cfcfcf;
+  --text: #212121;
+  --shadow: #e3e1e1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base: #212121;
+    --text: #cfcfcf;
+  }
+}
+
+html {
+  color-scheme: dark light;
+}
+:root:has(#theme [value="☀️"]:checked) {
+  color-scheme: light;
+  --base: #cfcfcf;
+  --text: #212121;
+  --shadow: #212020;
+}
+
+:root:has(#theme [value="🌑"]:checked) {
+  color-scheme: dark;
+  --base: #212121;
+  --text: #cfcfcf;
+  --shadow: #e3e1e1;
+}
