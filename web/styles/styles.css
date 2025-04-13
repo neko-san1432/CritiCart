@@ -1,5 +1,3 @@
-
-
 body {
   color: var(--text);
   background-color: var(--base);
@@ -13,7 +11,7 @@ button {
   border: 2px var(--text) solid;
   background-color: transparent;
   width: 300px;
-  height: 40px;
+  min-height: 40px;
 }
 button:hover {
   background-color: var(--text);
@@ -37,6 +35,7 @@ select {
   display: flex;
   border: 2px var(--text) solid;
   overflow: hidden;
+  transition: height + width 0.3s ease;
 }
 .login,
 .register {
@@ -45,7 +44,14 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: 0.7s ease;
+  border: solid;
+  /* margin-left: 50px; */
 }
+.register {
+  /* right: -100%; */
+}
+
 .forms {
   display: flex;
   flex-direction: column;
@@ -96,4 +102,28 @@ input:valid + .labeline {
   top: -9px;
   transform: translateY(0) scale(0.88);
   z-index: 2;
+}
+.pass-peek {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  margin: 0 -50px;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+.img-peek,
+.back-img {
+  filter: invert(var(--invert-ico));
+}
+.pass-peek:hover > .img-peek,
+.back-b:hover > .back-img {
+  filter: invert(var(--hovering));
+}
+
+.back {
+  width: 40px;
+  height: 40px;
+  left: 0%;
+  transform: translateY(-50%);
 }

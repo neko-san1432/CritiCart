@@ -2,12 +2,15 @@
   --base: #cfcfcf;
   --text: #212121;
   --shadow: #e3e1e1;
+  --invert-ico: 1;
+  --hovering:0
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --base: #212121;
     --text: #cfcfcf;
+    --invert-ico: 1
   }
 }
 
@@ -19,6 +22,8 @@ html {
   --base: #cfcfcf;
   --text: #212121;
   --shadow: #212020;
+  --invert-ico: 0;
+  --hovering: 1;
 }
 
 :root:has(#theme [value="🌑"]:checked) {
@@ -26,4 +31,6 @@ html {
   --base: #212121;
   --text: #cfcfcf;
   --shadow: #e3e1e1;
+  --invert-ico: 1;
+  --hovering: 0;
 }
