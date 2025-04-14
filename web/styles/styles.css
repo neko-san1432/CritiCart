@@ -29,7 +29,7 @@ select {
   overflow-y: scroll;
 }
 .box {
-  width: 400px;
+  width: 450px;
   height: 600px;
   background-color: var(--base);
   display: flex;
@@ -46,11 +46,7 @@ select {
   flex-direction: column;
   align-items: center;
   transition: 0.7s ease;
-  /* border: solid; */
-  /* margin-left: 50px; */
-}
-.register {
-  /* right: -100%; */
+  margin-left: 20px;
 }
 
 .forms {
@@ -118,16 +114,20 @@ input:valid + .labeline {
 .back-img {
   filter: invert(var(--invert-ico));
 }
+.back-b{position: absolute;}
 .pass-peek:hover > .img-peek,
 .back-b:hover > .back-img {
   filter: invert(var(--hovering));
 }
 
 .back {
-  width: 40px;
+  width: inherit;
   height: 40px;
   left: 0%;
   transform: translateY(-50%);
-  margin-left: 0%;
-  z-index: 1111;
+  /* margin-left: 0%; */
+  /* z-index: 1111; */
+  /* position: absolute; */
+  justify-content: left;
+  /* border: solid; */
 }
