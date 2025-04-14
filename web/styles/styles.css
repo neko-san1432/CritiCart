@@ -30,12 +30,13 @@ select {
 }
 .box {
   width: 400px;
-  height: 500px;
+  height: 600px;
   background-color: var(--base);
   display: flex;
   border: 2px var(--text) solid;
   overflow: hidden;
   transition: height + width 0.3s ease;
+  scale: 0.8;
 }
 .login,
 .register {
@@ -45,7 +46,7 @@ select {
   flex-direction: column;
   align-items: center;
   transition: 0.7s ease;
-  border: solid;
+  /* border: solid; */
   /* margin-left: 50px; */
 }
 .register {
@@ -111,6 +112,7 @@ input:valid + .labeline {
   align-items: center;
   justify-content: center;
   transition: 0.3s ease;
+  border: none;
 }
 .img-peek,
 .back-img {
@@ -126,4 +128,6 @@ input:valid + .labeline {
   height: 40px;
   left: 0%;
   transform: translateY(-50%);
+  margin-left: 0%;
+  z-index: 1111;
 }
