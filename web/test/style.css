@@ -1,13 +1,32 @@
-@import url();
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'san-serif','san-serif';
-    box-sizing: border-box;}
-body{
-    display: flex;
-    min-height: 100vh;
-    justify-content: center;    
-    align-items: center;
-    /* background: ; */
+.scroll-container {
+  width: 500px;
+  overflow: hidden; /* Hide scrollbar */
+  white-space: nowrap;
+  cursor:pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+.scroll-container:active {
+  cursor:pointer;
+}
+
+.item {
+  display: inline-block;
+  width: 150px;
+  height: 100px;
+  margin: 10px;
+  background: #ccc;
+  text-align: center;
+  line-height: 100px;
+  font-size: 20px;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scroll-container {
+  scrollbar-width: none;
 }

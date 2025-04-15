@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <script src="./script.js" defer></script>
+    <script src="./scripts/script.js" defer></script>
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="stylesheet" href="./styles/theme.css" />
     <script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>
@@ -46,9 +46,9 @@
             </div>
             <div class="container">
               <div class="tinput">
-                <input type="password" required />
+                <input type="password" id = "lpass" required />
                 <div class="labeline">Password</div>
-                <button class="pass-peek">
+                <button class="pass-peek" id = "show1">
                   <svg
                     width="24"
                     height="24"
@@ -119,9 +119,9 @@
             </div>
             <div class="container">
               <div class="tinput">
-                <input type="password" required />
+                <input type="password" id = "rpass"required />
                 <div class="labeline">Password</div>
-                <button class="pass-peek">
+                <button class="pass-peek" id = "show2">
                   <svg
                     width="24"
                     height="24"
@@ -139,9 +139,9 @@
             </div>
             <div class="container">
               <div class="tinput">
-                <input type="password" required />
+                <input type="password"id = "rrpass" required />
                 <div class="labeline">Re-type Password</div>
-                <button class="pass-peek">
+                <button class="pass-peek" id = "show3">
                   <svg
                     width="24"
                     height="24"

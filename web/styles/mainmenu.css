@@ -1,31 +1,290 @@
-body{
-    display: flex;
+body {
+  margin: 0;
+  display: flex;
+  overflow: hidden;
 }
-.main-panel{}
-.left-panel{}
 
-@for $i from 1 through 10{
-    .food-product#{$i}{
+.right-panel {
+  width: 100%;
+  border: solid;
+}
 
-    }
+.left-panel {
+  min-width: 200px;
+  max-width: 400px;
+  height: 100%;
+  border: solid;
+  display: flex;
+  flex-direction: column;
 }
-@for $i from 1 through 10{
-    .food-product#{$i}{
-        
-    }
+
+.product-holder-list {
+  width: 100%;
+  display: flex;
+  margin-left: 10px;
+  gap: 1em;
+  overflow: hidden;
+  scrollbar-width: none;
 }
-@for $i from 1 through 10{
-    .food-product#{$i}{
-        
-    }
+
+.product-holder-list::-webkit-scrollbar {
+  display: none;
 }
-@for $i from 1 through 10{
-    .food-product#{$i}{
-        
-    }
+
+.product-holder {
+  width: 200px;
+  border: solid;
+  height: 300px;
 }
-@for $i from 1 through 10{
-    .food-product#{$i}{
-        
-    }
+
+#food-product1 {
+  width: 200px;
+  height: 300px;
 }
+
+#cosmetics-product1 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product1 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product1 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product1 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product2 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product2 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product2 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product2 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product2 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product3 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product3 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product3 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product3 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product3 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product4 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product4 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product4 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product4 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product4 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product5 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product5 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product5 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product5 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product5 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product6 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product6 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product6 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product6 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product6 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product7 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product7 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product7 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product7 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product7 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product8 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product8 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product8 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product8 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product8 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product9 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product9 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product9 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product9 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product9 {
+  width: 200px;
+  height: 300px;
+}
+
+#food-product10 {
+  width: 200px;
+  height: 300px;
+}
+
+#cosmetics-product10 {
+  width: 200px;
+  height: 300px;
+}
+
+#appliance-product10 {
+  width: 200px;
+  height: 300px;
+}
+
+#healthnwellnes-product10 {
+  width: 200px;
+  height: 300px;
+}
+
+#toys-product10 {
+  width: 200px;
+  height: 300px;
+}
+
+/*# sourceMappingURL=mainmenu.css.map */

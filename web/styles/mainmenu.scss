@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.right-panel {
+    width: 100%;
+    border: solid;
+}
+
+.left-panel {
+    min-width: 200px;
+    max-width: 400px;
+    height: 100%;
+    border: solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-holder-list {
+    width: 100%;
+    display: flex;
+    margin-left: 10px;
+    gap: 1em;
+    overflow: hidden;
+    scrollbar-width: none;
+}
+.product-holder-list::-webkit-scrollbar {
+  display: none;
+}
+
+.product-holder {
+    width: 200px;
+    border: solid;
+    height: 300px; 
+    
+}
+
+@for $i from 1 through 10 {
+    #food-product#{$i} {
+        width: 200px;
+        height: 300px;
+    }
+    #cosmetics-product#{$i} {
+        width: 200px;
+        height: 300px;
+    }
+    #appliance-product#{$i} {
+        width: 200px;
+        height: 300px;
+    }
+    #healthnwellnes-product#{$i} {
+        width: 200px;
+        height: 300px;
+    }
+    #toys-product#{$i} {
+        width: 200px;
+        height: 300px;
+    }
+}
