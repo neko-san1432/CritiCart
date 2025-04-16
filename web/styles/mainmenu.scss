@@ -19,12 +19,13 @@ body {
 }
 
 .product-holder-list {
-    width: 100%;
+    width: 100%z;
     display: flex;
     margin-left: 10px;
     gap: 1em;
     overflow: hidden;
     scrollbar-width: none;
+    border: solid;
 }
 .product-holder-list::-webkit-scrollbar {
   display: none;
