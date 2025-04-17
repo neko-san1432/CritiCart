@@ -8,7 +8,7 @@ body {
     overflow-x: hidden;
     overflow-y: scroll;
     flex-grow: 1;
-    padding-left: 10px;
+    padding-left: 30px;
     // border: solid;
 }
 
@@ -23,8 +23,6 @@ body {
     overflow-y: hidden;
     transition: width 0.3s ease;
 }
-
-
 
 .left-panel.collapsed {
     width: 60px;
@@ -59,7 +57,7 @@ body {
 .product-holder-list {
     // width: calc(100% - (100%/400));
     display: flex;
-    margin-left: 10px;
+    margin-left: 20px;
     margin-right: 10px;
     margin-bottom: 10px;
     gap: 1em;
@@ -91,7 +89,17 @@ body {
     justify-content: center;
     gap: 8px;
 }
-
+button{
+    width:initial;
+}
+button:hover {
+  background-color: var(--text);
+  cursor: pointer;
+  color: var(--base);
+}
+button:hover svg{
+    filter: invert(var(--hovering));
+  }
 .panel-button svg {
     flex-shrink: 0;
 }
@@ -100,30 +108,45 @@ body {
     #food-product#{$i} {
         width: var(--card-width);
         height: var(--card-height);
-        border-radius: var(--button-radius);
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        // border-radius: var(--button-radius);
     }
 
     #cosmetics-product#{$i} {
         width: var(--card-width);
         height: var(--card-height);
-        border-radius: var(--button-radius);
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        // border-radius: var(--button-radius);
     }
 
     #appliance-product#{$i} {
         width: var(--card-width);
         height: var(--card-height);
-        border-radius: var(--button-radius);
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        // border-radius: var(--button-radius);
     }
 
     #healthnwellnes-product#{$i} {
         width: var(--card-width);
         height: var(--card-height);
-        border-radius: var(--button-radius);
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        // border-radius: var(--button-radius);
     }
 
     #toys-product#{$i} {
         width: var(--card-width);
         height: var(--card-height);
-        border-radius: var(--button-radius);
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        // border-radius: var(--button-radius);
     }
 }

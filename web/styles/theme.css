@@ -25,7 +25,9 @@ html {
   --invert-ico: 0;
   --hovering: 1;
 }
-
+.invert{
+  filter: invert(var(--invert-ico));
+}
 :root:has(#theme [value="🌑"]:checked) {
   color-scheme: dark;
   --base: #212121;
@@ -33,4 +35,63 @@ html {
   --shadow: #e3e1e1;
   --invert-ico: 1;
   --hovering: 0;
+}
+body {
+  color: var(--text);
+  background-color: var(--base);
+}
+
+body {
+  font-family: system-ui;
+}
+button {
+  transition: background-color 0.2s ease;
+  border: 2px var(--text) solid;
+  background-color: transparent;
+  width: 300px;
+  min-height: 40px;
+}
+
+button:hover {
+  background-color: var(--text);
+  cursor: pointer;
+  color: var(--base);
+}
+input,
+select {
+  font: inherit;
+}
+input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-size: 1em;
+  padding: 0 15px;
+  border: solid 2px;
+  background: transparent;
+  transition: 0.1s ease;
+}
+
+.labeline {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: var(--text);
+  background-color: var(--base);
+  padding: 0 5px;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+input:focus {
+  border: 4px solid;
+}
+
+input:focus + .labeline,
+input:valid + .labeline {
+  top: -9px;
+  transform: translateY(0) scale(0.88);
+  z-index: 2;
 }
