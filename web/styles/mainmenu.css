@@ -1,31 +1,50 @@
 body {
   margin: 0;
   display: flex;
-  overflow: hidden;
 }
 
 .right-panel {
-  width: 100%;
-  border: solid;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  flex-grow: 1;
 }
 
 .left-panel {
   min-width: 200px;
   max-width: 400px;
   height: 100%;
-  border: solid;
   display: flex;
+  position: sticky;
   flex-direction: column;
+  top: 0;
+  overflow-y: hidden;
+}
+
+.left-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.right-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.main-panel {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
 }
 
 .product-holder-list {
-  width: 100% z;
+  width: 99.75%;
   display: flex;
   margin-left: 10px;
   gap: 1em;
-  overflow: hidden;
   scrollbar-width: none;
-  border: solid;
+  overflow: hidden;
+  /* Hide scrollbar */
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
 }
 
 .product-holder-list::-webkit-scrollbar {

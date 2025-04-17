@@ -1,41 +1,61 @@
 body {
     margin: 0;
     display: flex;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 .right-panel {
-    width: 100%;
-    border: solid;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-grow: 1;
+    // border: solid;
 }
 
 .left-panel {
     min-width: 200px;
     max-width: 400px;
     height: 100%;
-    border: solid;
+    // border: solid;
     display: flex;
+    position: sticky;
     flex-direction: column;
+    top: 0;
+    overflow-y: hidden;
 }
-
+.left-panel::-webkit-scrollbar{
+    display:none;
+}
+.right-panel::-webkit-scrollbar{
+    display:none;
+}
+.main-panel{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
 .product-holder-list {
-    width: 100%z;
+    width: calc(100% - (100%/400)) ;
     display: flex;
     margin-left: 10px;
     gap: 1em;
-    overflow: hidden;
     scrollbar-width: none;
-    border: solid;
+    // border: solid;
+    overflow: hidden;
+    /* Hide scrollbar */
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
 }
+
 .product-holder-list::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .product-holder {
     width: 200px;
     border: solid;
-    height: 300px; 
-    
+    height: 300px;
+
 }
 
 @for $i from 1 through 10 {
@@ -43,18 +63,22 @@ body {
         width: 200px;
         height: 300px;
     }
+
     #cosmetics-product#{$i} {
         width: 200px;
         height: 300px;
     }
+
     #appliance-product#{$i} {
         width: 200px;
         height: 300px;
     }
+
     #healthnwellnes-product#{$i} {
         width: 200px;
         height: 300px;
     }
+
     #toys-product#{$i} {
         width: 200px;
         height: 300px;
