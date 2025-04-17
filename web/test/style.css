@@ -1,34 +1,32 @@
-body {
-  margin: 0;
-  display: flex;
+.scroll-container {
+  width: 500px;
+  overflow: hidden; /* Hide scrollbar */
+  white-space: nowrap;
+  cursor:pointer;
+  user-select: none; /* Prevent text selection */
 }
 
-.left-panel {
-  min-width: 60px;
-  width: 200px;
-  max-width: 400px;
-  transition: width 0.3s ease;
-  border: solid;
-  display: flex;
-  flex-direction: column;
+.scroll-container:active {
+  cursor:pointer;
 }
 
-.left-panel.collapsed {
-  width: 60px;
+.item {
+  display: inline-block;
+  width: 150px;
+  height: 100px;
+  margin: 10px;
+  background: #ccc;
+  text-align: center;
+  line-height: 100px;
+  font-size: 20px;
 }
 
-.nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-}
-
-.left-panel.collapsed .nav-btn span {
+/* Hide scrollbar for WebKit browsers */
+.scroll-container::-webkit-scrollbar {
   display: none;
 }
 
-.right-panel {
-  flex-grow: 1;
-  border: solid;
+/* Hide scrollbar for Firefox */
+.scroll-container {
+  scrollbar-width: none;
 }

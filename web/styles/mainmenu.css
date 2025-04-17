@@ -1,23 +1,41 @@
 body {
   margin: 0;
   display: flex;
+  overflow: hidden;
 }
 
 .right-panel {
   overflow-x: hidden;
   overflow-y: scroll;
   flex-grow: 1;
+  padding-left: 10px;
 }
 
 .left-panel {
-  min-width: 200px;
-  max-width: 400px;
+  width: 200px;
   height: 100%;
   display: flex;
   position: sticky;
   flex-direction: column;
   top: 0;
   overflow-y: hidden;
+  transition: width 0.3s ease;
+}
+
+.left-panel.collapsed {
+  width: 60px;
+}
+
+.left-panel.expand {
+  width: 200px;
+}
+
+.left-panel.collapsed span {
+  display: none;
+}
+
+.left-panel.expand span {
+  display: block;
 }
 
 .left-panel::-webkit-scrollbar {
@@ -35,13 +53,13 @@ body {
 }
 
 .product-holder-list {
-  width: 99.75%;
   display: flex;
   margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   gap: 1em;
   scrollbar-width: none;
   overflow: hidden;
-  /* Hide scrollbar */
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
@@ -52,259 +70,325 @@ body {
 }
 
 .product-holder {
-  width: 200px;
-  border: solid;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+}
+
+:root {
+  --card-width: 150px;
+  --card-height: 200px;
+  --button-radius: 5px;
+}
+
+.panel-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.panel-button svg {
+  flex-shrink: 0;
 }
 
 #food-product1 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product1 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product1 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product1 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product1 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product2 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product2 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product2 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product2 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product2 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product3 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product3 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product3 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product3 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product3 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product4 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product4 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product4 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product4 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product4 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product5 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product5 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product5 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product5 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product5 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product6 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product6 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product6 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product6 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product6 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product7 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product7 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product7 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product7 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product7 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product8 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product8 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product8 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product8 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product8 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product9 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product9 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product9 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product9 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product9 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #food-product10 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #cosmetics-product10 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #appliance-product10 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #healthnwellnes-product10 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 #toys-product10 {
-  width: 200px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--button-radius);
 }
 
 /*# sourceMappingURL=mainmenu.css.map */

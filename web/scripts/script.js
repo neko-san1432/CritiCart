@@ -1,8 +1,3 @@
-//////
-// Currently using a CSS-only solution with :has()
-// But this could work too
-/////
-
 const themeSwitcher = document.querySelector("[data-theme-picker]");
 
 themeSwitcher.addEventListener("change", () => {

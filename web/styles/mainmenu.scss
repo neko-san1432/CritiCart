@@ -1,19 +1,19 @@
 body {
     margin: 0;
     display: flex;
-    // overflow: hidden;
+    overflow: hidden;
 }
 
 .right-panel {
     overflow-x: hidden;
     overflow-y: scroll;
     flex-grow: 1;
+    padding-left: 10px;
     // border: solid;
 }
 
 .left-panel {
-    min-width: 200px;
-    max-width: 400px;
+    width: 200px;
     height: 100%;
     // border: solid;
     display: flex;
@@ -21,27 +21,50 @@ body {
     flex-direction: column;
     top: 0;
     overflow-y: hidden;
+    transition: width 0.3s ease;
 }
-.left-panel::-webkit-scrollbar{
-    display:none;
+
+
+
+.left-panel.collapsed {
+    width: 60px;
 }
-.right-panel::-webkit-scrollbar{
-    display:none;
+
+.left-panel.expand {
+    width: 200px;
 }
-.main-panel{
+
+.left-panel.collapsed span {
+    display: none;
+}
+
+.left-panel.expand span {
+    display: block;
+}
+
+.left-panel::-webkit-scrollbar {
+    display: none;
+}
+
+.right-panel::-webkit-scrollbar {
+    display: none;
+}
+
+.main-panel {
     width: 100vw;
     display: flex;
     flex-direction: row;
 }
+
 .product-holder-list {
-    width: calc(100% - (100%/400)) ;
+    // width: calc(100% - (100%/400));
     display: flex;
     margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
     gap: 1em;
     scrollbar-width: none;
-    // border: solid;
     overflow: hidden;
-    /* Hide scrollbar */
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
@@ -52,35 +75,55 @@ body {
 }
 
 .product-holder {
-    width: 200px;
-    border: solid;
-    height: 300px;
+    width: var(--card-width);
+    height: var(--card-height);
+}
 
+:root {
+    --card-width: 150px;
+    --card-height: 200px;
+    --button-radius: 5px;
+}
+
+.panel-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.panel-button svg {
+    flex-shrink: 0;
 }
 
 @for $i from 1 through 10 {
     #food-product#{$i} {
-        width: 200px;
-        height: 300px;
+        width: var(--card-width);
+        height: var(--card-height);
+        border-radius: var(--button-radius);
     }
 
     #cosmetics-product#{$i} {
-        width: 200px;
-        height: 300px;
+        width: var(--card-width);
+        height: var(--card-height);
+        border-radius: var(--button-radius);
     }
 
     #appliance-product#{$i} {
-        width: 200px;
-        height: 300px;
+        width: var(--card-width);
+        height: var(--card-height);
+        border-radius: var(--button-radius);
     }
 
     #healthnwellnes-product#{$i} {
-        width: 200px;
-        height: 300px;
+        width: var(--card-width);
+        height: var(--card-height);
+        border-radius: var(--button-radius);
     }
 
     #toys-product#{$i} {
-        width: 200px;
-        height: 300px;
+        width: var(--card-width);
+        height: var(--card-height);
+        border-radius: var(--button-radius);
     }
 }
