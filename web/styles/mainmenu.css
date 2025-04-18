@@ -2,6 +2,7 @@ body {
   margin: 0;
   display: flex;
   overflow: hidden;
+  font-size: 17px;
 }
 
 .right-panel {
@@ -12,7 +13,7 @@ body {
 }
 
 .left-panel {
-  width: 400px;
+  width: 470px;
   height: 100%;
   display: flex;
   position: sticky;
@@ -20,6 +21,7 @@ body {
   top: 0;
   overflow-y: hidden;
   transition: width 0.3s ease;
+  background-color: #10B981;
 }
 
 .left-panel.collapsed {
@@ -27,11 +29,12 @@ body {
 }
 
 .left-panel.expand {
-  width: 400px;
+  width: 470px;
 }
 
 .left-panel.collapsed span {
   display: none;
+  justify-content: center;
 }
 
 .left-panel.expand span {
@@ -90,10 +93,22 @@ body {
 button {
   width: initial;
   height: 70px;
+  font-size: 14px;
 }
 
 .left-panel > button {
   border: none;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.left-panel > #toggle-theme {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
 }
 
 button:hover {
@@ -108,6 +123,12 @@ button:hover svg {
 
 .panel-button svg {
   flex-shrink: 0;
+}
+
+.tinput {
+  position: relative;
+  width: 95%;
+  height: 50px;
 }
 
 #food-product1 {

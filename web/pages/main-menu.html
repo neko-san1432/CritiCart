@@ -5,17 +5,32 @@
     <title>:3</title>
     <link rel="stylesheet" href="../styles/theme.css" />
     <link rel="stylesheet" href="../styles/mainmenu.css" />
+    <!-- <link rel="stylesheet" href="./styles/styles.css" /> -->
     <script src="../scripts/mainmenu-interaction.js" defer></script>
     <!-- <script type="module" src= "../scripts/default.js"></script> -->
   </head>
   <body>
     <div class="main-panel">
       <div class="left-panel">
-        <div style="justify-content: space-between;display:flex">
-        
-        <button id="menu" style="border: none;width: 59px;">
-          <svg class = "invert"width="24" height="24" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
-        </button><span></span></div>
+        <div style="justify-content: space-between; display: flex">
+          <button id="menu" style="border: none; width: 59px">
+            <svg
+              class="invert"
+              width="24"
+              height="24"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              stroke-linejoin="round"
+              stroke-miterlimit="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+              />
+            </svg></button
+          ><span></span>
+        </div>
         <button class="panel-button" id="review-product">
           <svg
             class="invert"
@@ -90,23 +105,21 @@
           >
             <path
               d="M12 0c-5.083 0-8.465 4.949-3.733 13.678 1.596 2.945-1.725 3.641-5.09 4.418-3.073.709-3.187 2.235-3.177 4.904l.004 1h23.99l.004-.969c.012-2.688-.093-4.223-3.177-4.935-3.438-.794-6.639-1.49-5.09-4.418 4.719-8.912 1.251-13.678-3.731-13.678m0 1c1.89 0 3.39.764 4.225 2.15 1.354 2.251.866 5.824-1.377 10.06-.577 1.092-.673 2.078-.283 2.932.937 2.049 4.758 2.632 6.032 2.928 2.303.534 2.412 1.313 2.401 3.93h-21.998c-.01-2.615.09-3.396 2.401-3.93 1.157-.266 5.138-.919 6.049-2.94.387-.858.284-1.843-.304-2.929-2.231-4.115-2.744-7.764-1.405-10.012.84-1.412 2.353-2.189 4.259-2.189"
-            /></svg><span>User Profile</span>
-        </button>
-        <div style="height: 40%;"></div>
-        <button id="toggle-theme">
-          <svg
-            class="invert"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M22 12c0 5.514-4.486 10-10 10-4.826 0-8.864-3.436-9.797-7.99 3.573.142 6.903-1.818 8.644-5.013 1.202-2.206 1.473-4.679.83-6.992 5.608-.194 10.323 4.338 10.323 9.995zm-10-12c-1.109 0-2.178.162-3.197.444 3.826 5.933-2.026 13.496-8.781 11.128l-.022.428c0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12z"
             />
           </svg>
+          <span>User Profile</span>
         </button>
-
+        <div style="height: 40%"></div>
+        <div style=" z-index: 2; right: 0" id="modetheme">
+          <label
+            >Theme:
+            <select data-theme-picker name="themepicker" id="theme">
+              <option value="💻">System</option>
+              <option value="☀️">Light</option>
+              <option value="🌑">Dark</option>
+            </select>
+          </label>
+        </div>
         <button class="panel-button" id="logout">
           <svg
             class="invert"
@@ -119,12 +132,12 @@
           >
             <path
               d="M13.033 2v-2l10 3v18l-10 3v-2h-9v-7h1v6h8v-18h-8v7h-1v-8h9zm1 20.656l8-2.4v-16.512l-8-2.4v21.312zm-3.947-10.656l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z"
-            /></svg><span>Logout</span>
+            />
+          </svg>
+          <span>Logout</span>
         </button>
       </div>
-      <div class="right-panel">
-        <h1>Welcome</h1>
-        <div
+      <div class="right-panel"><div
           style="
             display: flex;
             flex-direction: row;
@@ -132,539 +145,185 @@
             width: inherit;
           "
         >
-          <button id="search-button">
-            <svg
-              class="invert"
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-            >
-              <path
-                d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z"
-              />
-            </svg>
-          </button>
-          <button id="review-product" style="margin-right: 10px">
+        <h1>Welcome</h1>
+        <button id="review-product" style="margin-right: 10px">
             Review Product
           </button>
         </div>
+        <div class="container">
+          <div class="tinput">
+            <input type="text" required placeholder="Search..."/>
+            <button style="position: absolute;width:50px;height:50px;margin-left: -50px;border: none;">
+              <svg class="invert"width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z"/></svg>
+            </button>
+          </div>
+        </div>
 
+          
         <h2>Reviewed Products</h2>
         <h3>Food</h3>
         <div class="product-holder-list">
           <div class="product-holder">
-            <button id="food-product1">
-              <img
-                src=""
-                alt="img1"
-                style="margin: 0; width: 96%; height: 80%"
-              />
-              <span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product1"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product2">
-              <img
-                src=""
-                alt="img2"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product2"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product3">
-              <img
-                src=""
-                alt="img3"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product3"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product4">
-              <img
-                src=""
-                alt="img4"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product4"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product5">
-              <img
-                src=""
-                alt="img5"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product5"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product6">
-              <img
-                src=""
-                alt="img6"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product6"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product7">
-              <img
-                src=""
-                alt="img7"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product7"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product8">
-              <img
-                src=""
-                alt="img8"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product8"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product9">
-              <img
-                src=""
-                alt="img9"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product9"></button>
           </div>
           <div class="product-holder">
-            <button id="food-product10">
-              <img
-                src=""
-                alt="img10"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="food-product10"></button>
           </div>
         </div>
         <h3>Cosmetics</h3>
         <div class="product-holder-list">
           <div class="product-holder">
-            <button id="cosmetics-product1">
-              <img
-                src=""
-                alt="img1"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product1"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product2">
-              <img
-                src=""
-                alt="img2"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product2"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product3">
-              <img
-                src=""
-                alt="img3"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product3"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product4">
-              <img
-                src=""
-                alt="img4"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product4"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product5">
-              <img
-                src=""
-                alt="img5"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product5"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product6">
-              <img
-                src=""
-                alt="img6"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product6"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product7">
-              <img
-                src=""
-                alt="img7"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product7"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product8">
-              <img
-                src=""
-                alt="img8"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product8"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product9">
-              <img
-                src=""
-                alt="img9"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product9"></button>
           </div>
           <div class="product-holder">
-            <button id="cosmetics-product10">
-              <img
-                src=""
-                alt="img10"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="cosmetics-product10"></button>
           </div>
         </div>
         <h3>Appliances</h3>
         <div class="product-holder-list">
           <div class="product-holder">
-            <button id="appliance-product1">
-              <img
-                src=""
-                alt="img1"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product1"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product2">
-              <img
-                src=""
-                alt="img2"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product2"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product3">
-              <img
-                src=""
-                alt="img3"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product3"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product4">
-              <img
-                src=""
-                alt="img4"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product4"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product5">
-              <img
-                src=""
-                alt="img5"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product5"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product6">
-              <img
-                src=""
-                alt="img6"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product6"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product7">
-              <img
-                src=""
-                alt="img7"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product7"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product8">
-              <img
-                src=""
-                alt="img8"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product8"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product9">
-              <img
-                src=""
-                alt="img9"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product9"></button>
           </div>
           <div class="product-holder">
-            <button id="appliance-product10">
-              <img
-                src=""
-                alt="img10"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="appliance-product10"></button>
           </div>
         </div>
         <h3>Health and Wellness</h3>
         <div class="product-holder-list">
           <div class="product-holder">
-            <button id="healthnwellnes-product1">
-              <img
-                src=""
-                alt="img1"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product1"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product2">
-              <img
-                src=""
-                alt="img2"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product2"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product3">
-              <img
-                src=""
-                alt="img3"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product3"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product4">
-              <img
-                src=""
-                alt="img4"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product4"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product5">
-              <img
-                src=""
-                alt="img5"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product5"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product6">
-              <img
-                src=""
-                alt="img6"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product6"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product7">
-              <img
-                src=""
-                alt="img7"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product7"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product8">
-              <img
-                src=""
-                alt="img8"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product8"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product9">
-              <img
-                src=""
-                alt="img9"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="healthnwellnes-product9"></button>
           </div>
           <div class="product-holder">
-            <button id="healthnwellnes-product10">
-              <img
-                src=""
-                alt="img10"
-                style="margin: 0; width: 96%; height: 80%"
-              /><label for=""></label>
-            </button>
+            <button id="healthnwellnes-product10"></button>
           </div>
         </div>
         <h3>Toys</h3>
         <div class="product-holder-list">
           <div class="product-holder">
-            <button id="toys-product1">
-              <img
-                src=""
-                alt="img1"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product1"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product2">
-              <img
-                src=""
-                alt="img2"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product2"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product3">
-              <img
-                src=""
-                alt="img3"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product3"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product4">
-              <img
-                src=""
-                alt="img4"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product4"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product5">
-              <img
-                src=""
-                alt="img5"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product5"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product6">
-              <img
-                src=""
-                alt="img6"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product6"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product7">
-              <img
-                src=""
-                alt="img7"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product7"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product8">
-              <img
-                src=""
-                alt="img8"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product8"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product9">
-              <img
-                src=""
-                alt="img9"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product9"></button>
           </div>
           <div class="product-holder">
-            <button id="toys-product10">
-              <img
-                src=""
-                alt="img10"
-                style="margin: 0; width: 96%; height: 80%"
-              /><span>prod name</span>
-              <span>ratings</span>
-            </button>
+            <button id="toys-product10"></button>
           </div>
         </div>
       </div>
