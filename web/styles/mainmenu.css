@@ -13,23 +13,23 @@ body {
 }
 
 .left-panel {
-  width: 470px;
+  width: 230px;
   height: 100%;
   display: flex;
   position: sticky;
   flex-direction: column;
   top: 0;
-  overflow-y: hidden;
   transition: width 0.3s ease;
   background-color: #10B981;
+  flex-shrink: 0;
 }
 
 .left-panel.collapsed {
-  width: 100px;
+  width: 50px;
 }
 
 .left-panel.expand {
-  width: 470px;
+  width: 230px;
 }
 
 .left-panel.collapsed span {
@@ -66,6 +66,9 @@ body {
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
+  border: solid;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .product-holder-list::-webkit-scrollbar {
@@ -75,6 +78,13 @@ body {
 .product-holder {
   width: var(--card-width);
   height: var(--card-height);
+  border: solid;
+}
+
+.right-panel > .review-product-panel {
+  position: absolute;
+  z-index: 9999;
+  background-color: #10B981;
 }
 
 :root {
