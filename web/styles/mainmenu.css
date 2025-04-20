@@ -24,6 +24,31 @@ body {
   flex-shrink: 0;
 }
 
+.star-rating {
+  position: relative;
+  display: inline-block;
+  font-size: 50px;
+  cursor: pointer;
+  width: 250px;
+  /* 5 stars * 50px */
+}
+
+.stars-bg {
+  color: gray;
+}
+
+.stars-fill {
+  color: gold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  /* this will change on hover */
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .left-panel.collapsed {
   width: 50px;
 }
