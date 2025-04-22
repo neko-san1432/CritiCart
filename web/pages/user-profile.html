@@ -1,12 +1,162 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-</head>
-<body>
-    <div class="nav-pane"></div>
-    <div class="user-profile"></div>
-    <div class="user-info"></div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>:3</title>
+    <link rel="stylesheet" href="../styles/theme.css" />
+    <link rel="stylesheet" href="../styles/mainmenu.css" />
+    <script src="../scripts/mainmenu-interaction.js" defer></script>
+    <script src="../scripts/sidepanelfunctions.js" defer></script>
+  </head>
+  <body>
+    <div class="main-panel">
+      <div class="left-panel">
+        <div style="justify-content: space-between; display: flex">
+          <button id="menu" style="border: none; width: 59px">
+            <svg
+              class="invert"
+              width="24"
+              height="24"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              stroke-linejoin="round"
+              stroke-miterlimit="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+              />
+            </svg></button
+          ><span></span>
+        </div>
+        <button class="panel-button" id="review-product">
+          <svg
+            class="invert"
+            width="24"
+            height="24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          >
+            <path
+              d="M21.62 20.196c1.055-.922 1.737-2.262 1.737-3.772 0-1.321-.521-2.515-1.357-3.412v-6.946l-11.001-6.066-11 6v12.131l11 5.869 5.468-2.917c.578.231 1.205.367 1.865.367.903 0 1.739-.258 2.471-.676l2.394 3.226.803-.596-2.38-3.208zm-11.121 2.404l-9.5-5.069v-10.447l9.5 4.946v10.57zm1-.001v-10.567l5.067-2.608.029.015.021-.04 4.384-2.256v5.039c-.774-.488-1.686-.782-2.668-.782-2.773 0-5.024 2.252-5.024 5.024 0 1.686.838 3.171 2.113 4.083l-3.922 2.092zm6.833-2.149c-2.219 0-4.024-1.808-4.024-4.026s1.805-4.025 4.024-4.025c2.22 0 4.025 1.807 4.025 4.025 0 2.218-1.805 4.026-4.025 4.026zm-.364-3.333l-1.306-1.147-.66.751 2.029 1.782 2.966-3.12-.725-.689-2.304 2.423zm-16.371-10.85l4.349-2.372 9.534 4.964-4.479 2.305-9.404-4.897zm9.4-5.127l9.404 5.186-3.832 1.972-9.565-4.98 3.993-2.178z"
+            />
+          </svg>
+          <span>Review a Product</span>
+        </button>
+        <button class="panel-button" id="home">
+          <svg
+            class="invert"
+            width="24"
+            height="24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          >
+            <path
+              d="M22 11.414v12.586h-20v-12.586l-1.293 1.293-.707-.707 12-12 12 12-.707.707-1.293-1.293zm-6 11.586h5v-12.586l-9-9-9 9v12.586h5v-9h8v9zm-1-7.889h-6v7.778h6v-7.778z"
+            />
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="panel-button" id="appeal">
+          <svg
+            class="invert"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M14.969 7.547l.031.191c0 .193-.096.379-.264.496-.538.372-.467.278-.67.885-.084.253-.33.424-.605.424h-.002c-.664-.002-.549-.038-1.083.338-.112.08-.244.119-.376.119s-.264-.039-.376-.118c-.534-.376-.419-.34-1.083-.338h-.002c-.275 0-.521-.171-.605-.424-.204-.607-.133-.514-.669-.886-.169-.117-.265-.303-.265-.496l.031-.19c.207-.604.208-.488 0-1.094l-.031-.191c0-.193.096-.379.265-.497.536-.372.465-.277.669-.885.084-.253.33-.424.605-.424h.002c.662.002.544.041 1.083-.338.112-.08.244-.119.376-.119s.264.039.376.118c.534.376.419.34 1.083.338h.002c.275 0 .521.171.605.424.203.607.132.513.67.885.168.118.264.304.264.497l-.031.191c-.207.604-.208.488 0 1.094zm-1.469-1.198l-.465-.464-1.41 1.446-.66-.627-.465.464 1.125 1.091 1.875-1.91zm2.5 4.651h-8v1h8v-1zm-1 2h-6v1h6v-1zm1 2h-8v1h8v-1zm-7.771 4c-.77 3.458-3.229 3.5-3.229 1.375v-15.333c0-1.333-.062-2.386-1-3.042h13c1.354 0 2 .625 2 2v13h2v-13c0-2.021-.844-4-4-4h-12c-3.494 0-5 2.906-5 5h3v16c0 1.657 1.343 3 3 3h14c2.688-.531 3.875-2.938 4-5h-15.771z"
+            />
+          </svg>
+          <span>File an Appeal</span>
+        </button>
+        <button class="panel-button" id="reviewed-product">
+          <svg
+            class="invert"
+            clip-rule="evenodd"
+            fill-rule="evenodd"
+            stroke-linejoin="round"
+            stroke-miterlimit="2"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m20 20h-15.25c-.414 0-.75.336-.75.75s.336.75.75.75h15.75c.53 0 1-.47 1-1v-15.75c0-.414-.336-.75-.75-.75s-.75.336-.75.75zm-1-17c0-.478-.379-1-1-1h-15c-.62 0-1 .519-1 1v15c0 .621.52 1 1 1h15c.478 0 1-.379 1-1zm-15.5.5h14v14h-14zm2.749 7.806 2.924 2.504c.142.127.321.19.498.19.203 0 .405-.082.553-.243l4.953-5.508c.131-.144.196-.324.196-.503 0-.41-.331-.746-.748-.746-.204 0-.405.082-.554.243l-4.453 4.962-2.371-2.011c-.144-.128-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.556z"
+              fill-rule="nonzero"
+            />
+          </svg>
+          <span>Your Reviewed Products</span>
+        </button>
+        <button class="panel-button" id="profile">
+          <svg
+            class="invert"
+            width="24"
+            height="24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          >
+            <path
+              d="M12 0c-5.083 0-8.465 4.949-3.733 13.678 1.596 2.945-1.725 3.641-5.09 4.418-3.073.709-3.187 2.235-3.177 4.904l.004 1h23.99l.004-.969c.012-2.688-.093-4.223-3.177-4.935-3.438-.794-6.639-1.49-5.09-4.418 4.719-8.912 1.251-13.678-3.731-13.678m0 1c1.89 0 3.39.764 4.225 2.15 1.354 2.251.866 5.824-1.377 10.06-.577 1.092-.673 2.078-.283 2.932.937 2.049 4.758 2.632 6.032 2.928 2.303.534 2.412 1.313 2.401 3.93h-21.998c-.01-2.615.09-3.396 2.401-3.93 1.157-.266 5.138-.919 6.049-2.94.387-.858.284-1.843-.304-2.929-2.231-4.115-2.744-7.764-1.405-10.012.84-1.412 2.353-2.189 4.259-2.189"
+            />
+          </svg>
+          <span>User Profile</span>
+        </button>
+        <div style="height: 40%"></div>
+        <span>Theme:</span>
+        <button
+          style="
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+          id="modetheme"
+        >
+          <label style="display: none">
+            <select data-theme-picker name="themepicker" id="theme">
+              <option value="💻">System</option>
+              <option value="☀️">Light</option>
+              <option value="🌑">Dark</option>
+            </select>
+          </label>
+          <div id="img-theme">
+            <svg
+              class="invert"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 17v-11.8c0-.663-.537-1.2-1.2-1.2h-17.6c-.663 0-1.2.537-1.2 1.2v11.8h20zm-18-11h16v9h-16v-9zm20 12v.8c0 .663-.537 1.2-1.2 1.2h-21.6c-.663 0-1.2-.537-1.2-1.2v-.8h10c0 .276.224.5.5.5h3c.276 0 .5-.224.5-.5h10z"
+              />
+            </svg>
+          </div>
+        </button>
+        <button class="panel-button" id="logout">
+          <svg
+            class="invert"
+            style="transform: scaleX(-1)"
+            width="24"
+            height="24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          >
+            <path
+              d="M13.033 2v-2l10 3v18l-10 3v-2h-9v-7h1v6h8v-18h-8v7h-1v-8h9zm1 20.656l8-2.4v-16.512l-8-2.4v21.312zm-3.947-10.656l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z"
+            />
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </body>
 </html>
