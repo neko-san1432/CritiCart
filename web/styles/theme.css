@@ -60,7 +60,6 @@ button {
   border: var(--border-color);
   font-size: 1em;
 }
-
 button:hover {
   background-color: var(--shadow);
   cursor: pointer;
