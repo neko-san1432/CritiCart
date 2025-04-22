@@ -79,10 +79,12 @@ body {
     display: flex;
     flex-direction: row;
 }
-.no-reviewed-products{
+
+.no-reviewed-products {
     display: flex;
     flex-direction: column;
 }
+
 .product-holder-list {
     // width: calc(100% - (100%/400));
     display: flex;
@@ -216,16 +218,20 @@ button:hover svg {
         // border-radius: var(--button-radius);
     }
 }
-@for $i from 1 through 50 {
-    #product#{$i}{
+
+@for $i from 1 through 30 {
+    #product#{$i} {
         display: flex;
-        flex-direction: row;
+        // flex-direction: row;
         width: 100%;
         height: 50px;
+        border: solid;
     }
-    #product#{$i}> button{
-        // position: absolute;
-        width: 50px;
-        height: 50px;
-    }
+}
+
+.no-reviewed-products {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
 }
