@@ -1,0 +1,13 @@
+<div class="navigator">
+      <button>&lt;&lt;</button>
+      <button>&lt;</button>
+      <p id="page-nav">1</p>
+      <button>&gt;</button>
+      <button>&gt;&gt;</button>
+    </div>
+
+
+
+
+
+    

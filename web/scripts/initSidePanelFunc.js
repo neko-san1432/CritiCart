@@ -15,11 +15,11 @@ appeal.addEventListener('click',() => {
   window.location.href = "/web/pages/file-an-appeal.html";
 });
 user_reviewed_products.addEventListener('click',() => {
-  window.location.href = "/web/pages/reviewed-products.html";
+  window.location.href = "/web/pages/your-reviewed-products.html";
 });
 profile.addEventListener('click',() => {
   window.location.href = "/web/pages/user-profile.html";
 });
 logout.addEventListener('click',() => {
-  window.location.href = "/web/pages/index.html";
+  window.location.href = "/web/index.html";
 });
