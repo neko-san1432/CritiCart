@@ -171,7 +171,7 @@ button:hover svg {
   height: 50px;
 }
 
-#food-product1 {
+.random-product1 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -179,7 +179,7 @@ button:hover svg {
   text-align: left;
 }
 
-#cosmetics-product1 {
+.random-product2 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -187,7 +187,7 @@ button:hover svg {
   text-align: left;
 }
 
-#appliance-product1 {
+.random-product3 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -195,7 +195,7 @@ button:hover svg {
   text-align: left;
 }
 
-#healthnwellnes-product1 {
+.random-product4 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -203,7 +203,7 @@ button:hover svg {
   text-align: left;
 }
 
-#toys-product1 {
+.random-product5 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -211,7 +211,7 @@ button:hover svg {
   text-align: left;
 }
 
-#food-product2 {
+.random-product6 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -219,7 +219,7 @@ button:hover svg {
   text-align: left;
 }
 
-#cosmetics-product2 {
+.random-product7 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -227,7 +227,7 @@ button:hover svg {
   text-align: left;
 }
 
-#appliance-product2 {
+.random-product8 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -235,7 +235,7 @@ button:hover svg {
   text-align: left;
 }
 
-#healthnwellnes-product2 {
+.random-product9 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;
@@ -243,327 +243,7 @@ button:hover svg {
   text-align: left;
 }
 
-#toys-product2 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product3 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product3 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product3 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product3 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product3 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product4 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product4 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product4 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product4 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product4 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product5 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product5 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product5 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product5 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product5 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product6 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product6 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product6 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product6 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product6 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product7 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product7 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product7 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product7 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product7 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product8 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product8 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product8 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product8 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product8 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product9 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product9 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product9 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product9 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product9 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#food-product10 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#cosmetics-product10 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#appliance-product10 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#healthnwellnes-product10 {
-  width: var(--card-width);
-  height: var(--card-height);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-#toys-product10 {
+.random-product10 {
   width: var(--card-width);
   height: var(--card-height);
   display: flex;

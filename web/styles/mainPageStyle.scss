@@ -173,7 +173,7 @@ button:hover svg {
 }
 
 @for $i from 1 through 10 {
-    #food-product#{$i} {
+    .random-product#{$i} {
         width: var(--card-width);
         height: var(--card-height);
         display: flex;
@@ -182,41 +182,6 @@ button:hover svg {
         // border-radius: var(--button-radius);
     }
 
-    #cosmetics-product#{$i} {
-        width: var(--card-width);
-        height: var(--card-height);
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        // border-radius: var(--button-radius);
-    }
-
-    #appliance-product#{$i} {
-        width: var(--card-width);
-        height: var(--card-height);
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        // border-radius: var(--button-radius);
-    }
-
-    #healthnwellnes-product#{$i} {
-        width: var(--card-width);
-        height: var(--card-height);
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        // border-radius: var(--button-radius);
-    }
-
-    #toys-product#{$i} {
-        width: var(--card-width);
-        height: var(--card-height);
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        // border-radius: var(--button-radius);
-    }
 }
 
 @for $i from 1 through 30 {
