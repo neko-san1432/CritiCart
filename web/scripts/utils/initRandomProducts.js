@@ -6,10 +6,7 @@
   --insert img, product name, & rating--</button>
 </div> 
 */
-//template for no products:
-/*
-  
-*/
+
 const foodSec = document.getElementById("food");
 const cosmeticsSec = document.getElementById("cosmetics");
 const appliancesSec = document.getElementById("appliances");

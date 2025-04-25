@@ -86,10 +86,9 @@ body {
 }
 
 .product-holder-list {
-    // width: calc(100% - (100%/400));
     display: flex;
     margin-left: 20px;
-    margin-right: 10px;
+    margin-right: 50px;
     margin-bottom: 10px;
     gap: 1em;
     scrollbar-width: none;
