@@ -1,13 +1,15 @@
-const review = document.getElementById("review-product");
+const review = document.querySelectorAll(".review-product");
 const home = document.getElementById("home");
 const appeal = document.getElementById("appeal");
 const user_reviewed_products = document.getElementById("reviewed-product");
 const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
 
-review.addEventListener('click',() => {
-  window.location.href = "/web/pages/submit-review.html";
-});
+review.forEach(f=>{
+  f.addEventListener('click',() => {
+    window.location.href = "/web/pages/submit-review.html";
+  });
+})
 home.addEventListener('click',() => {
   window.location.href = "/web/pages/main-menu.html";
 });
