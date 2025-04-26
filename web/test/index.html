@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Rating | YourAppName</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
-  <script src="./initTheme.js" defer></script>
+  <script src="../test/script.js" ></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <input type="range" id="hiddenSlider" min="0" max="5" step="0.1" style="display:none;">
-  <div class="star-rating" id="ratingContainer">
-      <div class="stars-bg">★★★★★</div>
-      <div class="stars-fill" id="fill">★★★★★</div>
-      <span id = "rating"></span>
-  </div>
+  <div class="search-container colapse">
+    <button id="searchBtn">🔍</button>
+    <input type="text" id="searchInput" placeholder="Search..." />
+    <ul id="dropdown"></ul>
+  </div>  
 </body>
 </html>
