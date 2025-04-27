@@ -2,18 +2,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>:3</title>
+    <title>Welcome | CritiCart</title>
     <link rel="stylesheet" href="../styles/initTheme.css" />
     <link rel="stylesheet" href="../styles/universalPageStyle.css" />
     <script type="module" src="../scripts/initInteraction.js"></script>
     <script type="module" src="../scripts/initSidePanelFunc.js"></script>
-    <script type="module" src="../scripts/utils/initProfileDetails.js"></script>
-    <script type="module" src="../scripts/utils/profileSetup.js"></script>
+    <script type="module" src="../scripts/utils/initRandomProducts.js"></script>
+    <script type="module" src="../scripts/showRejectedProduct.js"></script>
   </head>
   <body>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button" id="home-logo">
+        <button class="panel-button">
           <img src="" alt="logo" />
           <span>sdf</span>
         </button>
@@ -33,10 +33,10 @@
               <path
                 d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
               />
-            </svg></button
-          ><span></span>
+            </svg>
+          </button>
         </div>
-        <button class="panel-button" class="review-product">
+        <button class="panel-button review-product">
           <svg
             class="invert"
             width="24"
@@ -164,20 +164,13 @@
         </button>
       </div>
       <div class="right-panel">
-        <h1>User Profile</h1>
-        <div id="profile-details">
-          <div>
-            <img src="" alt="prof-pic" />
-          </div>
-          <div style="display: flex;border: solid;flex-direction: column;">
-            <span id="current-name"></span>
-            <span id="current-email"></span>
-            <span id="user-type"></span>
-            <span id="current-userpass"
-              >********<button id="edit4"></button
-            ></span>
-          </div>
-        </div>
+        <h1>File an appeal</h1>
+        <hr style="width: inherit; margin-right: 40px" />
+        <div id = "rejected-products"></div>
+      </div>
+      <div class="right-panel" style="display: none;">
+        <h1>Dispute Form</h1>
+        <hr style="width: inherit; margin-right: 40px" />
       </div>
     </div>
   </body>

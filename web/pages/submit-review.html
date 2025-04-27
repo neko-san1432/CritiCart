@@ -3,19 +3,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Review a Product | CritiCart</title>
-    <link rel="stylesheet" href="../styles/theme.css" />
+    <link rel="stylesheet" href="../styles/initTheme.css" />
     <link rel="stylesheet" href="../styles/universalPageStyle.css" />
     <link rel="stylesheet" href="../styles/uploadFIleStyle.css" />
-
     <script type="module" src="../scripts/initInteraction.js"></script>
     <script type="module" src="../scripts/initSidePanelFunc.js"></script>
     <script type="module" src="../scripts/utils/initRatingModule.js"></script>
     <script type="module" src="../scripts/utils/initTagsFunction.js"></script>
     <script type="module" src="../scripts/utils/dropdownModule.js"></script>
+    <script type="module" src="../scripts/utils/dirtyForm.js"></script>
   </head>
   <body>
     <div class="main-panel">
       <div class="left-panel">
+        <button class="panel-button" id="home-logo">
+          <img src="" alt="logo" />
+          <span>sdf</span>
+        </button>
         <div style="justify-content: space-between; display: flex">
           <button id="menu" style="border: none; width: 59px">
             <svg
@@ -35,7 +39,7 @@
             </svg></button
           ><span></span>
         </div>
-        <button class="panel-button" id="review-product">
+        <button class="panel-button" class="review-product">
           <svg
             class="invert"
             width="24"
@@ -185,111 +189,129 @@
           >
         </div>
       </div>
+
       <div class="right-panel">
         <h1>Review a Product</h1>
         <hr style="width: inherit; margin-right: 10px" />
-        <div class="file-upload-container">
-          <input
-            type="file"
-            id="fileInput"
-            accept="image/*"
-            multiple
-            style="display: none"
-          />
-          <label for="fileInput" class="file-upload-area" id="dropZone">
-            <div class="upload-instructions" id="uploadInstructions">
-              <span class="upload-icon">📷</span>
-              <p>Click to upload images or drag them here</p>
-              <p class="file-restrictions">(Max 5 images, JPG/PNG/GIF only)</p>
-            </div>
-            <div class="file-previews" id="filePreviews"></div>
-          </label>
-        </div>
-        <br />
-        <div class="container">
-          <div class="tinput" id="prod-name">
-            <input type="text" required />
-            <div class="labeline">Product name</div>
-          </div>
-        </div>
-        <br />
-        <div class="custom-dropdown">
-          <button class="dropdown-toggle">Select an Category ▼  </button>
-          <div class="dropdown-pane">
-            <div class="dropdown-option" data-value="food">Food</div>
-            <div class="dropdown-option" data-value="cosmetics">Cosmetics</div>
-            <div class="dropdown-option" data-value="hnw">Health and Wellness</div>
-            <div class="dropdown-option" data-value="toys">Toys</div>
-            <div class="dropdown-option" data-value="appliances">Appliances</div>
-          </div>
-        </div>
-        <br />
-        <div class="container">
-          <div class="tinput">
-            <input type="text" required />
-            <div class="labeline">Product link</div>
-          </div>
-        </div>
-        <br />
-        <div
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <input
-            type="range"
-            id="hiddenSlider"
-            min="0"
-            max="5"
-            step="0.1"
-            style="display: none"
-          />
-          <div class="star-rating" id="ratingContainer">
-            <div class="stars-bg">★★★★★</div>
-            <div class="stars-fill" id="fill">★★★★★</div>
+        <form id="protectedForm">
+          <div class="file-upload-container">
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              multiple
+              style="display: none"
+            />
+            <label for="fileInput" class="file-upload-area" id="dropZone">
+              <div class="upload-instructions" id="uploadInstructions">
+                <span class="upload-icon">📷</span>
+                <p>Click to upload images or drag them here</p>
+                <p class="file-restrictions">
+                  (Max 5 images, JPG/PNG/GIF only)
+                </p>
+              </div>
+              <div class="file-previews" id="filePreviews"></div>
+            </label>
           </div>
           <br />
-          <span id="rating"></span>
-        </div>
-        <br />
-        <div class="container">
-          <div class="tinput">
-            <textarea name="product-desc" id="description" required></textarea>
-            <div class="labeline">Product Description</div>
+          <div class="container">
+            <div class="tinput" id="prod-name">
+              <input type="text" required />
+              <div class="labeline">Product name</div>
+            </div>
           </div>
-        </div>
-        <br />
-        <div class="container" style="padding-left: 10px; padding-right: 10px">
-          <div id="tags"></div>
-        </div>
-        <div class="container">
-          <div class="tinput">
-            <input type="text" id="tagInput" required />
-            <div class="labeline">Tags</div>
+          <br />
+          <div class="custom-dropdown">
+            <button class="dropdown-toggle">Select an Category ▼</button>
+            <div class="dropdown-pane">
+              <div class="dropdown-option" data-value="food">Food</div>
+              <div class="dropdown-option" data-value="cosmetics">
+                Cosmetics
+              </div>
+              <div class="dropdown-option" data-value="hnw">
+                Health and Wellness
+              </div>
+              <div class="dropdown-option" data-value="toys">Toys</div>
+              <div class="dropdown-option" data-value="appliances">
+                Appliances
+              </div>
+            </div>
           </div>
-        </div>
-        <br />
-        <div class="container">
-          <button style="border: solid; display: flex">
-            Submit Review<svg
-              class="invert"
-              clip-rule="evenodd"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z"
-                fill-rule="nonzero"
-              />
-            </svg>
-          </button>
-        </div>
+          <br />
+          <div class="container">
+            <div class="tinput">
+              <input type="text" required />
+              <div class="labeline">Product link</div>
+            </div>
+          </div>
+          <br />
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <input
+              type="range"
+              id="hiddenSlider"
+              min="0"
+              max="5"
+              step="0.1"
+              style="display: none"
+            />
+            <div class="star-rating" id="ratingContainer">
+              <div class="stars-bg">★★★★★</div>
+              <div class="stars-fill" id="fill">★★★★★</div>
+            </div>
+            <br />
+            <span id="rating"></span>
+          </div>
+          <br />
+          <div class="container">
+            <div class="tinput">
+              <textarea
+                name="product-desc"
+                id="description"
+                required
+              ></textarea>
+              <div class="labeline">Product Description</div>
+            </div>
+          </div>
+          <br />
+          <div
+            class="container"
+            style="padding-left: 10px; padding-right: 10px"
+          >
+            <div id="tags"></div>
+          </div>
+          <div class="container">
+            <div class="tinput">
+              <input type="text" id="tagInput" required />
+              <div class="labeline">Tags</div>
+            </div>
+          </div>
+          <br />
+          <div class="container">
+            <button style="border: solid; display: flex">
+              Submit Review<svg
+                class="invert"
+                clip-rule="evenodd"
+                fill-rule="evenodd"
+                stroke-linejoin="round"
+                stroke-miterlimit="2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m14.523 18.787s4.501-4.505 6.255-6.26c.146-.146.219-.338.219-.53s-.073-.383-.219-.53c-1.753-1.754-6.255-6.258-6.255-6.258-.144-.145-.334-.217-.524-.217-.193 0-.385.074-.532.221-.293.292-.295.766-.004 1.056l4.978 4.978h-14.692c-.414 0-.75.336-.75.75s.336.75.75.75h14.692l-4.979 4.979c-.289.289-.286.762.006 1.054.148.148.341.222.533.222.19 0 .378-.072.522-.215z"
+                  fill-rule="nonzero"
+                />
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </body>

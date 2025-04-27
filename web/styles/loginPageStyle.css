@@ -1,3 +1,42 @@
+/* :root {
+  --base: #cfcfcf;
+  --text: #212121;
+  --shadow: #e3e1e1;
+  --border-color: #e5e7eb;
+  --invert-ico: 1;
+  --hovering: 0;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base: #111827;
+    --text: #f9fafb;
+    --shadow: #10b981;
+    --invert-ico: 1;
+    --hovering: 0;
+    --border-color: #374151;
+  }
+}
+:root:has(#theme [value="☀️"]:checked) {
+  color-scheme: light;
+  --base: #ffffff;
+  --text: #111827;
+  --shadow: #10b981;
+  --invert-ico: 0;
+  --hovering: 1;
+  --border-color: #e5e7eb;
+}
+.invert {
+  filter: invert(var(--invert-ico));
+}
+:root:has(#theme [value="🌑"]:checked) {
+  color-scheme: dark;
+  --base: #111827;
+  --text: #f9fafb;
+  --shadow: #10b981;
+  --invert-ico: 1;
+  --hovering: 0;
+  --border-color: #374151;
+} */
 .with-scrollbar {
   height: 300px;
   border: 5px solid hsl(0 0 50% / 0.5);
@@ -33,23 +72,26 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  /* border: solid; */
 }
 
 .tinput {
   position: relative;
   width: 300px;
   height: 50px;
+  
 }
 
 .pass-peek {
   width: 50px;
   height: 50px;
   position: absolute;
-  margin: 0 -50px;
+  margin-top: -50px;
+  right: 0;
   align-items: center;
   justify-content: center;
   transition: 0.3s ease;
-  border: none;
+  /* border: solid; */
 }
 .img-peek,
 .back-img {
@@ -60,7 +102,11 @@
 .back-b:hover > .back-img {
   filter: invert(var(--hovering));
 }
+.pass-peek:hover,
+.back-b:hover {
+  background-color: var(--text);
 
+}
 .back {
   width: inherit;
   height: 40px;

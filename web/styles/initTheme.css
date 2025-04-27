@@ -18,7 +18,10 @@
     --border-color: #374151;
   }
 }
-
+button:hover{
+  background-color: var(--text);
+  color: var(--base);
+}
 html {
   color-scheme: dark light;
   font-size: 1.5em;
@@ -61,11 +64,7 @@ button {
   border: var(--border-color);
   font-size: 1em;
 }
-button:hover {
-  background-color: var(--shadow);
-  cursor: pointer;
-  color: var(--base);
-}
+
 input,
 select {
   font: inherit;

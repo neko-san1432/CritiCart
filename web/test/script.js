@@ -1,23 +1,24 @@
-const dropdown = document.querySelector('.custom-dropdown');
-const toggle = dropdown.querySelector('.dropdown-toggle');
-const pane = dropdown.querySelector('.dropdown-pane');
-const options = pane.querySelectorAll('.dropdown-option');
-
-toggle.addEventListener('click', () => {
-  dropdown.classList.toggle('active');
-});
-
-options.forEach(option => {
-  option.addEventListener('click', () => {
-    toggle.textContent = option.textContent + ' ▼';
-    dropdown.classList.remove('active');
-    console.log('Selected:', option.dataset.value);
-  });
-});
-
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  if (!dropdown.contains(e.target)) {
-    dropdown.classList.remove('active');
+document.getElementById('profile-upload').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    // Validate file type
+    if (!file.type.match('image.*')) {
+      alert('Please select an image file');
+      return;
+    }
+    
+    // Validate file size (2MB max)
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Image must be less than 2MB');
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      document.getElementById('profile-image').src = event.target.result;
+      // Here you would typically upload to server
+      // uploadProfilePicture(file);
+    };
+    reader.readAsDataURL(file);
   }
 });

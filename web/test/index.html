@@ -2,19 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Product Tags</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="./script.js" defer></script>
+  <title>Protected Form</title>
+  <style>
+    body {
+      background: #0d1117;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 300px;
+    }
+    input, textarea {
+      padding: 10px;
+      border: 2px solid white;
+      border-radius: 8px;
+      background: transparent;
+      color: white;
+    }
+    button {
+      padding: 10px;
+      background-color: #00bfff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <div class="custom-dropdown">
-    <button class="dropdown-toggle">Select an option ▼</button>
-    <div class="dropdown-pane">
-      <div class="dropdown-option" data-value="option1">Option 1</div>
-      <div class="dropdown-option" data-value="option2">Option 2</div>
-      <div class="dropdown-option" data-value="option3">Option 3</div>
-    </div>
-  </div>
-<script src="script.js"></script>
+
+<h1>Product Form</h1>
+<form id="protectedForm">
+  <input type="text" name="productName" placeholder="Product Name">
+  <textarea name="productDescription" placeholder="Product Description"></textarea>
+  <button type="submit">Save</button>
+</form>
+
+<script>
+  
+</script>
+
 </body>
 </html>

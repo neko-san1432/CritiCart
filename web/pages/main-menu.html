@@ -3,8 +3,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome | CritiCart</title>
-    <link rel="stylesheet" href="../styles/theme.css" />
-    <link rel="stylesheet" href="../styles/mainPageStyle.css" />
+    <link rel="stylesheet" href="../styles/initTheme.css" />
+    <link rel="stylesheet" href="../styles/universalPageStyle.css" />
     <script type="module" src="../scripts/initInteraction.js"></script>
     <script type="module" src="../scripts/initSidePanelFunc.js"></script>
     <script type="module" src="../scripts/utils/initRandomProducts.js"></script>
@@ -12,7 +12,7 @@
   <body>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button">
+        <button class="panel-button" id = "home-logo">
           <img src="" alt="logo" />
           <span>sdf</span>
         </button>
@@ -178,14 +178,15 @@
         </div>
         <div class="container">
           <div class="tinput">
-            <input type="text" required placeholder="Search..." />
             <button
               style="
                 position: absolute;
                 width: 50px;
                 height: 50px;
-                margin-left: -50px;
+                margin-top: 0px;
+                right: 0px;
                 border: none;
+                z-index: 2;
               "
             >
               <svg
@@ -201,10 +202,12 @@
                 />
               </svg>
             </button>
+            <input type="text" required placeholder="Search..." />
+            
           </div>
         </div>
         <br />
-        <hr style="width: inherit; margin-right: 40px" />
+        <hr style="width: inherit; margin-right: 20px" />
         <h2>Reviewed Products</h2>
         <h3>Food</h3>
         <div class="product-holder-list" id="food"></div>

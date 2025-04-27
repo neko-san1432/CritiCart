@@ -3,14 +3,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>:3</title>
-    <link rel="stylesheet" href="../styles/theme.css" />
-    <link rel="stylesheet" href="../styles/mainPageStyle.css" />
+    <link rel="stylesheet" href="../styles/initTheme.css" />
+    <link rel="stylesheet" href="../styles/universalPageStyle.css" />
     <script type="module" src="../scripts/initInteraction.js"></script>
     <script type="module" src="../scripts/initSidePanelFunc.js"></script>
+    <script type="module" src="../scripts/initAdminFunc.js"></script>
   </head>
   <body>
     <div class="main-panel">
       <div class="left-panel">
+        <button class="panel-button" id = "home-logo">
+          <img src="" alt="logo" />
+          <span>sdf</span>
+        </button>
         <div style="justify-content: space-between; display: flex">
           <button id="menu" style="border: none; width: 59px">
             <svg
@@ -30,7 +35,7 @@
             </svg></button
           ><span></span>
         </div>
-        <button class="panel-button" id="review-product">
+        <button class="panel-button" class="review-product">
           <svg
             class="invert"
             width="24"
@@ -161,7 +166,9 @@
         <h1>Hello Admin</h1>
         <hr style="width: inherit; margin-right: 40px" />
         <h2>List of products to review</h2>
-        <div class="main-container"></div>
+        <div id="main-container">
+
+        </div>
       </div>
     </div>
   </body>
