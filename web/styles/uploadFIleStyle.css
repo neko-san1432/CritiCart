@@ -1,0 +1,92 @@
+.file-upload-container {
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .file-upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: block;
+    background-color: transparent;
+    min-height: 150px;
+  }
+  
+  .file-upload-area:hover {
+    border-color: #666;
+  }
+  
+  .file-upload-area.drag-over {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+  }
+  
+  .upload-instructions {
+    margin-bottom: 20px;
+  }
+  
+  .upload-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #757575;
+  }
+  
+  .file-restrictions {
+    font-size: 12px;
+    color: #757575;
+    margin-top: 5px;
+  }
+  
+  .file-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  .file-preview {
+    width: 100px;
+    position: relative;
+    text-align: center;
+  }
+  
+  .file-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .delete-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .delete-btn:hover {
+    background: #cc0000;
+  }
+  
+  .error-message {
+    color: #ff4444;
+    font-size: 14px;
+    margin-top: 10px;
+  }

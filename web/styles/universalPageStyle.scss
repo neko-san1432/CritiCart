@@ -26,11 +26,11 @@ body {
 
 .star-rating {
     position: relative;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     font-size: 50px;
     cursor: pointer;
     width: 250px;
-    /* 5 stars * 50px */
 }
 
 .stars-bg {
@@ -199,3 +199,48 @@ button:hover svg {
     width: auto;
     height: auto;
 }
+.tag-input-container {
+    border: solid 2px;
+    padding: 10px;
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-right: 30px;
+  }
+  
+  #tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .tag {
+    background-color: transparent;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    border: solid;
+    transition: background 0.2s ease;
+  }
+  
+  .tag:hover {
+    background-color: #d0d0d0;
+  }
+  
+  #tagInput {
+    flex-grow: 1;
+    outline: none;
+    font-size: 16px;
+    min-width: 100%;
+    height: 100%;
+  }
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }

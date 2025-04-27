@@ -1,57 +1,44 @@
-.search-container {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 6px;
-  width: 40px;
-  overflow: hidden;
-  transition: width 0.3s ease, box-shadow 0.3s ease;
-  background: white;
+.custom-dropdown {
   position: relative;
-}
-
-.search-container.expanded {
-  width: 250px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.search-container input {
-  flex: 1;
-  border: none;
-  outline: none;
-  margin-left: 5px;
-  display: none;
-}
-
-.search-container.expanded input {
   display: inline-block;
+  width: 200px;
 }
 
-#dropdown {
-  list-style: none;
-  padding: 0;
-  margin: 5px 0 0;
-  display: none;
-  background: white;
-  border: 1px solid #ccc;
-  position: absolute;
-  top: 40px;
+.dropdown-toggle {
   width: 100%;
-  max-height: 150px;
-  overflow-y: auto;
-  z-index: 10;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
 }
 
-#dropdown li {
-  padding: 8px;
+.dropdown-pane {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-option {
+  padding: 10px;
   cursor: pointer;
 }
 
-#dropdown li:hover {
+.dropdown-option:hover {
   background: #f0f0f0;
 }
 
-strong {
-  color: red;
+/* Show the pane when active */
+.custom-dropdown.active .dropdown-pane {
+  display: block;
 }

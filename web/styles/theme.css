@@ -1,3 +1,4 @@
+
 :root {
   --base: #cfcfcf;
   --text: #212121;
@@ -76,11 +77,23 @@ input {
   outline: none;
   font-size: 1em;
   padding: 0 15px;
-  border: solid 2px ;
+  border: solid 2px;
   background: transparent;
   transition: 0.1s ease;
+  display: flex;
 }
-
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 2px solid ;
+  overflow: hidden; /* Hides ugly scrollbars */
+  resize: none;
+  font: inherit;
+  background-color: transparent;
+  transition: 0.1s ease;
+  border-radius: 0;
+}
 .labeline {
   position: absolute;
   left: 15px;
@@ -95,7 +108,7 @@ input {
 }
 
 input:focus {
-  border: 4px solid ;
+  border: 4px solid;
 }
 
 input:focus + .labeline,
@@ -103,4 +116,62 @@ input:valid + .labeline {
   top: -9px;
   transform: translateY(0) scale(0.88);
   z-index: 2;
+}
+textarea:focus {
+  border: 4px solid;
+}
+
+textarea:focus + .labeline,
+textarea:valid + .labeline {
+  top: -9px;
+  transform: translateY(0) scale(0.88);
+  z-index: 2;
+}
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  margin-left: 20px;
+}
+
+
+.dropdown-toggle {
+  width: 100%;
+  padding: 10px;
+  background: var(--base);
+  border: 2px solid;
+
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-pane {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  background-color: var(--base);
+  overflow-y: auto;
+  
+  border: 2px solid ;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background: var(--text);
+  color: var(--base);
+}
+
+/* Show the pane when active */
+.custom-dropdown.active .dropdown-pane {
+  display: block;
 }

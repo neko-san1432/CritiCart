@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Rating | YourAppName</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
-  <script src="../test/script.js" ></script>
+  <title>Product Tags</title>
   <link rel="stylesheet" href="style.css">
+  <script src="./script.js" defer></script>
 </head>
 <body>
-  <div class="search-container colapse">
-    <button id="searchBtn">🔍</button>
-    <input type="text" id="searchInput" placeholder="Search..." />
-    <ul id="dropdown"></ul>
-  </div>  
+  <div class="custom-dropdown">
+    <button class="dropdown-toggle">Select an option ▼</button>
+    <div class="dropdown-pane">
+      <div class="dropdown-option" data-value="option1">Option 1</div>
+      <div class="dropdown-option" data-value="option2">Option 2</div>
+      <div class="dropdown-option" data-value="option3">Option 3</div>
+    </div>
+  </div>
+<script src="script.js"></script>
 </body>
 </html>

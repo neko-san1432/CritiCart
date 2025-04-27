@@ -2,12 +2,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>:3</title>
+    <title>Review a Product | CritiCart</title>
     <link rel="stylesheet" href="../styles/theme.css" />
-    <link rel="stylesheet" href="../styles/mainPageStyle.css" />
-     <script type="module" src="../scripts/initInteraction.js"></script>
+    <link rel="stylesheet" href="../styles/universalPageStyle.css" />
+    <link rel="stylesheet" href="../styles/uploadFIleStyle.css" />
+
+    <script type="module" src="../scripts/initInteraction.js"></script>
     <script type="module" src="../scripts/initSidePanelFunc.js"></script>
     <script type="module" src="../scripts/utils/initRatingModule.js"></script>
+    <script type="module" src="../scripts/utils/initTagsFunction.js"></script>
+    <script type="module" src="../scripts/utils/dropdownModule.js"></script>
   </head>
   <body>
     <div class="main-panel">
@@ -158,13 +162,48 @@
           <span>Logout</span>
         </button>
       </div>
-      <div class="right-panel" >
+      <div class="right-panel" style="display: none">
+        <div
+          style="
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <img
+            width="100px"
+            height="100px"
+            src="https://cdn-icons-png.flaticon.com/512/5610/5610944.png"
+            alt="check"
+          />
+
+          <span style="text-align: center"
+            >Done!<br />Please wait for the admin to approve your review</span
+          >
+        </div>
+      </div>
+      <div class="right-panel">
         <h1>Review a Product</h1>
-        <hr style="width: inherit; margin-right: 40px" />
-        <div class="container">
-          <div class="tinput" id="file-upload" style="height: 40%">
-            <input type="file" required />
-          </div>
+        <hr style="width: inherit; margin-right: 10px" />
+        <div class="file-upload-container">
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            multiple
+            style="display: none"
+          />
+          <label for="fileInput" class="file-upload-area" id="dropZone">
+            <div class="upload-instructions" id="uploadInstructions">
+              <span class="upload-icon">📷</span>
+              <p>Click to upload images or drag them here</p>
+              <p class="file-restrictions">(Max 5 images, JPG/PNG/GIF only)</p>
+            </div>
+            <div class="file-previews" id="filePreviews"></div>
+          </label>
         </div>
         <br />
         <div class="container">
@@ -174,21 +213,32 @@
           </div>
         </div>
         <br />
-        <div class="container">
-          <div class="tinput" id="login-email">
-            <input type="text" required />
-            <div class="labeline">Email</div>
+        <div class="custom-dropdown">
+          <button class="dropdown-toggle">Select an Category ▼  </button>
+          <div class="dropdown-pane">
+            <div class="dropdown-option" data-value="food">Food</div>
+            <div class="dropdown-option" data-value="cosmetics">Cosmetics</div>
+            <div class="dropdown-option" data-value="hnw">Health and Wellness</div>
+            <div class="dropdown-option" data-value="toys">Toys</div>
+            <div class="dropdown-option" data-value="appliances">Appliances</div>
           </div>
         </div>
         <br />
         <div class="container">
-          <div class="tinput" id="login-email">
+          <div class="tinput">
             <input type="text" required />
             <div class="labeline">Product link</div>
           </div>
         </div>
         <br />
-        <div class="container">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          "
+        >
           <input
             type="range"
             id="hiddenSlider"
@@ -206,23 +256,23 @@
         </div>
         <br />
         <div class="container">
-          <div class="tinput" id="login-email">
-            <textarea
-              name=""
-              id="description"
-              placeholder="Enter description"
-            ></textarea>
+          <div class="tinput">
+            <textarea name="product-desc" id="description" required></textarea>
+            <div class="labeline">Product Description</div>
           </div>
         </div>
         <br />
-        <div
-          style="
-            display: flex;
-            justify-content: right;
-            margin-right: 10px;
-            margin-bottom: 10px;
-          "
-        >
+        <div class="container" style="padding-left: 10px; padding-right: 10px">
+          <div id="tags"></div>
+        </div>
+        <div class="container">
+          <div class="tinput">
+            <input type="text" id="tagInput" required />
+            <div class="labeline">Tags</div>
+          </div>
+        </div>
+        <br />
+        <div class="container">
           <button style="border: solid; display: flex">
             Submit Review<svg
               class="invert"
@@ -241,7 +291,6 @@
           </button>
         </div>
       </div>
-
     </div>
   </body>
 </html>
