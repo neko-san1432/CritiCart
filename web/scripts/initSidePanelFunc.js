@@ -23,5 +23,26 @@ profile.addEventListener('click',() => {
   window.location.href = "/web/pages/user-profile.html";
 });
 logout.addEventListener('click',() => {
+  logout();
   window.location.href = "/web/index.html";
 });
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+import { DB_PUB_API, DB_PUB_URL } from "./database";
+const supabaseUrl = DB_PUB_URL;
+const supabaseKey = DB_PUB_API;
+const supabase = createClient(supabaseUrl, supabaseKey);
+console.log("Supabase is connected!");
+
+async function logout() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("Logout error:", error.message);
+    return;
+  }
+
+  console.log("Logged out successfully");
+  // Clear session data
+  localStorage.removeItem('session');
+  // Redirect to login page
+}

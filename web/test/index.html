@@ -1,51 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Protected Form</title>
-  <style>
-    body {
-      background: #0d1117;
-      color: white;
-      font-family: sans-serif;
-      padding: 20px;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 300px;
-    }
-    input, textarea {
-      padding: 10px;
-      border: 2px solid white;
-      border-radius: 8px;
-      background: transparent;
-      color: white;
-    }
-    button {
-      padding: 10px;
-      background-color: #00bfff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-
-<h1>Product Form</h1>
-<form id="protectedForm">
-  <input type="text" name="productName" placeholder="Product Name">
-  <textarea name="productDescription" placeholder="Product Description"></textarea>
-  <button type="submit">Save</button>
-</form>
-
-<script>
-  
-</script>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Protected Form</title>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="file-upload-container">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png" multiple style="display: none">
+      <label for="fileInput" class="file-upload-area" id="dropZone">
+        <div class="upload-instructions" id="uploadInstructions">
+          <span class="upload-icon">📷</span>
+          <p>Click to upload images or drag them here</p>
+          <p class="file-restrictions">(Max 5 images, JPG/PNG only, max 5MB each)</p>
+        </div>
+        <div class="file-previews" id="filePreviews"></div>
+      </label>
+    </div>
+  </body>
 </html>
