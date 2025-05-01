@@ -10,7 +10,6 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="./scripts/initLoginFunc.js" defer></script>
     <script src="../web/scripts/api/initializeUser.js"></script>
-    <script src="../web/scripts/api/initializeUser.js"></script>
   </head>
   <body style="overflow: hidden">
     <div style="z-index: 3; position: absolute; left: 0">
@@ -41,8 +40,8 @@
           <div class="login" id="login">
             <h1>Login</h1>
             <div class="container">
-              <div class="tinput" id="">
-                <input type="text" required />
+              <div class="tinput" >
+                <input type="text" id = "lemail"required />
                 <div class="labeline">Email</div>
               </div>
             </div>  
@@ -76,7 +75,7 @@
               data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"
             ></div>
             <p>login via</p>
-            <button style="background-color: transparent; border: none">
+            <button style="background-color: transparent; border: none"onclick="loginWithGoogle()">
               <img
                 src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
                 alt="google"
@@ -167,7 +166,7 @@
             <br />
             <button>Register</button>
             <p>Register via</p>
-            <button style="background-color: transparent; border: none">
+            <button style="background-color: transparent; border: none" onclick="loginWithGoogle()">
               <img
                 src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
                 alt="google"

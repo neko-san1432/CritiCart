@@ -1,5 +1,6 @@
 const themeSwitcher = document.querySelector("[data-theme-picker]");
 
+let userTheme = "";
 themeSwitcher.addEventListener("change", () => {
   if (themeSwitcher.value === "☀️") {
     document.documentElement.setAttribute("data-theme", "☀️");

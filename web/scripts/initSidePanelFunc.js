@@ -4,7 +4,10 @@ const appeal = document.getElementById("appeal");
 const user_reviewed_products = document.getElementById("reviewed-product");
 const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
-
+import isCollapsed from './scripts/api/initializeUser.js'
+if(isCollapsed){
+  
+}
 review.forEach(f=>{
   f.addEventListener('click',() => {
     window.location.href = "/web/pages/submit-review.html";
@@ -42,7 +45,5 @@ async function logout() {
   }
 
   console.log("Logged out successfully");
-  // Clear session data
   localStorage.removeItem('session');
-  // Redirect to login page
 }

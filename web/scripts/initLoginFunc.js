@@ -7,6 +7,7 @@ document.getElementById("register-in").addEventListener("click", () => {
     y.style.height = "700px"
     z = document.getElementById("register");
     z.style.marginLeft = "0%";
+    
 
 })
 document.getElementById("back-b").addEventListener("click", () => {
