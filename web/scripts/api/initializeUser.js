@@ -1,50 +1,81 @@
 //get the client UID
 //get the products enlisted by the user
 //redirect the user-page based on the user-type
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-import { DB_PUB_API, DB_PUB_URL } from "./database";
-const supabaseUrl = DB_PUB_URL;
-const supabaseKey = DB_PUB_API;
-const supabase = createClient(supabaseUrl, supabaseKey);
-let sessionUserID= ""
+import {supabase} from './database.js'
+let sessionUserID = "";
 console.log("Supabase is connected!");
 async function isAdmin() {
   const admin = await supabase
     .from("panelConfig")
     .select("isAdmin")
-    .eq("user_id", sessionUserID);
+    .eq("uuid", sessionUserID);
+  console.log(admin)
 }
 export async function isDarkMode() {
   const admin = await supabase
     .from("panelConfig")
     .select("isDark")
-    .eq("user_id", sessionUserID);
+    .eq("uuid", sessionUserID);
 }
+
 export async function isCollapsed() {
   const admin = await supabase
     .from("panelConfig")
     .select("isCollapsed")
-    .eq("user_id", sessionUserID);
+    .eq("uuid", sessionUserID);
 }
+const landingPageAfterLogin = isAdmin
+  ? window.location.origin + "/web/pages/admin-page.html"
+  : window.location.origin + "/web/pages/main-menu.html";
+
 async function loginWithGoogle() {
+  
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-  });
-
+    options: { redirectTo: landingPageAfterLogin },
+  })
   if (error) {
     throw error;
-  } else if (isAdmin) {
-    window.location.href = "/pages/admin-page.html";
-  }else if (!isAdmin){
-    window.location.href = "/pages/main-menu.html";
+  }else{
+    addUserConfig();
   }
 }
-function getRegistrationData(){
-  document.getElementById('').value
-  document.getElementById('').value
-  document.getElementById('').value
-  document.getElementById('').value
+ function addUserConfig(){
+  const { data } = supabase.from("panelConfig").insert([
+    {
+      uuid: sessionUserID,
+      isCollapsed: false,
+      isDark: false,
+      isAdmin: false,
+    },
+  ]);
 }
+const {
+  data: { user },
+  error,
+} = await supabase.auth.getUser();
+
+if (error) {
+  console.error("Error fetching user:", error.message);
+} else {
+  sessionUserID = user.id;
+  console.log("User ID:", user.id);
+}
+
+//registration
+document.getElementById("submitRegForm").addEventListener("click", () => {
+  let repass = document.getElementById("rrpass").value;
+  let pass = document.getElementById("rpass").value;
+  if (pass == repass) {
+    registerWithEmail(
+      document.getElementById("remail").value,
+      document.getElementById("rpass").value,
+      document.getElementById("rname").value
+    );
+  } else {
+    alert("Password don't match");
+  }
+});
 async function registerWithEmail(email, password, username) {
   const { user, error } = await supabase.auth.signUp({
     email,
@@ -55,18 +86,21 @@ async function registerWithEmail(email, password, username) {
       },
     },
   });
-
+  sessionUserID = user.id;
+  const { data } = await supabase.from("panelConfig").insert([
+    {
+      uuid: sessionUserID,
+      isCollapsed: false,
+      isDark: false,
+      isAdmin: false,
+    },
+  ]);
   if (error) throw error;
-  return user;
 }
-const {
-  data: { user },
-  error,
-} = await supabase.auth.getUser();
-
-if (error) {
-  console.error("Error fetching user:", error.message);
-} else {
-  sessionUserID= user.id;
-  console.log("User ID:", user.id);
-}
+//login
+x = document.querySelectorAll("#googleLogin");
+x.array.forEach((element) => {
+  element.addEventListener("click", () => {
+    loginWithGoogle();
+  });
+});

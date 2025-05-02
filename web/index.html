@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="./scripts/initLoginFunc.js" defer></script>
-    <script src="../web/scripts/api/initializeUser.js"></script>
+    <script type= "module" src="../web/scripts/api/initializeUser.js" async ></script>
   </head>
   <body style="overflow: hidden">
     <div style="z-index: 3; position: absolute; left: 0">
@@ -75,7 +75,7 @@
               data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"
             ></div>
             <p>login via</p>
-            <button style="background-color: transparent; border: none"onclick="loginWithGoogle()">
+            <button class= "googleLogin" style="background-color: transparent; border: solid">
               <img
                 src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
                 alt="google"
@@ -108,13 +108,13 @@
             <h1>Register</h1>
             <div class="container">
               <div class="tinput">
-                <input type="text" required />
+                <input id = "rname"type="text" required />
                 <div class="labeline">Name</div>
               </div>
             </div>
             <div class="container">
               <div class="tinput">
-                <input type="text" required />
+                <input id = "remail"type="text" required />
                 <div class="labeline">Email</div>
               </div>
             </div>
@@ -164,9 +164,9 @@
               data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"
             ></div>
             <br />
-            <button>Register</button>
+            <button id = "submitRegForm">Register</button>
             <p>Register via</p>
-            <button style="background-color: transparent; border: none" onclick="loginWithGoogle()">
+            <button style="background-color: transparent; border: none" class= "googleLogin">
               <img
                 src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
                 alt="google"
