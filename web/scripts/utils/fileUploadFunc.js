@@ -3,11 +3,13 @@ const dropZone = document.getElementById('dropZone');
 const filePreviews = document.getElementById('filePreviews');
 const uploadInstructions = document.getElementById('uploadInstructions');
 const MAX_FILES = 5;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 let filesArray = [];
 
 // Handle file selection
 fileInput.addEventListener('change', (e) => {
   handleFiles(e.target.files);
+  fileInput.value = ''; // Reset to allow re-uploading same files
 });
 
 // Drag and drop events
@@ -18,7 +20,7 @@ fileInput.addEventListener('change', (e) => {
   });
 });
 
-['dragleave', 'dragend'].forEach(event => {
+['dragleave', 'dragend', 'drop'].forEach(event => {
   dropZone.addEventListener(event, () => {
     dropZone.classList.remove('drag-over');
   });
@@ -26,44 +28,47 @@ fileInput.addEventListener('change', (e) => {
 
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
-  dropZone.classList.remove('drag-over');
   handleFiles(e.dataTransfer.files);
 });
 
 // Handle the files
 function handleFiles(files) {
-  // Convert FileList to array and filter images (excluding GIFs)
-  const newFiles = Array.from(files).filter(file => 
-    file.type.startsWith('image/') && !file.type.endsWith('gif')
-  );
+  if (!files || files.length === 0) return;
   
-  // Check if any GIFs were attempted
-  const gifFiles = Array.from(files).filter(file => 
-    file.type.endsWith('gif')
-  );
-  
-  if (gifFiles.length > 0) {
-    showError('GIF files are not allowed');
-  }
+  // Convert FileList to array and filter valid files
+  const validFiles = Array.from(files).filter(file => {
+    const isValidType = file.type.match('image/(jpeg|png)');
+    const isValidSize = file.size <= MAX_FILE_SIZE;
+    
+    if (!isValidType) {
+      showError('Only JPG/PNG images are allowed');
+      return false;
+    }
+    
+    if (!isValidSize) {
+      showError(`File ${file.name} exceeds 5MB limit`);
+      return false;
+    }
+    
+    return true;
+  });
   
   // Check file limit
-  if (filesArray.length + newFiles.length > MAX_FILES) {
-    showError(`Maximum ${MAX_FILES} images allowed`);
+  if (filesArray.length + validFiles.length > MAX_FILES) {
+    showError(`Maximum ${MAX_FILES} images allowed (${filesArray.length} already added)`);
     return;
   }
   
   // Add new files
-  newFiles.forEach(file => {
+  validFiles.forEach(file => {
     if (filesArray.length < MAX_FILES) {
       filesArray.push(file);
       createFilePreview(file);
     }
   });
   
-  // Hide instructions if we have files
-  if (filesArray.length > 0) {
-    uploadInstructions.style.display = 'none';
-  }
+  // Update UI
+  updateUploadUI();
 }
 
 // Create file preview element
@@ -79,24 +84,40 @@ function createFilePreview(file) {
   const deleteBtn = document.createElement('button');
   deleteBtn.className = 'delete-btn';
   deleteBtn.innerHTML = '×';
+  deleteBtn.title = 'Remove image';
   deleteBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     removeFile(file, preview);
   });
   
+  const fileInfo = document.createElement('div');
+  fileInfo.className = 'file-info';
+  fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
+  
   preview.appendChild(thumbnail);
   preview.appendChild(deleteBtn);
+  preview.appendChild(fileInfo);
   filePreviews.appendChild(preview);
 }
 
 // Remove file from list
 function removeFile(file, previewElement) {
   filesArray = filesArray.filter(f => f !== file);
-  filePreviews.removeChild(previewElement);
-  URL.revokeObjectURL(previewElement.querySelector('img').src);
+  previewElement.classList.add('removing');
   
-  // Show instructions if no files left
-  if (filesArray.length === 0) {
+  // Add animation before removing
+  setTimeout(() => {
+    filePreviews.removeChild(previewElement);
+    URL.revokeObjectURL(previewElement.querySelector('img').src);
+    updateUploadUI();
+  }, 300);
+}
+
+// Update UI based on current files
+function updateUploadUI() {
+  if (filesArray.length > 0) {
+    uploadInstructions.style.display = 'none';
+  } else {
     uploadInstructions.style.display = 'block';
   }
 }
@@ -115,10 +136,18 @@ function showError(message) {
   
   dropZone.appendChild(error);
   
-  // Auto-remove error after 3 seconds
+  // Auto-remove error after 5 seconds
   setTimeout(() => {
     if (error.parentNode) {
-      dropZone.removeChild(error);
+      error.classList.add('fading');
+      setTimeout(() => dropZone.removeChild(error), 300);
     }
-  }, 3000);
+  }, 5000);
+}
+
+// Format file size
+function formatFileSize(bytes) {
+  if (bytes < 1024) return bytes + ' bytes';
+  else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  else return (bytes / 1048576).toFixed(1) + ' MB';
 }

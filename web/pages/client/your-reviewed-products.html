@@ -2,13 +2,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>:3</title>
+    <title>Reviewed Products | CritiCart</title>
     <link rel="stylesheet" href="../styles/initTheme.css" />
     <link rel="stylesheet" href="../styles/universalPageStyle.css" />
-    <script type="module" src="../scripts/initInteraction.js"></script>
-    <script type="module" src="../scripts/initSidePanelFunc.js"></script>
-    <script type="module" src="../scripts/initAdminFunc.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script> -->
+    <script type="module" src="/web/scripts/UI/interaction.js"></script>
+    <script type="module" src="/web/scripts/UI/sidePanelFuncForClient.js"></script>
+    <script type="module" src="/web/scripts/init/client/initUserRevProd.js"></script>
   </head>
   <body>
     <div class="main-panel">
@@ -36,7 +35,7 @@
             </svg></button
           ><span></span>
         </div>
-        <button class="panel-button" class="review-product">
+        <button class="panel-button review-product">
           <svg
             class="invert"
             width="24"
@@ -163,13 +162,12 @@
           <span>Logout</span>
         </button>
       </div>
-      <div class="right-panel">
-        <h1>Hello Admin</h1>
-        <hr style="width: inherit; margin-right: 40px" />
-        <h2>List of products to review</h2>
-        <div id="main-container">
-
+      <div class = "right-panel">
+        <div style="width: 100%;">
+          <h1>Your reviewed products</h1>
+          <hr style="width: inherit; margin-right: 40px" />
         </div>
+        <div id ="main-container"></div>
       </div>
     </div>
   </body>

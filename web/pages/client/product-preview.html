@@ -5,16 +5,13 @@
     <title>Welcome | CritiCart</title>
     <link rel="stylesheet" href="../styles/initTheme.css" />
     <link rel="stylesheet" href="../styles/universalPageStyle.css" />
-    <script type="module" src="../scripts/initInteraction.js"></script>
-    <script type="module" src="../scripts/initSidePanelFunc.js"></script>
-    <script type="module" src="../scripts/utils/initRandomProducts.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script> -->
-
+    <script type="module" src="/web/scripts/UI/interaction.js"></script>
+    <script type="module" src="/web/scripts/UI/sidePanelFuncForClient.js"></script>
   </head>
   <body>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button" id = "home-logo">
+        <button class="panel-button">
           <img src="" alt="logo" />
           <span>sdf</span>
         </button>
@@ -165,62 +162,14 @@
         </button>
       </div>
       <div class="right-panel">
-        <div
-          style="
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: inherit;
-          "
-        >
-          <h1>Welcome</h1>
-          <button class="review-product" style="margin-right: 10px">
-            Review Product
-          </button>
-        </div>
-        <div class="container">
-          <div class="tinput">
-            <button
-              style="
-                position: absolute;
-                width: 50px;
-                height: 50px;
-                margin-top: 0px;
-                right: 0px;
-                border: none;
-                z-index: 2;
-              "
-            >
-              <svg
-                class="invert"
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-              >
-                <path
-                  d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z"
-                />
-              </svg>
-            </button>
-            <input type="text" required placeholder="Search..." />
-            
-          </div>
-        </div>
-        <br />
-        <hr style="width: inherit; margin-right: 20px" />
-        <h2>Reviewed Products</h2>
-        <h3>Food</h3>
-        <div class="product-holder-list" id="food"></div>
-        <h3>Cosmetics</h3>
-        <div class="product-holder-list" id="cosmetics"></div>
-        <h3>Appliances</h3>
-        <div class="product-holder-list" id="appliances"></div>
-        <h3>Health and Wellness</h3>
-        <div class="product-holder-list" id="hnw"></div>
-        <h3>Toys</h3>
-        <div class="product-holder-list" id="toys"></div>
+        <h1 id = "product-name"></h1>
+        <hr style="width: inherit; margin-right: 40px" />
+        <img src="" alt="product-img">
+        <p id = "prod-desc"></p>
+        <div id="rating"></div>
+        <hr style="width: inherit; margin-right: 40px" />
+        <h2>Comments</h2>
+        <div id="comments"></div>
       </div>
     </div>
   </body>

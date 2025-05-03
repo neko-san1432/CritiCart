@@ -1,7 +1,7 @@
 //get the client UID
 //get the products enlisted by the user
 //redirect the user-page based on the user-type
-import {supabase} from './database.js'
+import {supabase} from '../api/database.js'
 let sessionUserID = "";
 console.log("Supabase is connected!");
 async function isAdmin() {
@@ -10,6 +10,7 @@ async function isAdmin() {
     .select("isAdmin")
     .eq("uuid", sessionUserID);
   console.log(admin)
+  return admin;
 }
 export async function isDarkMode() {
   const admin = await supabase
@@ -24,20 +25,20 @@ export async function isCollapsed() {
     .select("isCollapsed")
     .eq("uuid", sessionUserID);
 }
-const landingPageAfterLogin = isAdmin
+const landingPageAfterLogin = isAdmin()
   ? window.location.origin + "/web/pages/admin-page.html"
   : window.location.origin + "/web/pages/main-menu.html";
 
 async function loginWithGoogle() {
-  
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-    options: { redirectTo: landingPageAfterLogin },
   })
   if (error) {
     throw error;
   }else{
     addUserConfig();
+    console.log(isAdmin())
+    window.location.href = landingPageAfterLogin;
   }
 }
  function addUserConfig(){
@@ -76,16 +77,18 @@ document.getElementById("submitRegForm").addEventListener("click", () => {
     alert("Password don't match");
   }
 });
-async function registerWithEmail(email, password, username) {
+async function registerWithEmail(remail, rpassword, rusername) {
   const { user, error } = await supabase.auth.signUp({
-    email,
-    password,
+    email:remail,
+    password:rpassword,
     options: {
       data: {
-        username: username,
+        username: rusername,
       },
     },
   });
+  console.log({ remail, rpassword, rusername });
+
   sessionUserID = user.id;
   const { data } = await supabase.from("panelConfig").insert([
     {
@@ -98,9 +101,9 @@ async function registerWithEmail(email, password, username) {
   if (error) throw error;
 }
 //login
-x = document.querySelectorAll("#googleLogin");
-x.array.forEach((element) => {
-  element.addEventListener("click", () => {
+let loginGoogle = document.querySelectorAll(".googleLogin");
+loginGoogle.forEach((button) => {
+  button.addEventListener("click", () => {
     loginWithGoogle();
   });
 });

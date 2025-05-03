@@ -2,19 +2,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome | CritiCart</title>
+    <title>:3</title>
     <link rel="stylesheet" href="../styles/initTheme.css" />
     <link rel="stylesheet" href="../styles/universalPageStyle.css" />
-    <script type="module" src="../scripts/initInteraction.js"></script>
-    <script type="module" src="../scripts/initSidePanelFunc.js"></script>
-    <script type="module" src="../scripts/utils/initRandomProducts.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script> -->
-
+    <script type="module" src="/web/scripts/UI/interaction.js"></script>
+    <script type="module" src="/web/scripts/UI/sidePanelFuncForAdmin.js" defer></script>
+    <script type="module" src="/web/scripts/init/admin/initAdmin.js" defer></script>
   </head>
   <body>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button">
+        <button class="panel-button" id = "home-logo">
           <img src="" alt="logo" />
           <span>sdf</span>
         </button>
@@ -34,10 +32,10 @@
               <path
                 d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
               />
-            </svg>
-          </button>
+            </svg></button
+          ><span></span>
         </div>
-        <button class="panel-button review-product">
+        <button class="panel-button" class="review-product">
           <svg
             class="invert"
             width="24"
@@ -165,14 +163,12 @@
         </button>
       </div>
       <div class="right-panel">
-        <h1 id = "product-name"></h1>
+        <h1>Hello Admin</h1>
         <hr style="width: inherit; margin-right: 40px" />
-        <img src="" alt="product-img">
-        <p id = "prod-desc"></p>
-        <div id="rating"></div>
-        <hr style="width: inherit; margin-right: 40px" />
-        <h2>Comments</h2>
-        <div id="comments"></div>
+        <h2>List of products to review</h2>
+        <div id="main-container">
+
+        </div>
       </div>
     </div>
   </body>
