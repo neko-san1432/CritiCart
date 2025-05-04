@@ -7,8 +7,8 @@ document.getElementById("register-in").addEventListener("click", () => {
     y.style.height = "700px"
     z = document.getElementById("register");
     z.style.marginLeft = "0%";
-    
-
+    document.getElementById("lemail").value = ""
+    document.getElementById("lpass").value = ""
 })
 document.getElementById("back-b").addEventListener("click", () => {
     x = document.getElementById("login");
@@ -18,6 +18,10 @@ document.getElementById("back-b").addEventListener("click", () => {
     y.style.height = "600px"
     z = document.getElementById("register");
     z.style.marginLeft = "50%";
+    document.getElementById("remail").value = ""
+    document.getElementById("rname").value = ""
+    document.getElementById("rpass").value = ""
+    document.getElementById("rrpass").value = ""
 })
 
 document.getElementById("show1").addEventListener("click", () => {

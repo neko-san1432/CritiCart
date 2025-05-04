@@ -46,6 +46,7 @@ async function applyUserPreferences() {
   } else {
     themeToggle.value = "☀️";
   }
+
 }
 
 applyUserPreferences();

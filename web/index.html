@@ -3,27 +3,125 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <script src="./scripts/initTheme.js" defer></script>
+    <script src="./scripts/UI/theme.js" defer></script>
     <link rel="stylesheet" href="./styles/loginPageStyle.css" />
+    <link rel="stylesheet" href="./styles/universalPageStyle.css" />
     <link rel="stylesheet" href="./styles/initTheme.css" />
     <script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="./scripts/initLoginFunc.js" defer></script>
-    <script type= "module" src="../web/scripts/api/initializeUser.js" async ></script>
+    <script src="./scripts/UI/initLoginFunc.js" defer></script>
+    <script src="/web/scripts/internet.js"></script>
+    <script
+      type="module"
+      src="../web/scripts/api/initializeUser.js"
+      async
+    ></script>
   </head>
   <body style="overflow: hidden">
-    <div style="z-index: 3; position: absolute; left: 0">
-      CritiCart
+    <div id = "errorPane" style="z-index:5">
+     asdljasjhd
     </div>
+    
+    <div
+      id="offline"
+      style="
+        position: absolute;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--base);
+        display: none;
+      "
+    >
+      <p id="msgnet">
+        You are not connected to the internet. Please check your connection.
+      </p>
+      <div id="recon">Reconnecting</div>
+    </div>
+    <div
+      id="confirmVerification"
+      style="
+        display: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 4;
+        background-color: transparent;
+        backdrop-filter: blur(10px);
+      "
+    >
+      <div class="boxy">
+        <div style="display: flex;width: 100%;margin-top: 0;top: 0;"><button
+          id="closeVerify"
+          style=" position: absolute;margin:0;padding:0;width:30px;height:30px;"
+        >
+          <svg
+            class="invert"
+            width="24"
+            height="24"
+            clip-rule="evenodd"
+            fill-rule="evenodd"
+            stroke-linejoin="round"
+            stroke-miterlimit="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+            />
+          </svg>
+        </button></div>
+        
+        <h1>Confirm Verification</h1>
+        <span>We have sent a verification code to your email.</span>
+        <span>Didn't receive Email?</span>
+        <div>
+          <button id="resendVerification"style="width: 150px;height:30px">Click to resend</button
+          ><span id="countdown"></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="z-index: 3; position: absolute; left: 0">CritiCart</div>
     <div style="position: absolute; z-index: 2; right: 0">
-      <label
-        >Theme:
-        <select data-theme-picker name="themepicker" id="theme">
-          <option value="💻">System</option>
-          <option value="☀️">Light</option>
-          <option value="🌑">Dark</option>
-        </select>
-      </label>
+      <button
+        style="
+          z-index: 2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50px;
+        "
+        id="modetheme"
+      >
+        <label style="display: none">
+          <select data-theme-picker name="themepicker" id="theme">
+            <option value="💻">System</option>
+            <option value="☀️">Light</option>
+            <option value="🌑">Dark</option>
+          </select>
+        </label>
+        <div id="img-theme">
+          <svg
+            class="invert"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M22 17v-11.8c0-.663-.537-1.2-1.2-1.2h-17.6c-.663 0-1.2.537-1.2 1.2v11.8h20zm-18-11h16v9h-16v-9zm20 12v.8c0 .663-.537 1.2-1.2 1.2h-21.6c-.663 0-1.2-.537-1.2-1.2v-.8h10c0 .276.224.5.5.5h3c.276 0 .5-.224.5-.5h10z"
+            />
+          </svg>
+        </div>
+      </button>
     </div>
 
     <div
@@ -36,20 +134,20 @@
       "
     >
       <div class="box" id="box">
-        <div id="pane" style="display: flex; flex-direction: row;">
+        <div id="pane" style="display: flex; flex-direction: row">
           <div class="login" id="login">
             <h1>Login</h1>
             <div class="container">
-              <div class="tinput" >
-                <input type="text" id = "lemail"required />
+              <div class="tinput">
+                <input type="text" id="lemail" required />
                 <div class="labeline">Email</div>
               </div>
-            </div>  
+            </div>
             <div class="container">
               <div class="tinput">
-                <input type="password" id = "lpass" required />
+                <input type="password" id="lpass" required />
                 <div class="labeline">Password</div>
-                <button class="pass-peek" id = "show1">
+                <button class="pass-peek" id="show1">
                   <svg
                     width="24"
                     height="24"
@@ -66,16 +164,16 @@
               </div>
             </div>
             <br />
-            <button id = "loginBE">Login</button>
+            <button id="loginBE">Login</button>
             <br />
             <button id="register-in">Register</button>
-            <br>
+            <br />
             <div
               class="g-recaptcha"
               data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"
             ></div>
             <p>login via</p>
-            <button class= "googleLogin" style="background-color: transparent; ">
+            <button class="googleLogin" style="background-color: transparent">
               <img
                 src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
                 alt="google"
@@ -86,7 +184,8 @@
           <div class="register" id="register">
             <div class="back">
               <button
-                class="back-b" id = "back-b"
+                class="back-b"
+                id="back-b"
                 style="height: 40px; width: 40px; margin-top: 19; border: none"
               >
                 <svg
@@ -108,21 +207,21 @@
             <h1>Register</h1>
             <div class="container">
               <div class="tinput">
-                <input id = "rname"type="text" required />
+                <input id="rname" type="text" required />
                 <div class="labeline">Name</div>
               </div>
             </div>
             <div class="container">
               <div class="tinput">
-                <input id = "remail"type="text" required />
+                <input id="remail" type="text" required />
                 <div class="labeline">Email</div>
               </div>
             </div>
             <div class="container">
               <div class="tinput">
-                <input type="password" id = "rpass"required />
+                <input type="password" id="rpass" required />
                 <div class="labeline">Password</div>
-                <button class="pass-peek" id = "show2">
+                <button class="pass-peek" id="show2">
                   <svg
                     width="24"
                     height="24"
@@ -140,9 +239,9 @@
             </div>
             <div class="container">
               <div class="tinput">
-                <input type="password"id = "rrpass" required />
+                <input type="password" id="rrpass" required />
                 <div class="labeline">Re-type Password</div>
-                <button class="pass-peek" id = "show3">
+                <button class="pass-peek" id="show3">
                   <svg
                     width="24"
                     height="24"
@@ -164,9 +263,12 @@
               data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"
             ></div>
             <br />
-            <button id = "submitRegForm">Register</button>
+            <button id="submitRegForm">Register</button>
             <p>Register via</p>
-            <button style="background-color: transparent; border: none" class= "googleLogin">
+            <button
+              style="background-color: transparent; border: none"
+              class="googleLogin"
+            >
               <img
                 src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
                 alt="google"

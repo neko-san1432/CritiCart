@@ -3,17 +3,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>:3</title>
-    <link rel="stylesheet" href="../styles/initTheme.css" />
-    <link rel="stylesheet" href="../styles/universalPageStyle.css" />
+    <link rel="stylesheet" href="/web/styles/initTheme.css" />
+    <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
     <script type="module" src="/web/scripts/UI/interaction.js"></script>
-    <script type="module" src="/web/scripts/UI/sidePanelFuncForAdmin.js" defer></script>
-    <script type="module" src="/web/scripts/init/admin/initAdmin.js" defer></script>
+    <script
+      type="module"
+      src="/web/scripts/UI/sidePanelFuncForAdmin.js"
+      defer
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/admin/initAdmin.js"
+      defer
+    ></script>
     <script src="/web/scripts/init/panelDefault.js" defer></script>
+    <script src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
+    <div
+      id="offline"
+      style="
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--base);
+        display: none;
+      "
+    >
+      <p id="msgnet">
+        You are not connected to the internet. Please check your connection.
+      </p>
+      <div id="recon">Reconnecting</div>
+    </div>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button" id = "home-logo">
+        <button class="panel-button" id="home-logo">
           <img src="" alt="logo" />
           <span>sdf</span>
         </button>
@@ -167,9 +196,7 @@
         <h1>Hello Admin</h1>
         <hr style="width: inherit; margin-right: 40px" />
         <h2>List of products to review</h2>
-        <div id="main-container">
-
-        </div>
+        <div id="main-container"></div>
       </div>
     </div>
   </body>

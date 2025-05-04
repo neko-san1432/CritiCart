@@ -3,15 +3,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>:3</title>
-    <link rel="stylesheet" href="../styles/initTheme.css" />
-    <link rel="stylesheet" href="../styles/universalPageStyle.css" />
-    <script type="module" src="../scripts/initInteraction.js"></script>
-    <script type="module" src="../scripts/initSidePanelFunc.js"></script>
-    <script type="module" src="../scripts/utils/initProfileDetails.js"></script>
-    <script type="module" src="../scripts/utils/profileSetup.js"></script>
+    <link rel="stylesheet" href="/web/styles/initTheme.css" />
+    <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
+    <script type="module" src="/web/scripts/initInteraction.js"></script>
+    <script type="module" src="/web/scripts/initSidePanelFunc.js"></script>
+    <script type="module" src="/web/scripts/utils/initProfileDetails.js"></script>
+    <script type="module" src="/web/scripts/utils/profileSetup.js"></script>
     <script src="/web/scripts/init/panelDefault.js" defer></script>
+    <script src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
+    <div
+      id="offline"
+      style="
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--base);
+        display: none;
+      "
+    >
+      <p id="msgnet">
+        You are not connected to the internet. Please check your connection.
+      </p>
+      <div id="recon">Reconnecting</div>
+    </div>
     <div class="main-panel">
       <div class="left-panel">
         <button class="panel-button" id="home-logo">

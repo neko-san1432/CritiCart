@@ -139,7 +139,6 @@ textarea:valid + .labeline {
   padding: 10px;
   background: var(--base);
   border: 2px solid;
-
   cursor: pointer;
   text-align: left;
 }
@@ -153,9 +152,7 @@ textarea:valid + .labeline {
   max-height: 200px;
   background-color: var(--base);
   overflow-y: auto;
-  
   border: 2px solid ;
-
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }

@@ -1,42 +1,3 @@
-/* :root {
-  --base: #cfcfcf;
-  --text: #212121;
-  --shadow: #e3e1e1;
-  --border-color: #e5e7eb;
-  --invert-ico: 1;
-  --hovering: 0;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --base: #111827;
-    --text: #f9fafb;
-    --shadow: #10b981;
-    --invert-ico: 1;
-    --hovering: 0;
-    --border-color: #374151;
-  }
-}
-:root:has(#theme [value="☀️"]:checked) {
-  color-scheme: light;
-  --base: #ffffff;
-  --text: #111827;
-  --shadow: #10b981;
-  --invert-ico: 0;
-  --hovering: 1;
-  --border-color: #e5e7eb;
-}
-.invert {
-  filter: invert(var(--invert-ico));
-}
-:root:has(#theme [value="🌑"]:checked) {
-  color-scheme: dark;
-  --base: #111827;
-  --text: #f9fafb;
-  --shadow: #10b981;
-  --invert-ico: 1;
-  --hovering: 0;
-  --border-color: #374151;
-} */
 .with-scrollbar {
   height: 300px;
   border: 5px solid hsl(0 0 50% / 0.5);
@@ -51,6 +12,16 @@
   overflow: hidden;
   transition: height + width 0.3s ease;
   scale: 0.8;
+}
+.boxy { 
+  width: 80%;
+  height: 28%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border:solid;
+  background-color: var(--base);
 }
 .login,
 .register {
@@ -79,7 +50,6 @@
   position: relative;
   width: 300px;
   height: 50px;
-  
 }
 
 .pass-peek {
@@ -97,7 +67,9 @@
 .back-img {
   filter: invert(var(--invert-ico));
 }
-.back-b{position: absolute;}
+.back-b {
+  position: absolute;
+}
 .pass-peek:hover > .img-peek,
 .back-b:hover > .back-img {
   filter: invert(var(--hovering));
@@ -105,7 +77,6 @@
 .pass-peek:hover,
 .back-b:hover {
   background-color: var(--text);
-
 }
 .back {
   width: inherit;

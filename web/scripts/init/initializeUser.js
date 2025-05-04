@@ -1,14 +1,42 @@
 import { supabase } from "../api/database.js";
 
-let sessionUserID = "";
 console.log("✅ Supabase is connected!");
 
+// ─────────────── UTILITY FUNCTIONS ───────────────
+function showAlert(message) {
+  alert(message);
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isStrongPassword(password) {
+  return password.length >= 8; // Add more complexity checks if needed
+}
+
+async function insertPanelConfig(userID) {
+  const { error } = await supabase.from("panelConfig").insert([
+    {
+      uuid: userID,
+      isCollapsed: false,
+      isDark: false,
+      isAdmin: false,
+    },
+  ]);
+
+  if (error) {
+    console.error("Insert error:", error.message);
+  }
+}
+
 // ─────────────── ADMIN CHECK ───────────────
-async function isAdmin() {
+async function isAdmin(userID) {
   const { data, error } = await supabase
     .from("panelConfig")
     .select("isAdmin")
-    .eq("uuid", sessionUserID)
+    .eq("uuid", userID)
     .single();
 
   if (error) {
@@ -21,119 +49,181 @@ async function isAdmin() {
 
 // ─────────────── GOOGLE LOGIN ───────────────
 async function loginWithGoogle() {
+  const redirectTo = `${window.location.origin}/web/pages/main-menu.html`;
+
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-    options: {
-      redirectTo: window.location.origin + "/web/pages/main-menu.html",
-    },
+    options: { redirectTo },
   });
 
   if (error) {
-    alert("Google Login Error: " + error.message);
-    throw error;
+    showAlert("Google Login Error. Please try again.");
+    console.error("Google Login Error:", error.message);
   }
 }
 
 // ─────────────── EMAIL LOGIN ───────────────
-async function loginWithEmail(mail, pass) {
+async function loginWithEmail(email, password) {
+  if (!isValidEmail(email)) {
+    showAlert("Invalid email format.");
+    return;
+  }
+
+  if (!isStrongPassword(password)) {
+    showAlert("Password must be at least 8 characters long.");
+    return;
+  }
+
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: mail,
-    password: pass,
+    email,
+    password,
   });
 
   if (error) {
-    if (error.message.includes("Invalid login credentials")) {
-      alert("Incorrect email or password.");
-    } else {
-      alert("Login error: " + error.message);
-    }
+    showAlert("Login failed. Please check your credentials.");
+    console.error("Login error:", error.message);
     return;
   }
 
   const user = data.user;
-  if (user && user.email_confirmed_at) {
-    window.location.href = "/web/pages/main-menu.html";
+  if (user?.email_confirmed_at) {
+    window.location.href = window.origin+"/web/pages/main-menu.html";
   } else {
-    alert("Please verify your email before continuing.");
+    showAlert("Please verify your email before continuing.");
   }
 }
 
 // ─────────────── REGISTRATION ───────────────
-async function registerWithEmail(remail, rpassword, rusername) {
+async function registerWithEmail(email, password, username) {
+  if (!isValidEmail(email)) {
+    showAlert("Invalid email format.");
+    return;
+  }
+
+  if (!isStrongPassword(password)) {
+    showAlert("Password must be at least 8 characters long.");
+    return;
+  }
+
   const { data, error } = await supabase.auth.signUp({
-    email: remail,
-    password: rpassword,
+    email,
+    password,
     options: {
-      emailRedirectTo: window.location.origin + "/web/pages/main-menu.html",
-      data: {
-        username: rusername,
-      },
+      emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
+      data: { username },
     },
   });
 
   if (error) {
-    alert("Registration failed: " + error.message);
+    showAlert("Registration failed. Please try again.");
+    console.error("Registration error:", error.message);
     return;
   }
 
   const user = data.user;
   if (user?.id) {
-    sessionUserID = user.id;
-
-    const { error: insertError } = await supabase.from("panelConfig").insert([
-      {
-        uuid: sessionUserID,
-        isCollapsed: false,
-        isDark: false,
-        isAdmin: false,
-      },
-    ]);
-
-    if (insertError) {
-      console.error("Insert error:", insertError.message);
-    }
+    await insertPanelConfig(user.id);
   }
 }
 
 // ─────────────── USER CHECK ON LOAD ───────────────
-const {
-  data: { user },
-  error: userFetchError,
-} = await supabase.auth.getUser();
+async function checkUserOnLoad() {
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
 
-if (userFetchError) {
-  console.error("Error fetching user:", userFetchError.message);
-} else if (user) {
-  sessionUserID = user.id;
-  console.log("User ID:", user.id);
+  if (error) {
+    console.error("Error fetching user:", error.message);
+    return;
+  }
+
+  if (user) {
+    console.log("User ID:", user.id);
+    const isAdminUser = await isAdmin(user.id);
+    const redirectTo = isAdminUser
+      ? `${window.location.origin}/web/pages/admin/admin-page.html`
+      : `${window.location.origin}/web/pages/client/main-menu.html`;
+
+    window.location.href = redirectTo;
+  }
 }
+
+checkUserOnLoad();
 
 // ─────────────── DOM EVENTS ───────────────
 document.getElementById("submitRegForm").addEventListener("click", () => {
-  let repass = document.getElementById("rrpass").value;
-  let pass = document.getElementById("rpass").value;
-
-  if (pass === repass) {
-    registerWithEmail(
-      document.getElementById("remail").value,
-      document.getElementById("rpass").value,
-      document.getElementById("rname").value
-    );
-  } else {
-    alert("Passwords don't match");
+  if(!validateCaptcha()) {
+    showAlert("Please complete the reCAPTCHA.");
+    return; // Prevent form submission if reCAPTCHA is not completed
   }
+  const repass = document.getElementById("rrpass").value;
+  const rpass = document.getElementById("rpass").value;
+  const remail = document.getElementById("remail").value;
+  const rname = document.getElementById("rname").value;
+
+  if (!repass || !rpass || !rname || !remail) {
+    showAlert("All fields are required.");
+    return;
+  }
+
+  if (rpass !== repass) {
+    showAlert("Passwords do not match.");
+    return;
+  }
+
+  registerWithEmail(remail, rpass, rname);
 });
 
-let loginGoogle = document.querySelectorAll(".googleLogin");
-loginGoogle.forEach((button) => {
-  button.addEventListener("click", () => {
-    loginWithGoogle();
+document.querySelectorAll(".googleLogin").forEach((button) => {
+  button.addEventListener("click", loginWithGoogle);
+});
+
+document.getElementById("loginBE").addEventListener("click", () => {
+  if(!validateCaptcha()) {
+    showAlert("Please complete the reCAPTCHA.");
+    return; // Prevent form submission if reCAPTCHA is not completed
+  }
+  const email = document.getElementById("lemail").value;
+  const password = document.getElementById("lpass").value;
+
+  if (!email || !password) {
+    showAlert("All fields are required.");
+    return;
+  }
+
+  loginWithEmail(email, password);
+});
+
+async function resendVerification(email) {
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email,
+    options: {
+      emailRedirectTo: window.location.origin + "/web/pages/main-menu.html",
+    },
   });
-});
+  if(error){
+    showAlert("Error resending verification email. Please try again.");
+  }else{
+    showAlert("Verification email resent. Please check your inbox.");
+  }
+  return error;
+}
+document.getElementById("resendVerification").addEventListener("click", () => {
+  const email = document.getElementById("lemail").value;
+  if (!email) {
+    showAlert("Email is required.");
+    return;
+  }
+  resendVerification(email);
+} );
 
-let loginEmail = document.getElementById("loginBE");
-loginEmail.addEventListener("click", () => {
-  let lmail = document.getElementById("lemail").value;
-  let lpass = document.getElementById("lpass").value;
-  loginWithEmail(lmail, lpass);
-});
+function validateCaptcha() {
+  const response = grecaptcha.getResponse();
+  if (!response) {
+    alert("Please complete the reCAPTCHA.");
+    return false; // Prevent form submission
+  }
+  return true; // Continue with form submission
+}
