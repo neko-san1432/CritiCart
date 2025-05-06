@@ -10,7 +10,7 @@ async function addUserConfig(id) {
     },
   ]);
   if (error) {
-    console.error("Insert failed:", error.message);
+    showError("Insert failed:", error.message);
   }
 }
 
@@ -21,7 +21,7 @@ async function checkAuthAndAddConfig() {
   } = await supabase.auth.getSession();
 
   if (error) {
-    console.error("Session fetch error:", error.message);
+    showError("Session fetch error:", error.message);
     return;
   }
 
@@ -42,7 +42,7 @@ async function checkIfExists(id) {
     .limit(1);
 
   if (error) {
-    console.error("Error querying:", error);
+    showError("Error querying:", error);
     return false;
   }
 

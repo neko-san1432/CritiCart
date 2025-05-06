@@ -9,7 +9,7 @@ let lpass = "123123";
     password: lpass,
   });
   if (error) {
-    console.error("Login failed:", error.message);
+    showError("Login failed:", error.message);
   } else {
     const {
       data: { user },
@@ -17,7 +17,7 @@ let lpass = "123123";
     } = await supabase.auth.getUser();
     sessionUserID = user.id;
     if(error){
-      console.error('Cannot retrieve user')
+      showError('Cannot retrieve user')
     }
     console.log("User signed in:", data.user);
   }
@@ -32,7 +32,7 @@ y.addEventListener("click", async () => {
     },
   ]);
   if (error) {
-    console.error("Insert failed:", error.message);
+    showError("Insert failed:", error.message);
     return;
   }
   console.log("Insert success:", data);

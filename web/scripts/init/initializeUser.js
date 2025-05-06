@@ -1,11 +1,10 @@
 import { supabase } from "../api/database.js";
+import { showError } from "../UI/error.js";
 
 console.log("✅ Supabase is connected!");
 
 // ─────────────── UTILITY FUNCTIONS ───────────────
-function showAlert(message) {
-  alert(message);
-}
+
 
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,7 +26,7 @@ async function insertPanelConfig(userID) {
   ]);
 
   if (error) {
-    console.error("Insert error:", error.message);
+    showError("Insert error: "+ error.message);
   }
 }
 
@@ -40,7 +39,7 @@ async function isAdmin(userID) {
     .single();
 
   if (error) {
-    console.error("Admin check error:", error.message);
+    showError("Admin check error: "+ error.message);
     return false;
   }
 
@@ -57,20 +56,19 @@ async function loginWithGoogle() {
   });
 
   if (error) {
-    showAlert("Google Login Error. Please try again.");
-    console.error("Google Login Error:", error.message);
+    showError("Google Login Error: "+ error.message);
   }
 }
 
 // ─────────────── EMAIL LOGIN ───────────────
 async function loginWithEmail(email, password) {
   if (!isValidEmail(email)) {
-    showAlert("Invalid email format.");
+    showError("Invalid email format.");
     return;
   }
 
   if (!isStrongPassword(password)) {
-    showAlert("Password must be at least 8 characters long.");
+    showError("Password must be at least 8 characters long.");
     return;
   }
 
@@ -80,8 +78,8 @@ async function loginWithEmail(email, password) {
   });
 
   if (error) {
-    showAlert("Login failed. Please check your credentials.");
-    console.error("Login error:", error.message);
+    showError("Login failed. Please check your credentials.");
+    showError("Login error:"+ error.message);
     return;
   }
 
@@ -89,19 +87,19 @@ async function loginWithEmail(email, password) {
   if (user?.email_confirmed_at) {
     window.location.href = window.origin+"/web/pages/main-menu.html";
   } else {
-    showAlert("Please verify your email before continuing.");
+    showError("Please verify your email before continuing.");
   }
 }
 
 // ─────────────── REGISTRATION ───────────────
 async function registerWithEmail(email, password, username) {
   if (!isValidEmail(email)) {
-    showAlert("Invalid email format.");
+    showError("Invalid email format.");
     return;
   }
 
   if (!isStrongPassword(password)) {
-    showAlert("Password must be at least 8 characters long.");
+    showError("Password must be at least 8 characters long.");
     return;
   }
 
@@ -115,8 +113,7 @@ async function registerWithEmail(email, password, username) {
   });
 
   if (error) {
-    showAlert("Registration failed. Please try again.");
-    console.error("Registration error:", error.message);
+    showError("Registration error: "+ error.message);
     return;
   }
 
@@ -134,7 +131,7 @@ async function checkUserOnLoad() {
   } = await supabase.auth.getUser();
 
   if (error) {
-    console.error("Error fetching user:", error.message);
+    showError("Error fetching user: "+ error.message);
     return;
   }
 
@@ -154,7 +151,7 @@ checkUserOnLoad();
 // ─────────────── DOM EVENTS ───────────────
 document.getElementById("submitRegForm").addEventListener("click", () => {
   if(!validateCaptcha()) {
-    showAlert("Please complete the reCAPTCHA.");
+    showError("Please complete the reCAPTCHA.");
     return; // Prevent form submission if reCAPTCHA is not completed
   }
   const repass = document.getElementById("rrpass").value;
@@ -163,16 +160,16 @@ document.getElementById("submitRegForm").addEventListener("click", () => {
   const rname = document.getElementById("rname").value;
 
   if (!repass || !rpass || !rname || !remail) {
-    showAlert("All fields are required.");
+    showError("All fields are required.");
     return;
   }
 
   if (rpass !== repass) {
-    showAlert("Passwords do not match.");
+    showError("Passwords do not match.");
     return;
   }
-
   registerWithEmail(remail, rpass, rname);
+  document.querySelector('.boxy').style.display = "flex"
 });
 
 document.querySelectorAll(".googleLogin").forEach((button) => {
@@ -181,14 +178,14 @@ document.querySelectorAll(".googleLogin").forEach((button) => {
 
 document.getElementById("loginBE").addEventListener("click", () => {
   if(!validateCaptcha()) {
-    showAlert("Please complete the reCAPTCHA.");
-    return; // Prevent form submission if reCAPTCHA is not completed
-  }
+    showError("Please complete the reCAPTCHA.");
+    return; // Prevent form submission if reCAPTCHA is not compled
+  }te
   const email = document.getElementById("lemail").value;
   const password = document.getElementById("lpass").value;
 
   if (!email || !password) {
-    showAlert("All fields are required.");
+    showError("All fields are required.");
     return;
   }
 
@@ -204,16 +201,16 @@ async function resendVerification(email) {
     },
   });
   if(error){
-    showAlert("Error resending verification email. Please try again.");
+    showError("Error resending verification email. Please try again.");
   }else{
-    showAlert("Verification email resent. Please check your inbox.");
+    showError("Verification email resent. Please check your inbox.");
   }
   return error;
 }
 document.getElementById("resendVerification").addEventListener("click", () => {
   const email = document.getElementById("lemail").value;
   if (!email) {
-    showAlert("Email is required.");
+    showError("Email is required.");
     return;
   }
   resendVerification(email);
@@ -227,3 +224,6 @@ function validateCaptcha() {
   }
   return true; // Continue with form submission
 }
+document.getElementById('closeVerify').addEventListener('click',()=>{
+  document.querySelector('.boxy').style.display = "flex"
+})

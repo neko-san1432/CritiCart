@@ -13,7 +13,7 @@ async function isDarkMode() {
     .single(); 
 
   if (error) {
-    console.error("Error fetching isDark:", error.message);
+    showError("Error fetching isDark:", error.message);
     return false;
   }
 
@@ -28,7 +28,7 @@ async function isCollapsed() {
     .single(); 
 
   if (error) {
-    console.error("Error fetching isCollapsed:", error.message);
+    showError("Error fetching isCollapsed:", error.message);
     return false;
   }
 

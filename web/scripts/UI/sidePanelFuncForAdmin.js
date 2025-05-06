@@ -18,7 +18,7 @@ import { supabase } from '../api/database.js';
 async function logoutfunc() {
   const { error } = await supabase.auth.signOut();
   if (error) {
-    console.error("Logout error:", error.message);
+    showError("Logout error:", error.message);
     return;
   }
   console.log("Logged out successfully");

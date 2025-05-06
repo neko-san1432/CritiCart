@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="./styles/initTheme.css" />
     <script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="./scripts/UI/initLoginFunc.js" defer></script>
+    <script src="/web/scripts/UI/loginFunc.js" defer></script>
     <script src="/web/scripts/internet.js"></script>
     <script
       type="module"
-      src="../web/scripts/api/initializeUser.js"
+      src="/web/scripts/init/initializeUser.js"
       async
     ></script>
   </head>
@@ -21,7 +21,6 @@
     <div id = "errorPane" style="z-index:5">
      
     </div>
-    
     <div
       id="offline"
       style="
@@ -46,7 +45,6 @@
       id="confirmVerification"
       style="
         display: none;
-        display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
@@ -57,7 +55,7 @@
         backdrop-filter: blur(10px);
       "
     >
-      <div class="boxy">
+      <div class="boxy" >
         <div style="display: flex;width: 100%;margin-top: 0;top: 0;"><button
           id="closeVerify"
           style=" position: absolute;margin:0;padding:0;width:30px;height:30px;"
@@ -130,6 +128,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        width: 100vw;
         z-index: 1;
       "
     >
