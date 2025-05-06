@@ -1,11 +1,13 @@
 import { supabase } from "../api/database.js";
-import { showError } from "../UI/error.js";
+// import { showError } from "../UI/error.js";
 
 console.log("✅ Supabase is connected!");
 
 // ─────────────── UTILITY FUNCTIONS ───────────────
 
-
+function showError(message){
+  alert(message)
+}
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -48,7 +50,7 @@ async function isAdmin(userID) {
 
 // ─────────────── GOOGLE LOGIN ───────────────
 async function loginWithGoogle() {
-  const redirectTo = `${window.location.origin}/web/pages/main-menu.html`;
+  const redirectTo = `${window.location.origin}/web/pages/client/main-menu.html`;
 
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -85,7 +87,7 @@ async function loginWithEmail(email, password) {
 
   const user = data.user;
   if (user?.email_confirmed_at) {
-    window.location.href = window.origin+"/web/pages/main-menu.html";
+    window.location.href = window.origin+"/web/pages/client/main-menu.html";
   } else {
     showError("Please verify your email before continuing.");
   }
@@ -107,7 +109,7 @@ async function registerWithEmail(email, password, username) {
     email,
     password,
     options: {
-      emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
+      emailRedirectTo: `${window.location.origin}/web/pages/client/main-menu.html`,
       data: { username },
     },
   });
@@ -180,7 +182,7 @@ document.getElementById("loginBE").addEventListener("click", () => {
   if(!validateCaptcha()) {
     showError("Please complete the reCAPTCHA.");
     return; // Prevent form submission if reCAPTCHA is not compled
-  }te
+  }
   const email = document.getElementById("lemail").value;
   const password = document.getElementById("lpass").value;
 
@@ -197,7 +199,7 @@ async function resendVerification(email) {
     type: "signup",
     email,
     options: {
-      emailRedirectTo: window.location.origin + "/web/pages/main-menu.html",
+      emailRedirectTo: window.location.origin + "/web/pages/client/main-menu.html",
     },
   });
   if(error){
@@ -219,7 +221,6 @@ document.getElementById("resendVerification").addEventListener("click", () => {
 function validateCaptcha() {
   const response = grecaptcha.getResponse();
   if (!response) {
-    alert("Please complete the reCAPTCHA.");
     return false; // Prevent form submission
   }
   return true; // Continue with form submission

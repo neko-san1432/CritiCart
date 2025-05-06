@@ -18,7 +18,8 @@ export function showError(message, width, height) {
   show.style.justifyContent = 'center';
   show.style.alignItems = 'center';
   show.textContent = message;
-
+  show.style.border = "solid"
+  show.style.color = "red"
   errorPanel.style.display = 'block';
 
   // Hide after 2 seconds

@@ -5,7 +5,7 @@
 }
 .box {
   width: 450px;
-  height: 600px;
+  height: 700px;
   background-color: var(--base);
   display: flex;
   border: 2px var(--text) solid;
@@ -32,6 +32,7 @@
   align-items: center;
   transition: 0.7s ease;
   margin-left: 20px;
+  /* border: solid; */
 }
 
 .forms {

@@ -3,7 +3,7 @@ const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
 
 home.addEventListener('click',() => {
-  window.location.href = window.origin+"/web/pages/main-menu.html";
+  window.location.href = window.origin+"/web/pages/client/main-menu.html";
 });
 
 profile.addEventListener('click',() => {
