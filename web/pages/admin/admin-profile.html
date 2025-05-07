@@ -2,17 +2,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>:3</title>
+    <title>Profle | CritiCart</title>
     <link rel="stylesheet" href="/web/styles/initTheme.css" />
     <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
     <script type="module" src="/web/scripts/UI/interaction.js"></script>
     <script type="module" src="/web/scripts/UI/sidePanelFuncForAdmin.js"></script>
     <script type="module" src="/web/scripts/init/initUserProfile.js"></script>
     <script type="module" src="/web/scripts/utils/profileSetup.js"></script>
-    <script src="/web/scripts/init/panelDefault.js" defer></script>
-    <script src="/web/scripts/internet.js" defer></script>
+    <script type="module" src="/web/scripts/init/panelDefault.js" defer></script>
+    <script type="module" src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
+    <div id="errorPane" style="z-index:5;position:absolute;display: flex;justify-content: center;">
+    </div>
     <div
       id="offline"
       style="

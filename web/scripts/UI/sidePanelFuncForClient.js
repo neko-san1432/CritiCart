@@ -8,6 +8,7 @@ const homel = document.getElementById("home-logo");
 homel.addEventListener('click',() => {
   window.location.href = window.origin+"/web/pages/client/main-menu.html";
 });
+
 review.forEach(f=>{
   f.addEventListener('click',() => {
     window.location.href = window.origin+"/web/pages/client/submit-review.html";
@@ -37,6 +38,7 @@ async function logoutfunc() {
     showError("Logout error:", error.message);
     return;
   }
-  console.log("Logged out successfully");
-  localStorage.removeItem('session');
+  localStorage.clear();
+  sessionStorage.clear();
+
 }

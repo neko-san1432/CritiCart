@@ -2,7 +2,7 @@ const errorPanel = document.getElementById('errorPane');
 
 export function showError(message, width, height) {
   // Clear any existing timeout
-  clearTimeout(errorPanel._timeout);
+  clearTimeout(errorPanel);
 
   // Create or reuse the error div
   let show = document.getElementById('error');
@@ -20,7 +20,7 @@ export function showError(message, width, height) {
   show.textContent = message;
   show.style.border = "solid"
   show.style.color = "red"
-  errorPanel.style.display = 'block';
+  errorPanel.style.display = 'flex';
 
   // Hide after 2 seconds
   errorPanel._timeout = setTimeout(() => {

@@ -22,5 +22,6 @@ async function logoutfunc() {
     return;
   }
   console.log("Logged out successfully");
-  localStorage.removeItem('session');
+  localStorage.clear();
+  sessionStorage.clear();
 }

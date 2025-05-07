@@ -1,10 +1,12 @@
 import { supabase } from "../api/database.js";
-
+import { showError } from "../UI/error.js";
+console.log("✅ Supabase is connected!");
+// ─────────────── UTILITY FUNCTIONS ───────────────
 const {
   data: { user },
   error,
 } = await supabase.auth.getUser();
-
+console.log("User:", user);
 async function isDarkMode() {
   const { data, error } = await supabase
     .from("panelConfig")
