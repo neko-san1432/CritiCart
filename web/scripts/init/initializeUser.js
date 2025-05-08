@@ -124,7 +124,7 @@ async function registerWithEmail(email, password, username) {
     await insertPanelConfig(user.id);
   }
 }
-
+console.log(isDark())
 // ─────────────── USER CHECK ON LOAD ───────────────
 async function checkUserOnLoad() {
   const {
@@ -154,7 +154,7 @@ checkUserOnLoad();
 document.getElementById("submitRegForm").addEventListener("click", () => {
   if(!validateCaptcha()) {
     showError("Please complete the reCAPTCHA.");
-    return; // Prevent form submission if reCAPTCHA is not completed
+    return; 
   }
   const repass = document.getElementById("rrpass").value;
   const rpass = document.getElementById("rpass").value;

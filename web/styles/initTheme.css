@@ -1,9 +1,9 @@
 
 :root {
-  --base: #cfcfcf;
+  --base: #ffffff;
   --text: #212121;
-  --shadow: #e3e1e1;
-  --border-color: #e5e7eb;
+  --shadow: #ffffff;
+  --border-color: #ffffff;
   --invert-ico: 1;
   --hovering: 0;
 }
@@ -33,7 +33,7 @@ html {
   --shadow: #10b981;
   --invert-ico: 0;
   --hovering: 1;
-  --border-color: #e5e7eb;
+  --border-color: #ffffff;
 }
 .invert {
   filter: invert(var(--invert-ico));
@@ -41,7 +41,7 @@ html {
 :root:has(#theme [value="🌑"]:checked) {
   color-scheme: dark;
   --base: #111827;
-  --text: #f9fafb;
+  --text: #ffffff;
   --shadow: #10b981;
   --invert-ico: 1;
   --hovering: 0;
