@@ -1,6 +1,7 @@
 const home = document.getElementById("home");
 const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
+const checked= document.getElementById();
 
 home.addEventListener('click',() => {
   window.location.href = window.origin+"/web/pages/client/main-menu.html";
@@ -13,6 +14,9 @@ logout.addEventListener('click',() => {
   logoutfunc();
   window.location.href = window.origin+"/web/index.html";
 });
+checked.addEventListener('click',()=>{
+  window.location.href = window.origin+"/web/index.html";
+})
 import { supabase } from '../api/database.js';
 
 async function logoutfunc() {
