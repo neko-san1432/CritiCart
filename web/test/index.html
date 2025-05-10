@@ -1,39 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Backdrop Blur Example</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-image: url('https://picsum.photos/1200/800');
-      background-size: cover;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: sans-serif;
-    }
-
-    .blur-box {
-      width: 300px;
-      height: 200px;
-      background-color: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px); /* Safari support */
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 16px;
-      padding: 20px;
-      color: white;
-      text-align: center;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Read Panel Config</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script type="module" src="./script.js"></script>
 </head>
 <body>
-  <div class="blur-box">
-    <h2>Blurred Behind</h2>
-    <p>This box uses backdrop-filter to blur the background.</p>
-  </div>
+  <h1>Read Panel Config</h1>
+  <button id="read-btn">Read Config</button>
+  <pre id="output"></pre>
 </body>
 </html>

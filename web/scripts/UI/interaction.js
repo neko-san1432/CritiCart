@@ -1,4 +1,4 @@
-// import  isDark from "./default.js";
+
 
 const sliders = document.querySelectorAll(".product-holder-list");
 let isDown = false;
