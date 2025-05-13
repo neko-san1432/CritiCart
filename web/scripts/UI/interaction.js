@@ -1,4 +1,4 @@
-
+import supabase from "../api/database.js";
 
 const sliders = document.querySelectorAll(".product-holder-list");
 let isDown = false;
@@ -31,7 +31,7 @@ sliders.forEach((slider) => {
 const leftPanel = document.querySelector(".left-panel");
 const menu = document.getElementById("menu");
 var isToggled = true;
-menu.addEventListener("click", () => {
+menu.addEventListener("click", async() => {
   if (isToggled) {
     leftPanel.classList.remove("expand");
     leftPanel.classList.add("collapsed");
@@ -39,6 +39,7 @@ menu.addEventListener("click", () => {
       '<svg  class = "invert" width="24" height="24" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m13 16.745c0-.414-.336-.75-.75-.75h-9.5c-.414 0-.75.336-.75.75s.336.75.75.75h9.5c.414 0 .75-.336.75-.75zm9-5c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm-4-5c0-.414-.336-.75-.75-.75h-14.5c-.414 0-.75.336-.75.75s.336.75.75.75h14.5c.414 0 .75-.336.75-.75z" fill-rule="nonzero"/></svg>';
     isToggled = false;
     document.getElementById("modetheme").style.display="none";
+    userSidePanelUpdate(true);
   } else {
     leftPanel.classList.remove("collapsed");
     leftPanel.classList.add("expand");
@@ -46,9 +47,27 @@ menu.addEventListener("click", () => {
       '<svg class = "invert"width="24" height="24" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>';
     isToggled = true;
     document.getElementById("modetheme").style.display="";
+    userSidePanelUpdate(false);
   }
 });
+async function userSidePanelUpdate(bool){
+  const { data: userData, error: userError } = await supabase.auth.getUser();
 
+if (userError) {
+  console.error('Failed to get user:', userError.message);
+} else {
+  const { data: updateData, error: updateError } = await supabase
+    .from('panelConfig')
+    .update({ isCollapsed: bool })
+    .eq('userId', userData.user.id);
+
+  if (updateError) {
+    console.error('Update failed:', updateError.message);
+  } else {
+    console.log('Update success:', updateData);
+  }
+}
+}
 var x = true;
 const toggleTheme = document.getElementById("modetheme");
 toggleTheme.addEventListener("click", () => {

@@ -1,5 +1,4 @@
 import { supabase } from "../api/database.js";
-import { showError } from "../UI/error.js";
 console.log("✅ Supabase is connected!");
 // ─────────────── UTILITY FUNCTIONS ───────────────
 const {
@@ -11,11 +10,11 @@ async function isDarkMode() {
   const { data, error } = await supabase
     .from("panelConfig")
     .select("isDark")
-    .eq("uuid", user.id)
+    .eq("userId", user.id)
     .single(); 
 
   if (error) {
-    showError("Error fetching isDark:", error.message);
+    console.log("Error fetching isDark:", error.message);
     return false;
   }
 
@@ -26,11 +25,11 @@ async function isCollapsed() {
   const { data, error } = await supabase
     .from("panelConfig")
     .select("isCollapsed")
-    .eq("uuid", user.id)
+    .eq("userId", user.id)
     .single(); 
 
   if (error) {
-    showError("Error fetching isCollapsed:", error.message);
+    console.log("Error fetching isCollapsed:", error.message);
     return false;
   }
 

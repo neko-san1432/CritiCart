@@ -72,12 +72,12 @@ async function loginWithEmail(email, password) {
   if (!isStrongPassword(password)) return showError("Password must be at least 8 characters long.");
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
   if (error) return showError("Login failed: " + error.message);
 
   const user = data.user;
   if (user?.email_confirmed_at) {
     window.location.href = `${window.origin}/web/pages/client/main-menu.html`;
+    checkUserOnLoad();
   } else {
     showError("Please verify your email before continuing.");
   }
@@ -121,7 +121,7 @@ async function resendVerification(email) {
 async function checkUserOnLoad() {
   const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (error) return showError("Error fetching user: " + error.message);
+  if (error) return console.log("Error fetching user: " + error.message);
 
   if (user) {
     console.log("User ID:", user.id);
@@ -134,7 +134,6 @@ async function checkUserOnLoad() {
 }
 
 // ─────────────── DOM EVENTS ───────────────
-checkUserOnLoad();
 
 document.getElementById("submitRegForm").addEventListener("click", () => {
   if (!validateCaptcha()) return showError("Please complete the reCAPTCHA.");

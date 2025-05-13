@@ -95,7 +95,6 @@ body {
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
-  border: solid;
   flex-grow: 0;
   flex-shrink: 0;
 }
