@@ -3,12 +3,14 @@ let uname = document.getElementById("current-name");
 let email = document.getElementById("current-email");
 let userType = document.getElementById("user-type");
 let password = document.getElementById("current-userpass");
+let avatar = document.getElementById("avatar");
 let w = "",
   x = "",
   y = "",
   z = "";
 const {data: { user }, error } = await supabase.auth.getUser();
 function getUser() {
+  let userAvatar = user.user_metadata.avatar_url;
   let userName = user.user_metadata.full_name;
   let userEmail = user.user_metadata.email;
   let userType = user.user_metadata.user_type;

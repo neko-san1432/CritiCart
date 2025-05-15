@@ -2,13 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Read Panel Config</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script type="module" src="./script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading...</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Read Panel Config</h1>
-  <button id="read-btn">Read Config</button>
-  <pre id="output"></pre>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">🛒</div>
+      <nav>
+        <a href="#">Review a Product</a>
+        <a href="#">Home</a>
+        <a href="#">Your Reviewed Products</a>
+        <a href="#">User Profile</a>
+      </nav>
+      <div class="logout">Logout</div>
+    </aside>
+    <main class="main-content">
+      <h1>Welcome</h1>
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+      </div>
+      <div class="loader-container">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </main>
+  </div>
 </body>
 </html>

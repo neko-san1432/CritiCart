@@ -5,6 +5,7 @@
   --shadow: #ffffff;
   --border-color: #ffffff;
   --invert-ico: 1;
+  --invert-ico-selected: 1;
   --hovering: 0;
 }
 
@@ -14,6 +15,7 @@
     --text: #f9fafb;
     --shadow: #10b981;
     --invert-ico: 1;
+    --invert-ico-selected: 1;
     --hovering: 0;
     --border-color: #374151;
   }
@@ -32,6 +34,7 @@ html {
   --text: #111827;
   --shadow: #10b981;
   --invert-ico: 0;
+  --invert-ico-selected: 0;
   --hovering: 1;
   --border-color: #ffffff;
 }
@@ -44,6 +47,7 @@ html {
   --text: #ffffff;
   --shadow: #10b981;
   --invert-ico: 1;
+  --invert-ico-selected: 1;
   --hovering: 0;
   --border-color: #374151;
 }
@@ -133,7 +137,12 @@ textarea:valid + .labeline {
   margin-left: 20px;
 }
 
-
+/* .selected{
+  filter: invert(var(--invert-ico-selected));
+} */
+.selected:hover{
+  filter: invert(var(--invert-ico-selected));
+}
 .dropdown-toggle {
   width: 100%;
   padding: 10px;

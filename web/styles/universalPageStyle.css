@@ -98,7 +98,10 @@ body {
   flex-grow: 0;
   flex-shrink: 0;
 }
-
+#home-logo{
+  background-color: var(--shadow);
+  color: var(--text);
+}
 .product-holder-list::-webkit-scrollbar {
   display: none;
 }

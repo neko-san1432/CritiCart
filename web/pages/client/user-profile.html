@@ -2,19 +2,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id = "profile-title">x | CritiCart</title>
+    <title id="profile-title">x | CritiCart</title>
     <link rel="stylesheet" href="/web/styles/initTheme.css" />
     <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
+    <link rel="stylesheet" href="/web/styles/profileButtonsStyles.css" />
     <script type="module" src="/web/scripts/UI/interaction.js"></script>
-    <script type="module" src="/web/scripts/UI/sidePanelFuncForClient.js"></script>
-    <script type="module" src="/web/scripts/init/initUserProfile.js" defer></script>
-    <script type="module" src="/web/scripts/init/client/initUserProfileDetails.js" defer></script>
-    <script type="module" src="/web/scripts/init/panelDefault.js" defer></script>
+    <script
+      type="module"
+      src="/web/scripts/UI/sidePanelFuncForClient.js"
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/initUserProfile.js"
+      defer
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/client/initUserProfileDetails.js"
+      defer
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/panelDefault.js"
+      defer
+    ></script>
     <script type="module" src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
-    <div id="errorPane" style="z-index:5;position:absolute;display: flex;justify-content: center;">
-    </div>
+    <div
+      id="errorPane"
+      style="
+        z-index: 5;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+      "
+    ></div>
     <div
       id="offline"
       style="
@@ -39,7 +62,7 @@
       <div class="left-panel">
         <button class="panel-button" id="home-logo">
           <img src="" alt="logo" />
-          <span>sdf</span>
+          <span>CritiCart</span>
         </button>
         <div style="justify-content: space-between; display: flex">
           <button id="menu" style="border: none; width: 59px">
@@ -90,20 +113,7 @@
           </svg>
           <span>Home</span>
         </button>
-        <button class="panel-button" id="appeal">
-          <svg
-            class="invert"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M14.969 7.547l.031.191c0 .193-.096.379-.264.496-.538.372-.467.278-.67.885-.084.253-.33.424-.605.424h-.002c-.664-.002-.549-.038-1.083.338-.112.08-.244.119-.376.119s-.264-.039-.376-.118c-.534-.376-.419-.34-1.083-.338h-.002c-.275 0-.521-.171-.605-.424-.204-.607-.133-.514-.669-.886-.169-.117-.265-.303-.265-.496l.031-.19c.207-.604.208-.488 0-1.094l-.031-.191c0-.193.096-.379.265-.497.536-.372.465-.277.669-.885.084-.253.33-.424.605-.424h.002c.662.002.544.041 1.083-.338.112-.08.244-.119.376-.119s.264.039.376.118c.534.376.419.34 1.083.338h.002c.275 0 .521.171.605.424.203.607.132.513.67.885.168.118.264.304.264.497l-.031.191c-.207.604-.208.488 0 1.094zm-1.469-1.198l-.465-.464-1.41 1.446-.66-.627-.465.464 1.125 1.091 1.875-1.91zm2.5 4.651h-8v1h8v-1zm-1 2h-6v1h6v-1zm1 2h-8v1h8v-1zm-7.771 4c-.77 3.458-3.229 3.5-3.229 1.375v-15.333c0-1.333-.062-2.386-1-3.042h13c1.354 0 2 .625 2 2v13h2v-13c0-2.021-.844-4-4-4h-12c-3.494 0-5 2.906-5 5h3v16c0 1.657 1.343 3 3 3h14c2.688-.531 3.875-2.938 4-5h-15.771z"
-            />
-          </svg>
-          <span>File an Appeal</span>
-        </button>
+
         <button class="panel-button" id="reviewed-product">
           <svg
             class="invert"
@@ -189,11 +199,63 @@
       </div>
       <div class="right-panel">
         <h1>User Profile</h1>
-        <div id="profile-details">
-          <div>
-            <img src="" alt="prof-pic" />
+        <div id="profile-details  ">
+          <div
+            style="
+              width: 100%;
+              height: 200px;
+              padding-right: 1000px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            id="avatar"
+          >
+            <div
+              style="
+                width: 200px;
+                height: 200px;
+                border: solid;
+                border-radius: 50%;
+              "
+            >
+              <button
+                style="
+                  width: 200px;
+                  height: 200px;
+                  z-index: 2;
+                  position: absolute;
+                  border-radius: 50%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                id="edit-avatar"
+              >
+                <svg
+                style="width: 36px; height: 36px"
+                  class="invert"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 0-.229-.083-.466-.28-.662l-3.115-3.104c-.185-.185-.429-.277-.672-.277s-.486.092-.672.277l-11.606 11.566c-.569 1.763-1.555 4.823-1.626 5.081-.02.075-.029.15-.029.224 0 .461.349.848.765.848.511 0 .991-.189 5.369-1.681zm-3.27-3.342 2.137 2.137-3.168 1.046zm.955-1.166 10.114-10.079 2.335 2.327-10.099 10.101z"
+                    fill-rule="nonzero"
+                  />
+                </svg>
+              </button>
+              <img
+                src=""
+                alt="prof-pic"
+                style="width: 200px; height: 200px; border-radius: 50%"
+              />
+            </div>
           </div>
-          <div style="display: flex;flex-direction: column;">
+          <div style="display: flex; flex-direction: column">
             <span id="current-name"></span>
             <span id="current-email"></span>
             <span id="user-type"></span>
@@ -202,5 +264,11 @@
         </div>
       </div>
     </div>
+    <style>
+      #profile {
+        background-color: var(--base);
+        color: var(--text);
+      }
+    </style>
   </body>
 </html>

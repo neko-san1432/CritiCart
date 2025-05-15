@@ -6,7 +6,6 @@ async function addUserConfig(id) {
       uuid: id,
       isCollapsed: false,
       isDark: false,
-      isAdmin: false,
     },
   ]);
   if (error) {

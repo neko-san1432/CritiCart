@@ -29,7 +29,6 @@ async function insertPanelConfig(userID) {
       uuid: userID,
       isCollapsed: false,
       isDark: false,
-      isAdmin: false,
     },
   ]);
 
@@ -38,20 +37,6 @@ async function insertPanelConfig(userID) {
   }
 }
 
-async function isAdmin(userID) {
-  const { data, error } = await supabase
-    .from("panelConfig")
-    .select("isAdmin")
-    .eq("uuid", userID)
-    .single();
-
-  if (error) {
-    showError("Admin check error: " + error.message);
-    return false;
-  }
-
-  return data?.isAdmin || false;
-}
 
 // ─────────────── AUTH HANDLERS ───────────────
 async function loginWithGoogle() {
@@ -125,10 +110,7 @@ async function checkUserOnLoad() {
 
   if (user) {
     console.log("User ID:", user.id);
-    const isAdminUser = await isAdmin(user.id);
-    const redirectTo = isAdminUser
-      ? `${window.location.origin}/web/pages/admin/admin-page.html`
-      : `${window.location.origin}/web/pages/client/main-menu.html`;
+    const redirectTo =  `${window.location.origin}/web/pages/client/main-menu.html`;
     window.location.href = redirectTo;
   }
 }

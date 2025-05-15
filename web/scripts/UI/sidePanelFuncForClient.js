@@ -1,6 +1,5 @@
 const review = document.querySelectorAll(".review-product");
 const home = document.getElementById("home");
-const appeal = document.getElementById("appeal");
 const user_reviewed_products = document.getElementById("reviewed-product");
 const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
@@ -16,9 +15,6 @@ review.forEach(f=>{
 })
 home.addEventListener('click',() => {
   window.location.href = window.origin+"/web/pages/client/main-menu.html";
-});
-appeal.addEventListener('click',() => {
-  window.location.href = window.origin+"/web/pages/client/file-an-appeal.html";
 });
 user_reviewed_products.addEventListener('click',() => {
   window.location.href = window.origin+"/web/pages/client/your-reviewed-products.html";

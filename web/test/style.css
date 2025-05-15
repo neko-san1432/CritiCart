@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f172a;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 230px;
+  background-color: #10b981;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar nav a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.sidebar .logout {
+  margin-top: auto;
+  font-weight: bold;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+.search-bar {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #94a3b8;
+  background-color: #0f172a;
+  color: #fff;
+}
+
+.loader-container {
+  margin-top: 50px;
+  text-align: center;
+  border: solid
+}
+
+.spinner {
+  border: 6px solid #2dd4bf;
+  border-top: 6px solid #0f172a;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
