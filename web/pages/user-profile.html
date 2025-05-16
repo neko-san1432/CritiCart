@@ -2,17 +2,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id = "product-title">X | CritiCart</title>
+    <title id="profile-title">x | CritiCart</title>
     <link rel="stylesheet" href="/web/styles/initTheme.css" />
     <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
+    <link rel="stylesheet" href="/web/styles/profileButtonsStyles.css" />
     <script type="module" src="/web/scripts/UI/interaction.js"></script>
-    <script type="module" src="/web/scripts/UI/sidePanelFuncForClient.js"></script>
-    <script src="/web/scripts/init/panelDefault.js" defer></script>
-    <script src="/web/scripts/internet.js" defer></script>
+    <script
+      type="module"
+      src="/web/scripts/UI/sidePanelFuncForClient.js"
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/initUserProfile.js"
+      defer
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/client/initUserProfileDetails.js"
+      defer
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/panelDefault.js"
+      defer
+    ></script>
+    <script type="module" src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
-    <div id="errorPane" style="z-index:5;position:absolute;display: flex;justify-content: center;">
-    </div>
+    <div
+      id="errorPane"
+      style="
+        z-index: 5;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+      "
+    ></div>
     <div
       id="offline"
       style="
@@ -35,7 +60,7 @@
     </div>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button">
+        <button class="panel-button" id="home-logo">
           <img src="" alt="logo" />
           <span>CritiCart</span>
         </button>
@@ -55,8 +80,8 @@
               <path
                 d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
               />
-            </svg>
-          </button>
+            </svg></button
+          ><span></span>
         </div>
         <button class="panel-button review-product">
           <svg
@@ -88,7 +113,7 @@
           </svg>
           <span>Home</span>
         </button>
-         
+
         <button class="panel-button" id="reviewed-product">
           <svg
             class="invert"
@@ -173,14 +198,76 @@
         </button>
       </div>
       <div class="right-panel">
-        <div class="nav"><button class="backhome"></button></div>
-        <div id="reviewShowcase">
+        <h1>User Profile</h1>
+        <div id="profile-details  ">
+          <div
+            style="
+              width: 100%;
+              height: 200px;
+              padding-right: 1000px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            id="avatar"
+          >
+            <div
+              style="
+                width: 200px;
+                height: 200px;
+                border: solid;
+                border-radius: 50%;
+              "
+            >
+              <button
+                style="
+                  width: 200px;
+                  height: 200px;
+                  z-index: 2;
+                  position: absolute;
+                  border-radius: 50%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                id="edit-avatar"
+              >
+                <svg
+                style="width: 36px; height: 36px"
+                  class="invert"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 0-.229-.083-.466-.28-.662l-3.115-3.104c-.185-.185-.429-.277-.672-.277s-.486.092-.672.277l-11.606 11.566c-.569 1.763-1.555 4.823-1.626 5.081-.02.075-.029.15-.029.224 0 .461.349.848.765.848.511 0 .991-.189 5.369-1.681zm-3.27-3.342 2.137 2.137-3.168 1.046zm.955-1.166 10.114-10.079 2.335 2.327-10.099 10.101z"
+                    fill-rule="nonzero"
+                  />
+                </svg>
+              </button>
+              <img
+                src=""
+                alt="prof-pic"
+                style="width: 200px; height: 200px; border-radius: 50%"
+              />
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <span id="current-name"></span>
+            <span id="current-email"></span>
+            <span id="current-userpass"></span>
+          </div>
         </div>
-        <hr style="width: inherit; margin-right: 40px" />
-        <h2>Comments</h2>
-        <div id="comments"></div>
       </div>
     </div>
-    
+    <style>
+      #profile {
+        background-color: var(--base);
+        color: var(--text);
+      }
+    </style>
   </body>
 </html>

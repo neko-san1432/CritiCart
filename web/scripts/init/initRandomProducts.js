@@ -6,7 +6,7 @@
   --insert img, product name, & rating--</button>
 </div> 
 */
-
+import {supabase} from '../api/database.js';
 const foodSec = document.getElementById("food");
 const cosmeticsSec = document.getElementById("cosmetics");
 const appliancesSec = document.getElementById("appliances");
@@ -18,11 +18,13 @@ var cosmetics = "";
 var toys = "";
 var hnw = "";
 var appliances = "";
-function callDB() {}
 function search_random_products() {
+  initRandomProducts();
   if (products[0].length == 0) {
     foodSec.innerHTML =
       '<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>';
+  }else{
+    
   }
   if (products[1].length == 0) {
     cosmeticsSec.innerHTML =
@@ -42,3 +44,35 @@ function search_random_products() {
   }
 }
 search_random_products();
+ function initRandomProducts() {
+  
+}
+async function initFood() {
+  const { data, error } = await supabase
+    .from("productsReview")
+    .select("productName,productType,productRating,productUserDesc,userID,likes,dislikes")
+    .eq("productType", "food")
+    .limit(10);
+  if (error) {
+    console.error("Error fetching products:", error);
+  } else {
+    const shuffled = data.sort(() => Math.random() - 0.5);
+    products[0] = shuffled.slice(0, 10);
+  }
+  let rating = 0;
+  for (let i = 0; i < products[0].length; i++) {
+    rating = (products[0][i].productRating.price+products[0][i].productRating.price.quality)/2
+    food += `<div class="product-holder">
+    <button class="food-product${i}">
+    <img src="https://via.placeholder.com/150" alt="${products[0][i].productName}">
+    <h3>${products[0][i].productName}</h3>
+    <p>${products[0][i].productRating}</p>
+    <p>${products[0][i].productUserDesc}</p>
+    </button>
+    </div>`;
+  }
+}
+async function getUserName(UUID) {
+  const { data: { user }, error } = await supabase.auth.getUser();
+  
+}

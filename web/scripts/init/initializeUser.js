@@ -37,16 +37,17 @@ async function insertPanelConfig(userID) {
   }
 }
 
-
 // ─────────────── AUTH HANDLERS ───────────────
 async function loginWithGoogle() {
-  const redirectTo = `${window.location.origin}/web/pages/client/main-menu.html`;
+  const redirectTo = `${window.location.origin}/web/pages/main-menu.html`;
 
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-    options: { redirectTo },
+    options: {
+      redirectTo,
+      
+    },
   });
-
   if (error) {
     showError("Google Login Error: " + error.message);
   }
@@ -54,14 +55,18 @@ async function loginWithGoogle() {
 
 async function loginWithEmail(email, password) {
   if (!isValidEmail(email)) return showError("Invalid email format.");
-  if (!isStrongPassword(password)) return showError("Password must be at least 8 characters long.");
+  if (!isStrongPassword(password))
+    return showError("Password must be at least 8 characters long.");
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
   if (error) return showError("Login failed: " + error.message);
 
   const user = data.user;
   if (user?.email_confirmed_at) {
-    window.location.href = `${window.origin}/web/pages/client/main-menu.html`;
+    window.location.href = `${window.origin}/web/pages/main-menu.html`;
     checkUserOnLoad();
   } else {
     showError("Please verify your email before continuing.");
@@ -70,14 +75,16 @@ async function loginWithEmail(email, password) {
 
 async function registerWithEmail(email, password, username) {
   if (!isValidEmail(email)) return showError("Invalid email format.");
-  if (!isStrongPassword(password)) return showError("Password must be at least 8 characters long.");
+  if (!isStrongPassword(password))
+    return showError("Password must be at least 8 characters long.");
 
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: `${window.location.origin}/web/pages/client/main-menu.html`,
+      emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
       data: { username },
+      avatartLink: "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
     },
   });
 
@@ -92,26 +99,29 @@ async function resendVerification(email) {
     type: "signup",
     email,
     options: {
-      emailRedirectTo: `${window.location.origin}/web/pages/client/main-menu.html`,
+      emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
     },
   });
 
   showError(
-    error ? "Error resending verification email. Please try again." : "Verification email resent. Please check your inbox."
+    error
+      ? "Error resending verification email. Please try again."
+      : "Verification email resent. Please check your inbox."
   );
 
   return error;
 }
 
 async function checkUserOnLoad() {
-  const { data: { user }, error } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
 
   if (error) return console.log("Error fetching user: " + error.message);
 
   if (user) {
     console.log("User ID:", user.id);
-    const redirectTo =  `${window.location.origin}/web/pages/client/main-menu.html`;
-    window.location.href = redirectTo;
   }
 }
 
@@ -125,11 +135,12 @@ document.getElementById("submitRegForm").addEventListener("click", () => {
   const repass = document.getElementById("rrpass").value;
   const rname = document.getElementById("rname").value;
 
-  if (!repass || !rpass || !rname || !remail) return showError("All fields are required.");
+  if (!repass || !rpass || !rname || !remail)
+    return showError("All fields are required.");
   if (rpass !== repass) return showError("Passwords do not match.");
 
   registerWithEmail(remail, rpass, rname);
-  document.querySelector('.boxy').style.display = "flex";
+  document.querySelector(".boxy").style.display = "flex";
 });
 
 document.querySelectorAll(".googleLogin").forEach((button) => {
@@ -154,5 +165,5 @@ document.getElementById("resendVerification").addEventListener("click", () => {
 });
 
 document.getElementById("closeVerify").addEventListener("click", () => {
-  document.querySelector('.boxy').style.display = "flex";
+  document.querySelector(".boxy").style.display = "flex";
 });
