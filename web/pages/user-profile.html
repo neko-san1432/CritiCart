@@ -198,71 +198,96 @@
         </button>
       </div>
       <div class="right-panel">
-        <h1>User Profile</h1>
-        <div id="profile-details  ">
-          <div
-            style="
-              width: 100%;
-              height: 200px;
-              padding-right: 1000px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-            id="avatar"
-          >
+        <div style="position: absolute;z-index: 5; width: 100%; height: 100%" id="newA">
+          <input type="file" name="" id="newAvatar">
+          <button id="submitNewAvatar">Submit</button>
+          <button id = "cancel4">cancel</button>
+        </div>
+        <div style="position: absolute;z-index: 4; width: 100%; height: 100%" id="newP">
+          <input type="text" id="newPass">
+          <input type="text" id="rNewPass">
+          <input type="text" id="oldPass">
+          <button id="submitNPass">Submit</button>
+          <button id = "cancel3">cancel</button>
+        </div>
+        <div style="position: absolute;z-index: 3; width: 100%; height: 100%" id="newE">
+           <input type="text" id="newEmail">
+          <button id="submitNewEmail">Submit</button>
+          <button id = "cancel2">cancel</button>
+        </div>
+        <div style="position: absolute;z-index: 2; width: 100%; height: 100%" id="newN">
+          <button id = "cancel1">cancel</button>
+          <input type="text" id="newName">
+          <button id="submitNewName">Submit</button>
+        </div>
+        <div style="position: absolute;z-index: 1; width: 100%; height: 100%" id="profile-container">
+          <h1>User Profile</h1>
+          <div id="profile-details  ">
             <div
               style="
-                width: 200px;
+                width: 100%;
                 height: 200px;
-                border: solid;
-                border-radius: 50%;
+                padding-right: 1000px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
               "
+              id="avatar"
             >
-              <button
+              <div
                 style="
                   width: 200px;
                   height: 200px;
-                  z-index: 2;
-                  position: absolute;
+                  border: solid;
                   border-radius: 50%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
                 "
-                id="edit-avatar"
               >
-                <svg
-                style="width: 36px; height: 36px"
-                  class="invert"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <button
+                  style="
+                    width: 200px;
+                    height: 200px;
+                    z-index: 2;
+                    position: absolute;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  id="edit-avatar"
                 >
-                  <path
-                    d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 0-.229-.083-.466-.28-.662l-3.115-3.104c-.185-.185-.429-.277-.672-.277s-.486.092-.672.277l-11.606 11.566c-.569 1.763-1.555 4.823-1.626 5.081-.02.075-.029.15-.029.224 0 .461.349.848.765.848.511 0 .991-.189 5.369-1.681zm-3.27-3.342 2.137 2.137-3.168 1.046zm.955-1.166 10.114-10.079 2.335 2.327-10.099 10.101z"
-                    fill-rule="nonzero"
-                  />
-                </svg>
-              </button>
-              <img
-                src=""
-                alt="prof-pic"
-                style="width: 200px; height: 200px; border-radius: 50%"
-              />
+                  <svg
+                    style="width: 36px; height: 36px"
+                    class="invert"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 0-.229-.083-.466-.28-.662l-3.115-3.104c-.185-.185-.429-.277-.672-.277s-.486.092-.672.277l-11.606 11.566c-.569 1.763-1.555 4.823-1.626 5.081-.02.075-.029.15-.029.224 0 .461.349.848.765.848.511 0 .991-.189 5.369-1.681zm-3.27-3.342 2.137 2.137-3.168 1.046zm.955-1.166 10.114-10.079 2.335 2.327-10.099 10.101z"
+                      fill-rule="nonzero"
+                    />
+                  </svg>
+                </button>
+                <img
+                  src=""
+                  alt="prof-pic"
+                  style="width: 200px; height: 200px; border-radius: 50%"
+                />
+              </div>
             </div>
-          </div>
-          <div style="display: flex; flex-direction: column">
-            <span id="current-name"></span>
-            <span id="current-email"></span>
-            <span id="current-userpass"></span>
+            <div style="display: flex; flex-direction: column">
+              <span id="current-name"></span>
+              <span id="current-email"></span>
+              <span id="current-userpass"></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <style>
       #profile {
         background-color: var(--base);

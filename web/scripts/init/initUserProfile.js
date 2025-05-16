@@ -78,19 +78,62 @@ function showUser({
 }
 
 getUser();
+let newP = document.getElementById("new-password");
+let oldP = document.getElementById("old-password");
+let confirmP = document.getElementById("confirm-password");
+
 document.getElementById("edit1").addEventListener("click", () => {
-  //popup
-  //get value
+  n.style.display="flex"
 });
 document.getElementById("edit2").addEventListener("click", () => {
-  //popup
-  //get value
+  e.style.display="flex"
 });
-document.getElementById("edit3").addEventListener("click", () => {
-  //popup
-  //get value
+document.getElementById("edit4").addEventListener("click", () => {
+  p.style.display="flex"
 });
 document.getElementById("edit-avatar").addEventListener("click", () => {
-  //popup
-  //get value
+  a.style.display="flex"
+});
+const c1= document.getElementById("cancel1")
+const c2= document.getElementById("cancel2")
+const c3= document.getElementById("cancel3")
+const c4= document.getElementById("cancel4")
+const sne = document.getElementById("submitNewEmail")
+const snn= document.getElementById("submitNewName")
+const sp= document.getElementById("submitNPass")
+const sna= document.getElementById("submitNewAvatar")
+const e= document.getElementById("newE")
+const n= document.getElementById("newN")
+const p= document.getElementById("newP")
+const a= document.getElementById("newA")
+const na= document.getElementById("newAvatar")
+const np = document.getElementById("newPass")
+const rnp= document.getElementById("rNewPass")
+const op= document.getElementById("oldPass")
+const ne = document.getElementById("newEmail")
+const nn= document.getElementById("newName")
+c1.addEventListener("click", () => {
+  n.style.display="none"
+});
+c2.addEventListener("click", () => {
+  e.style.display="none"
+});
+c3.addEventListener("click", () => {
+  p.style.display="none"
+});
+c4.addEventListener("click", () => {
+  a.style.display="none"
+});
+
+snn.addEventListener("click", () => {
+  n.style.display="none"
+});
+sne.addEventListener("click", () => {
+  e.style.display="none"
+});
+sp.addEventListener("click", () => {
+  p.style.display="none"
+});
+sna.addEventListener("click", () => {
+  a.style.display="none"
 });
