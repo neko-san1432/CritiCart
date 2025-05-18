@@ -1,6 +1,18 @@
 // ─────────────── IMPORTS ───────────────
 import { supabase } from "../api/database.js";
 
+async function testConnection() {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) throw error;
+    console.log("Session data:", data);
+  } catch (err) {
+    console.error("Supabase test failed:", err.message);
+  }
+}
+
+testConnection();
+
 console.log("✅ Supabase is connected!");
 
 // ─────────────── UTILITY FUNCTIONS ───────────────
@@ -93,7 +105,7 @@ async function registerWithEmail(mail, pass, uname) {
       }
     },
   });
-
+  console.log(data)
   if (error) return showError("Registration error: " + error.message);
   // const user = data.user;
   // if (user?.id) await insertPanelConfig(user.id);
