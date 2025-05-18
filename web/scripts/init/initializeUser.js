@@ -1,6 +1,5 @@
 // ─────────────── IMPORTS ───────────────
 import { supabase } from "../api/database.js";
-// import { showError } from "../UI/error.js";
 
 console.log("✅ Supabase is connected!");
 
@@ -18,9 +17,28 @@ function isStrongPassword(password) {
   return password.length >= 8;
 }
 
-function validateCaptcha() {
-  return !!grecaptcha.getResponse();
+// ─────────────── RECAPTCHA ───────────────
+let reCAPTCHA_login, reCAPTCHA_register;
+
+function initRecaptcha() {
+  if (typeof grecaptcha === "undefined") {
+    console.error("❌ reCAPTCHA is not loaded.");
+    return;
+  }
+
+  reCAPTCHA_login = grecaptcha.render("captcha-login", {
+    sitekey: "6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr",
+  });
+
+  reCAPTCHA_register = grecaptcha.render("captcha-register", {
+    sitekey: "6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr",
+  });
 }
+
+window.onload = () => {
+  // reCAPTCHA script should already be loaded
+  initRecaptcha();
+};
 
 // ─────────────── PANEL CONFIG ───────────────
 async function insertPanelConfig(userID) {
@@ -31,37 +49,24 @@ async function insertPanelConfig(userID) {
       isDark: false,
     },
   ]);
-
-  if (error) {
-    showError("Insert error: " + error.message);
-  }
+  if (error) showError("Insert error: " + error.message);
 }
 
 // ─────────────── AUTH HANDLERS ───────────────
 async function loginWithGoogle() {
   const redirectTo = `${window.location.origin}/web/pages/main-menu.html`;
-
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-    options: {
-      redirectTo,
-      
-    },
+    options: { redirectTo },
   });
-  if (error) {
-    showError("Google Login Error: " + error.message);
-  }
+  if (error) showError("Google Login Error: " + error.message);
 }
 
 async function loginWithEmail(email, password) {
   if (!isValidEmail(email)) return showError("Invalid email format.");
-  if (!isStrongPassword(password))
-    return showError("Password must be at least 8 characters long.");
+  if (!isStrongPassword(password)) return showError("Password too weak.");
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return showError("Login failed: " + error.message);
 
   const user = data.user;
@@ -73,25 +78,25 @@ async function loginWithEmail(email, password) {
   }
 }
 
-async function registerWithEmail(email, password, username) {
-  if (!isValidEmail(email)) return showError("Invalid email format.");
-  if (!isStrongPassword(password))
-    return showError("Password must be at least 8 characters long.");
+async function registerWithEmail(mail, pass, uname) {
+  if (!isValidEmail(mail)) return showError("Invalid email format.");
+  if (!isStrongPassword(pass)) return showError("Password too weak.");
 
   const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
+    email:mail,
+    password:pass,
     options: {
       emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
-      data: { username },
-      avatartLink: "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
+      data:{
+        username:uname,
+        avatarLink:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s"
+      }
     },
   });
 
   if (error) return showError("Registration error: " + error.message);
-
-  const user = data.user;
-  if (user?.id) await insertPanelConfig(user.id);
+  // const user = data.user;
+  // if (user?.id) await insertPanelConfig(user.id);
 }
 
 async function resendVerification(email) {
@@ -103,32 +108,21 @@ async function resendVerification(email) {
     },
   });
 
-  showError(
-    error
-      ? "Error resending verification email. Please try again."
-      : "Verification email resent. Please check your inbox."
-  );
-
+  showError(error ? "Error resending email." : "Verification email resent.");
   return error;
 }
 
 async function checkUserOnLoad() {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error) return console.log("Error fetching user: " + error.message);
-
-  if (user) {
-    console.log("User ID:", user.id);
-  }
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error) return console.log("User fetch error: " + error.message);
+  if (user) console.log("User ID:", user.id);
 }
 
 // ─────────────── DOM EVENTS ───────────────
 
-document.getElementById("submitRegForm").addEventListener("click", () => {
-  if (!validateCaptcha()) return showError("Please complete the reCAPTCHA.");
+document.getElementById("submitRegForm").addEventListener("click", async() => {
+  const response = grecaptcha.getResponse(reCAPTCHA_register);
+  if (!response) return showError("Please complete the reCAPTCHA.");
 
   const remail = document.getElementById("remail").value;
   const rpass = document.getElementById("rpass").value;
@@ -139,23 +133,28 @@ document.getElementById("submitRegForm").addEventListener("click", () => {
     return showError("All fields are required.");
   if (rpass !== repass) return showError("Passwords do not match.");
 
-  registerWithEmail(remail, rpass, rname);
+  await registerWithEmail(remail, rpass, rname);
   document.querySelector(".boxy").style.display = "flex";
-});
 
-document.querySelectorAll(".googleLogin").forEach((button) => {
-  button.addEventListener("click", loginWithGoogle);
+  // Optional: reset CAPTCHA
+  grecaptcha.reset(reCAPTCHA_register);
+});
+document.querySelectorAll(".googleLogin").forEach((btn) => {
+  btn.addEventListener("click", loginWithGoogle);
 });
 
 document.getElementById("loginBE").addEventListener("click", () => {
-  if (!validateCaptcha()) return showError("Please complete the reCAPTCHA.");
+  const response = grecaptcha.getResponse(reCAPTCHA_login);
+  if (!response) return showError("Please complete the reCAPTCHA.");
 
   const email = document.getElementById("lemail").value;
   const password = document.getElementById("lpass").value;
 
   if (!email || !password) return showError("All fields are required.");
-
   loginWithEmail(email, password);
+
+  // Optional: reset CAPTCHA
+  grecaptcha.reset(reCAPTCHA_login);
 });
 
 document.getElementById("resendVerification").addEventListener("click", () => {
@@ -167,3 +166,4 @@ document.getElementById("resendVerification").addEventListener("click", () => {
 document.getElementById("closeVerify").addEventListener("click", () => {
   document.querySelector(".boxy").style.display = "flex";
 });
+  

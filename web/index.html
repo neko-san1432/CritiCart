@@ -1,24 +1,39 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="./scripts/UI/theme.js" defer></script>
+    <link rel="stylesheet" href="./styles/loginPageStyle.css" />
+    <link rel="stylesheet" href="./styles/universalPageStyle.css" />
+    <link rel="stylesheet" href="./styles/initTheme.css" />
+    <script
+      src="https://www.google.com/recaptcha/api.js?onload=onLoadCallback&render=explicit"
+      async
+      defer
+    ></script>
+    <script src="/web/scripts/UI/loginFunc.js" defer></script>
+    <script src="/web/scripts/internet.js"></script>
+    <script
+      type="module"
+      src="/web/scripts/init/initializeUser.js"
+      async
+    ></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
-  <script src="./scripts/UI/theme.js" defer></script>
-  <link rel="stylesheet" href="./styles/loginPageStyle.css" />
-  <link rel="stylesheet" href="./styles/universalPageStyle.css" />
-  <link rel="stylesheet" href="./styles/initTheme.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <script src="/web/scripts/UI/loginFunc.js" defer></script>
-  <script src="/web/scripts/internet.js"></script>
-  <script type="module" src="/web/scripts/init/initializeUser.js" async></script>
-</head>
-
-<body style="overflow: hidden">
-  <div id="errorPane" style="z-index:5;position:absolute;display: flex;justify-content: center;">
-  </div>
-  <div id="offline" style="
+  <body style="overflow: hidden">
+    <div
+      id="errorPane"
+      style="
+        z-index: 5;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+      "
+    ></div>
+    <div
+      id="offline"
+      style="
         position: absolute;
         z-index: 2;
         display: flex;
@@ -29,13 +44,16 @@
         height: 100%;
         background-color: var(--base);
         display: none;
-      ">
-    <p id="msgnet">
-      You are not connected to the internet. Please check your connection.
-    </p>
-    <div id="recon">Reconnecting</div>
-  </div>
-  <div id="confirmVerification" style="
+      "
+    >
+      <p id="msgnet">
+        You are not connected to the internet. Please check your connection.
+      </p>
+      <div id="recon">Reconnecting</div>
+    </div>
+    <div
+      id="confirmVerification"
+      style="
         display: none;
         justify-content: center;
         align-items: center;
@@ -45,162 +63,232 @@
         z-index: 4;
         background-color: transparent;
         backdrop-filter: blur(10px);
-      ">
-    <div class="boxy">
-      <div style="display: flex;width: 100%;margin-top: 0;top: 0;">
-        <button id="closeVerify" style=" position: absolute;margin:0;padding:0;width:30px;height:30px;">
-          <svg class="invert" width="24" height="24" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round"
-            stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z" />
-          </svg>
-        </button>
-      </div>
+      "
+    >
+      <div class="boxy">
+        <div style="display: flex; width: 100%; margin-top: 0; top: 0">
+          <button
+            id="closeVerify"
+            style="
+              position: absolute;
+              margin: 0;
+              padding: 0;
+              width: 30px;
+              height: 30px;
+            "
+          >
+            <svg
+              class="invert"
+              width="24"
+              height="24"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              stroke-linejoin="round"
+              stroke-miterlimit="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
+              />
+            </svg>
+          </button>
+        </div>
 
-      <h1>Confirm Verification</h1>
-      <span>We have sent a verification code to your email.</span>
-      <span>Didn't receive Email?</span>
-      <div>
-        <button id="resendVerification" style="width: 150px;height:30px">Click to resend</button><span
-          id="countdown"></span>
+        <h1>Confirm Verification</h1>
+        <span>We have sent a verification code to your email.</span>
+        <span>Didn't receive Email?</span>
+        <div>
+          <button id="resendVerification" style="width: 150px; height: 30px">
+            Click to resend</button
+          ><span id="countdown"></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div style="z-index: 3; position: absolute; left: 0">CritiCart</div>
-  <div style="position: absolute; z-index: 2; right: 0">
-    <button style="
+    <div style="z-index: 3; position: absolute; left: 0">CritiCart</div>
+    <div style="position: absolute; z-index: 2; right: 0">
+      <button
+        style="
           z-index: 2;
           display: flex;
           justify-content: center;
           align-items: center;
           width: 50px;
-        " id="modetheme">
-      <label style="display: none">
-        <select data-theme-picker name="themepicker" id="theme">
-          <option value="💻">System</option>
-          <option value="☀️">Light</option>
-          <option value="🌑">Dark</option>
-        </select>
-      </label>
-      <div id="img-theme">
-        <svg class="invert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path
-            d="M22 17v-11.8c0-.663-.537-1.2-1.2-1.2h-17.6c-.663 0-1.2.537-1.2 1.2v11.8h20zm-18-11h16v9h-16v-9zm20 12v.8c0 .663-.537 1.2-1.2 1.2h-21.6c-.663 0-1.2-.537-1.2-1.2v-.8h10c0 .276.224.5.5.5h3c.276 0 .5-.224.5-.5h10z" />
-        </svg>
-      </div>
-    </button>
-  </div>
+        "
+        id="modetheme"
+      >
+        <label style="display: none">
+          <select data-theme-picker name="themepicker" id="theme">
+            <option value="💻">System</option>
+            <option value="☀️">Light</option>
+            <option value="🌑">Dark</option>
+          </select>
+        </label>
+        <div id="img-theme">
+          <svg
+            class="invert"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M22 17v-11.8c0-.663-.537-1.2-1.2-1.2h-17.6c-.663 0-1.2.537-1.2 1.2v11.8h20zm-18-11h16v9h-16v-9zm20 12v.8c0 .663-.537 1.2-1.2 1.2h-21.6c-.663 0-1.2-.537-1.2-1.2v-.8h10c0 .276.224.5.5.5h3c.276 0 .5-.224.5-.5h10z"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
 
-  <div style="
+    <div
+      style="
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         width: 100vw;
         z-index: 1;
-      ">
-    <div class="box" id="box">
-      <div id="pane" style="display: flex; flex-direction: row">
-        <div class="login" id="login">
-          <h1>Login</h1>
-          <div class="container">
-            <div class="tinput">
-              <input type="text" id="lemail" required />
-              <div class="labeline">Email</div>
+      "
+    >
+      <div class="box" id="box">
+        <div id="pane" style="display: flex; flex-direction: row">
+          <div class="login" id="login">
+            <h1>Login</h1>
+            <div class="container">
+              <div class="tinput">
+                <input type="text" id="lemail" required />
+                <div class="labeline">Email</div>
+              </div>
             </div>
-          </div>
-          <div class="container">
-            <div class="tinput">
-              <input type="password" id="lpass" required />
-              <div class="labeline">Password</div>
-              <button class="pass-peek" id="show1">
-                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" class="img-peek"
-                  clip-rule="evenodd">
-                  <path
-                    d="M12.01 20c-5.065 0-9.586-4.211-12.01-8.424 2.418-4.103 6.943-7.576 12.01-7.576 5.135 0 9.635 3.453 11.999 7.564-2.241 4.43-6.726 8.436-11.999 8.436zm-10.842-8.416c.843 1.331 5.018 7.416 10.842 7.416 6.305 0 10.112-6.103 10.851-7.405-.772-1.198-4.606-6.595-10.851-6.595-6.116 0-10.025 5.355-10.842 6.584zm10.832-4.584c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 1c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4z" />
-                </svg>
-              </button>
+            <div class="container">
+              <div class="tinput">
+                <input type="password" id="lpass" required />
+                <div class="labeline">Password</div>
+                <button class="pass-peek" id="show1">
+                  <svg
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill-rule="evenodd"
+                    class="img-peek"
+                    clip-rule="evenodd"
+                  >
+                    <path
+                      d="M12.01 20c-5.065 0-9.586-4.211-12.01-8.424 2.418-4.103 6.943-7.576 12.01-7.576 5.135 0 9.635 3.453 11.999 7.564-2.241 4.43-6.726 8.436-11.999 8.436zm-10.842-8.416c.843 1.331 5.018 7.416 10.842 7.416 6.305 0 10.112-6.103 10.851-7.405-.772-1.198-4.606-6.595-10.851-6.595-6.116 0-10.025 5.355-10.842 6.584zm10.832-4.584c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 1c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
-          <br />
-          <button id="loginBE">Login</button>
-          <br />
-          <button id="register-in">Register</button>
-          <br />
-          <div class="g-recaptcha" data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"></div>
-          <p>login via</p>
-          <button class="googleLogin" style="background-color: transparent">
-            <img
-              src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
-              alt="google" />
-          </button>
-        </div>
-
-        <div class="register" id="register">
-          <div class="back">
-            <button class="back-b" id="back-b" style="height: 40px; width: 40px; margin-top: 19; border: none">
-              <svg class="back-img" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round"
-                stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="m9.474 5.209s-4.501 4.505-6.254 6.259c-.147.146-.22.338-.22.53s.073.384.22.53c1.752 1.754 6.252 6.257 6.252 6.257.145.145.336.217.527.217.191-.001.383-.074.53-.221.293-.293.294-.766.004-1.057l-4.976-4.976h14.692c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.692l4.978-4.979c.289-.289.287-.761-.006-1.054-.147-.147-.339-.221-.53-.221-.191-.001-.38.071-.525.215z"
-                  fill-rule="nonzero" />
-              </svg>
+            <br />
+            <button id="loginBE">Login</button>
+            <br />
+            <button id="register-in">Register</button>
+            <br />
+            <div id="captcha-login"></div>
+            <p>login via</p>
+            <button class="googleLogin" style="background-color: transparent; border: solid">
+              <img
+                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
+                alt="google"
+              />
             </button>
           </div>
-          <h1>Register</h1>
-          <div class="container">
-            <div class="tinput">
-              <input id="rname" type="text" required />
-              <div class="labeline">Name</div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="tinput">
-              <input id="remail" type="text" required />
-              <div class="labeline">Email</div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="tinput">
-              <input type="password" id="rpass" required />
-              <div class="labeline">Password</div>
-              <button class="pass-peek" id="show2">
-                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" class="img-peek"
-                  clip-rule="evenodd">
+
+          <div class="register" id="register">
+            <div class="back">
+              <button
+                class="back-b"
+                id="back-b"
+                style="height: 40px; width: 40px; margin-top: 19; border: none"
+              >
+                <svg
+                  class="back-img"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
-                    d="M12.01 20c-5.065 0-9.586-4.211-12.01-8.424 2.418-4.103 6.943-7.576 12.01-7.576 5.135 0 9.635 3.453 11.999 7.564-2.241 4.43-6.726 8.436-11.999 8.436zm-10.842-8.416c.843 1.331 5.018 7.416 10.842 7.416 6.305 0 10.112-6.103 10.851-7.405-.772-1.198-4.606-6.595-10.851-6.595-6.116 0-10.025 5.355-10.842 6.584zm10.832-4.584c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 1c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4z" />
+                    d="m9.474 5.209s-4.501 4.505-6.254 6.259c-.147.146-.22.338-.22.53s.073.384.22.53c1.752 1.754 6.252 6.257 6.252 6.257.145.145.336.217.527.217.191-.001.383-.074.53-.221.293-.293.294-.766.004-1.057l-4.976-4.976h14.692c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.692l4.978-4.979c.289-.289.287-.761-.006-1.054-.147-.147-.339-.221-.53-.221-.191-.001-.38.071-.525.215z"
+                    fill-rule="nonzero"
+                  />
                 </svg>
               </button>
             </div>
-          </div>
-          <div class="container">
-            <div class="tinput">
-              <input type="password" id="rrpass" required />
-              <div class="labeline">Re-type Password</div>
-              <button class="pass-peek" id="show3">
-                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" class="img-peek"
-                  clip-rule="evenodd">
-                  <path
-                    d="M12.01 20c-5.065 0-9.586-4.211-12.01-8.424 2.418-4.103 6.943-7.576 12.01-7.576 5.135 0 9.635 3.453 11.999 7.564-2.241 4.43-6.726 8.436-11.999 8.436zm-10.842-8.416c.843 1.331 5.018 7.416 10.842 7.416 6.305 0 10.112-6.103 10.851-7.405-.772-1.198-4.606-6.595-10.851-6.595-6.116 0-10.025 5.355-10.842 6.584zm10.832-4.584c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 1c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4z" />
-                </svg>
-              </button>
+            <h1>Register</h1>
+            <div class="container">
+              <div class="tinput">
+                <input id="rname" type="text" required />
+                <div class="labeline">Name</div>
+              </div>
             </div>
+            <div class="container">
+              <div class="tinput">
+                <input id="remail" type="text" required />
+                <div class="labeline">Email</div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="tinput">
+                <input type="password" id="rpass" required />
+                <div class="labeline">Password</div>
+                <button class="pass-peek" id="show2">
+                  <svg
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill-rule="evenodd"
+                    class="img-peek"
+                    clip-rule="evenodd"
+                  >
+                    <path
+                      d="M12.01 20c-5.065 0-9.586-4.211-12.01-8.424 2.418-4.103 6.943-7.576 12.01-7.576 5.135 0 9.635 3.453 11.999 7.564-2.241 4.43-6.726 8.436-11.999 8.436zm-10.842-8.416c.843 1.331 5.018 7.416 10.842 7.416 6.305 0 10.112-6.103 10.851-7.405-.772-1.198-4.606-6.595-10.851-6.595-6.116 0-10.025 5.355-10.842 6.584zm10.832-4.584c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 1c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="container">
+              <div class="tinput">
+                <input type="password" id="rrpass" required />
+                <div class="labeline">Re-type Password</div>
+                <button class="pass-peek" id="show3">
+                  <svg
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill-rule="evenodd"
+                    class="img-peek"
+                    clip-rule="evenodd"
+                  >
+                    <path
+                      d="M12.01 20c-5.065 0-9.586-4.211-12.01-8.424 2.418-4.103 6.943-7.576 12.01-7.576 5.135 0 9.635 3.453 11.999 7.564-2.241 4.43-6.726 8.436-11.999 8.436zm-10.842-8.416c.843 1.331 5.018 7.416 10.842 7.416 6.305 0 10.112-6.103 10.851-7.405-.772-1.198-4.606-6.595-10.851-6.595-6.116 0-10.025 5.355-10.842 6.584zm10.832-4.584c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 1c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <br />
+            <div id="captcha-register"></div>
+            <br />
+            <button id="submitRegForm">Register</button>
+            <p>Register via</p>
+            <button
+              style="background-color: transparent; border: none"
+              class="googleLogin"
+            >
+              <img
+                src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
+                alt="google"
+              />
+            </button>
           </div>
-          <br />
-          <div class="g-recaptcha" data-sitekey="6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr"></div>
-          <br />
-          <button id="submitRegForm">Register</button>
-          <p>Register via</p>
-          <button style="background-color: transparent; border: none" class="googleLogin">
-            <img
-              src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
-              alt="google" />
-          </button>
         </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

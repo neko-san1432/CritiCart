@@ -1,11 +1,38 @@
 import { supabase } from "../api/database.js";
 
-const uname = document.getElementById("current-name");
-const email = document.getElementById("current-email");
-const password = document.getElementById("current-userpass");
-const avatar = document.getElementById("avatar");
+document.addEventListener("DOMContentLoaded", () => {
+  const elements = {
+    uname: document.getElementById("current-name"),
+    email: document.getElementById("current-email"),
+    password: document.getElementById("current-userpass"),
+    avatar: document.getElementById("avatar"),
 
-const editIcon = `
+    newName: document.getElementById("newN"),
+    newEmail: document.getElementById("newE"),
+    newPass: document.getElementById("newP"),
+    repeatPass: document.getElementById("rNewPass"),
+    newAvatar: document.getElementById("newA"),
+    avatarFile: document.getElementById("newAvatar"),
+
+    editName: document.getElementById("edit1"),
+    editEmail: document.getElementById("edit2"),
+    editPass: document.getElementById("edit4"),
+    editAvatar: document.getElementById("edit-avatar"),
+
+    cancel1: document.getElementById("cancel1"),
+    cancel2: document.getElementById("cancel2"),
+    cancel3: document.getElementById("cancel3"),
+    cancel4: document.getElementById("cancel4"),
+
+    submitName: document.getElementById("submitNewName"),
+    submitEmail: document.getElementById("submitNewEmail"),
+    submitPass: document.getElementById("submitNPass"),
+    submitAvatar: document.getElementById("submitNewAvatar"),
+
+    avatarImg: document.getElementById("avatar-pic"),
+  };
+
+  const editIcon = `
   <svg class="invert" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" 
     stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 
@@ -16,9 +43,9 @@ const editIcon = `
     10.114-10.079 2.335 2.327-10.099 10.101z" fill-rule="nonzero"/>
   </svg>`;
 
-function createEditableLine(label, value, editId) {
-  return `${label}: ${value} <button id="${editId}">${editIcon}</button>`;
-}
+  function createEditableLine(label, value, editId) {
+    return `${label}: ${value} <button id="${editId}">${editIcon}</button>`;
+  }
 
 function createAvatarHTML(src, isEditable = false) {
   const buttonHTML = isEditable
@@ -32,108 +59,128 @@ function createAvatarHTML(src, isEditable = false) {
     </div>`;
 }
 
-async function getUser() {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  async function loadUserProfile() {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
+      console.error("Auth error:", error);
+      return;
+    }
 
-  if (error || !user) {
-    console.error("Failed to get user:", error);
-    return;
+    const isEmailUser = user.app_metadata?.provider === "email";
+    const meta = user.user_metadata;
+
+    const name = isEmailUser ? meta.display_name : meta.full_name;
+    const email = meta.email;
+    const avatarLink = isEmailUser ? meta.avatarLink : meta.avatar_url;
+
+    elements.uname.innerHTML = createEditableLine("Name", name, "edit1");
+    elements.email.innerHTML = createEditableLine("Email", email, "edit2");
+    elements.avatar.innerHTML = createAvatarHTML(avatarLink, isEmailUser);
+    if (isEmailUser) {
+      elements.password.innerHTML = createEditableLine("Password", "********", "edit4");
+    }
+
+    // Attach listeners after DOM injection
+    attachEditListeners(isEmailUser);
   }
 
-  const isEmailUser = user.app_metadata?.provider === "email";
-  const meta = user.user_metadata;
-
-  const userName = isEmailUser ? meta.display_name : meta.full_name;
-  const userEmail = meta.email;
-  const userAvatar = isEmailUser ? meta.avatarLink : meta.avatar_url;
-
-  const nameHTML = createEditableLine("Name", userName, "edit1");
-  const emailHTML = createEditableLine("Email", userEmail, "edit2");
-  const avatarHTML = createAvatarHTML(userAvatar, isEmailUser);
-
-  let passwordHTML = "";
-  if (isEmailUser) {
-    passwordHTML = createEditableLine("Password", meta.password, "edit4");
+  function attachEditListeners(isEmailUser) {
+    document.getElementById("edit1").addEventListener("click", () => {
+      elements.newName.style.display = "flex";
+    });
+    document.getElementById("edit2").addEventListener("click", () => {
+      elements.newEmail.style.display = "flex";
+    });
+    if (isEmailUser) {
+      document.getElementById("edit4").addEventListener("click", () => {
+        elements.newPass.style.display = "flex";
+      });
+      document.getElementById("edit-avatar").addEventListener("click", () => {
+        elements.newAvatar.style.display = "flex";
+      });
+    }
   }
 
-  showUser({ nameHTML, emailHTML, avatarHTML, passwordHTML, isEmailUser });
-}
+  // Cancel buttons
+  elements.cancel1.onclick = () => {
+    elements.newName.style.display = "none";
+    elements.newName.querySelector("input").value = "";
+  };
+  elements.cancel2.onclick = () => {
+    elements.newEmail.style.display = "none";
+    elements.newEmail.querySelector("input").value = "";
+  };
+  elements.cancel3.onclick = () => {
+    elements.newPass.style.display = "none";
+    elements.newPass.querySelectorAll("input").forEach((el) => el.value = "");
+  };
+  elements.cancel4.onclick = () => {
+    elements.newAvatar.style.display = "none";
+    elements.avatarFile.value = "";
+  };
 
-function showUser({
-  nameHTML,
-  emailHTML,
-  avatarHTML,
-  passwordHTML,
-  isEmailUser,
-}) {
-  uname.innerHTML = nameHTML;
-  email.innerHTML = emailHTML;
-  avatar.innerHTML = avatarHTML;
-  if (isEmailUser) {
-    password.innerHTML = passwordHTML;
-  }
-}
+  // Submit Handlers
+  elements.submitName.onclick = async () => {
+    await supabase.auth.updateUser({
+      data: { display_name: elements.newName.querySelector("input").value },
+    });
+    elements.newName.style.display = "none";
+    loadUserProfile();
+  };
 
-getUser();
-let newP = document.getElementById("new-password");
-let oldP = document.getElementById("old-password");
-let confirmP = document.getElementById("confirm-password");
+  elements.submitEmail.onclick = async () => {
+    await supabase.auth.updateUser({ email: elements.newEmail.querySelector("input").value });
+    elements.newEmail.style.display = "none";
+    loadUserProfile();
+  };
 
-document.getElementById("edit1").addEventListener("click", () => {
-  n.style.display="flex"
-});
-document.getElementById("edit2").addEventListener("click", () => {
-  e.style.display="flex"
-});
-document.getElementById("edit4").addEventListener("click", () => {
-  p.style.display="flex"
-});
-document.getElementById("edit-avatar").addEventListener("click", () => {
-  a.style.display="flex"
-});
-const c1= document.getElementById("cancel1")
-const c2= document.getElementById("cancel2")
-const c3= document.getElementById("cancel3")
-const c4= document.getElementById("cancel4")
-const sne = document.getElementById("submitNewEmail")
-const snn= document.getElementById("submitNewName")
-const sp= document.getElementById("submitNPass")
-const sna= document.getElementById("submitNewAvatar")
-const e= document.getElementById("newE")
-const n= document.getElementById("newN")
-const p= document.getElementById("newP")
-const a= document.getElementById("newA")
-const na= document.getElementById("newAvatar")
-const np = document.getElementById("newPass")
-const rnp= document.getElementById("rNewPass")
-const op= document.getElementById("oldPass")
-const ne = document.getElementById("newEmail")
-const nn= document.getElementById("newName")
-c1.addEventListener("click", () => {
-  n.style.display="none"
-});
-c2.addEventListener("click", () => {
-  e.style.display="none"
-});
-c3.addEventListener("click", () => {
-  p.style.display="none"
-});
-c4.addEventListener("click", () => {
-  a.style.display="none"
-});
+  elements.submitPass.onclick = async () => {
+    const np = elements.newPass.querySelector("#newPass").value;
+    const rnp = elements.newPass.querySelector("#rNewPass").value;
 
-snn.addEventListener("click", () => {
-  n.style.display="none"
-});
-sne.addEventListener("click", () => {
-  e.style.display="none"
-});
-sp.addEventListener("click", () => {
-  p.style.display="none"
-});
-sna.addEventListener("click", () => {
-  a.style.display="none"
+    if (np !== rnp) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    await supabase.auth.updateUser({ password: np });
+    elements.newPass.style.display = "none";
+  };
+
+  elements.submitAvatar.onclick = async () => {
+    const file = elements.avatarFile.files[0];
+    if (!file) return alert("Please select an image.");
+
+    const user = (await supabase.auth.getUser()).data.user;
+    const filePath = `avatars/${user.id}-${Date.now()}-${file.name}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("profilepic")
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.error("Upload failed:", uploadError);
+      return;
+    }
+
+    await supabase.auth.updateUser({
+      data: { avatarLink: filePath },
+    });
+
+    const { data: signedUrlData } = await supabase.storage
+      .from("profilepic")
+      .createSignedUrl(filePath, 60);
+
+    if (signedUrlData?.signedUrl) {
+      elements.avatarImg.src = signedUrlData.signedUrl;
+    }
+
+    elements.newAvatar.style.display = "none";
+  };
+
+  // Initial load
+  loadUserProfile();
 });

@@ -199,15 +199,18 @@
       </div>
       <div class="right-panel">
         <div style="position: absolute;z-index: 5; width: 100%; height: 100%" id="newA">
-          <input type="file" name="" id="newAvatar">
+          <input type="file" name="" id="newAvatar" onchange="img.src = window.URL.createObjectURL(this.files[0])">
           <button id="submitNewAvatar">Submit</button>
           <button id = "cancel4">cancel</button>
         </div>
         <div style="position: absolute;z-index: 4; width: 100%; height: 100%" id="newP">
-          <input type="text" id="newPass">
+          <div id="verifying">
+            
+          </div>
+          <div id="enterNewPass"><input type="text" id="newPass">
           <input type="text" id="rNewPass">
-          <input type="text" id="oldPass">
-          <button id="submitNPass">Submit</button>
+          <button id="submitNPass">Submit</button></div>
+          
           <button id = "cancel3">cancel</button>
         </div>
         <div style="position: absolute;z-index: 3; width: 100%; height: 100%" id="newE">
@@ -272,6 +275,7 @@
                   </svg>
                 </button>
                 <img
+                id = "avatar-pic"
                   src=""
                   alt="prof-pic"
                   style="width: 200px; height: 200px; border-radius: 50%"

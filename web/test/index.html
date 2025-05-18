@@ -2,32 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loading...</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Supabase Signup</title>
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="logo">🛒</div>
-      <nav>
-        <a href="#">Review a Product</a>
-        <a href="#">Home</a>
-        <a href="#">Your Reviewed Products</a>
-        <a href="#">User Profile</a>
-      </nav>
-      <div class="logout">Logout</div>
-    </aside>
-    <main class="main-content">
-      <h1>Welcome</h1>
-      <div class="search-bar">
-        <input type="text" placeholder="Search...">
-      </div>
-      <div class="loader-container">
-        <div class="spinner"></div>
-        <p>Loading...</p>
-      </div>
-    </main>
-  </div>
+  <h1>Register</h1>
+  <input type="email" id="email" placeholder="Email" /><br />
+  <input type="password" id="password" placeholder="Password" /><br />
+  <button id="signupBtn">Sign Up</button>
+
+  <script type="module">
+    // ─── Import Supabase Client ───
+    import { createClient } from "https://esm.sh/@supabase/supabase-js";
+
+    // ─── Initialize Supabase ───
+    const supabase = createClient(
+      "https://dgualcjfvzjrqzwwmvov.supabase.co",          // 🔁 Replace this
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRndWFsY2pmdnpqcnF6d3dtdm92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMzAxODIsImV4cCI6MjA2MTYwNjE4Mn0.R-gNusHP_Va683Xf1mhgdUH4NO5udxSkaUtstQwUS_A"                          // 🔁 Replace this
+    );
+
+    // ─── Signup Logic ───
+    document.getElementById("signupBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        option :{
+          data:{
+            username:"nya"
+          }
+        }
+      });
+
+      if (error) {
+        alert("❌ Error: " + error.message);
+      } else {
+        alert("✅ Signup successful! Please verify your email.");
+        console.log(data);
+      }
+    });
+  </script>
 </body>
 </html>
