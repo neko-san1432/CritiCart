@@ -56,7 +56,7 @@ window.onload = () => {
 async function insertPanelConfig(userID) {
   const { error } = await supabase.from("panelConfig").insert([
     {
-      uuid: userID,
+      userId: userID,
       isCollapsed: false,
       isDark: false,
     },
@@ -107,8 +107,8 @@ async function registerWithEmail(mail, pass, uname) {
   });
   console.log(data)
   if (error) return showError("Registration error: " + error.message);
-  // const user = data.user;
-  // if (user?.id) await insertPanelConfig(user.id);
+  const user = data.user;
+  if (user?.id) await insertPanelConfig(user.id);
 }
 
 async function resendVerification(email) {
