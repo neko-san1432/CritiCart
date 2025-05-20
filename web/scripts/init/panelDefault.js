@@ -11,8 +11,8 @@ async function isDarkMode() {
     .from("panelConfig")
     .select("isDark")
     .eq("userId", user.id)
-    .single(); 
-
+    .single();
+  console.log("isDark:", data);
   if (error) {
     console.log("Error fetching isDark:", error.message);
     return false;
@@ -26,8 +26,8 @@ async function isCollapsed() {
     .from("panelConfig")
     .select("isCollapsed")
     .eq("userId", user.id)
-    .single(); 
-
+    .single();
+  console.log("isCollapsed:", data);
   if (error) {
     console.log("Error fetching isCollapsed:", error.message);
     return false;

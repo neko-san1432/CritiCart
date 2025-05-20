@@ -4,7 +4,7 @@ const filePreviews = document.getElementById('filePreviews');
 const uploadInstructions = document.getElementById('uploadInstructions');
 const MAX_FILES = 5;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-let filesArray = [];
+export let filesArray = [];
 
 // Handle file selection
 fileInput.addEventListener('change', (e) => {

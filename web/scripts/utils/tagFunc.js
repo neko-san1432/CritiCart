@@ -1,6 +1,6 @@
 const tagInput = document.getElementById('tagInput');
 const tagsContainer = document.getElementById('tags');
-let tags = [];
+export let tags = [];
 
 function createTagElement(text, index) {
   const tag = document.createElement('button');
