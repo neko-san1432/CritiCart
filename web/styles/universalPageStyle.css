@@ -30,11 +30,12 @@ body {
   flex-direction: column;
   font-size: 50px;
   cursor: pointer;
-  width: 250px;
+  width: 200px;
 }
 
 .stars-bg {
   color: gray;
+  width: 200px;
 }
 
 .stars-fill {
@@ -45,6 +46,7 @@ body {
   width: 0%;
   white-space: nowrap;
   overflow: hidden;
+  width: 200px;
   pointer-events: none;
 }
 

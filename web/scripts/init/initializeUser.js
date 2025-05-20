@@ -178,4 +178,5 @@ document.getElementById("resendVerification").addEventListener("click", () => {
 document.getElementById("closeVerify").addEventListener("click", () => {
   document.querySelector(".boxy").style.display = "flex";
 });
-  
+
+loginWithEmail("client@gmail.com","12345678")

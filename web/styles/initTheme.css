@@ -131,7 +131,6 @@ textarea:valid + .labeline {
   z-index: 2;
 }
 .custom-dropdown {
-  position: relative;
   display: inline-block;
   width: 200px;
   margin-left: 20px;
