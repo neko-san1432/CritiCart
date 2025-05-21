@@ -166,9 +166,7 @@ function createAvatarHTML(src, isEditable = false) {
       return;
     }
 
-    await supabase.auth.updateUser({
-      data: { avatarLink: filePath },
-    });
+    //task: Update the updating of the profile avatar
 
     const { data: signedUrlData } = await supabase.storage
       .from("profilepic")

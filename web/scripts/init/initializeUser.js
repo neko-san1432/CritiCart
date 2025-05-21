@@ -101,7 +101,6 @@ async function registerWithEmail(mail, pass, uname) {
       emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
       data:{
         username:uname,
-        avatarLink:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s"
       }
     },
   });
@@ -109,8 +108,17 @@ async function registerWithEmail(mail, pass, uname) {
   if (error) return showError("Registration error: " + error.message);
   const user = data.user;
   if (user?.id) await insertPanelConfig(user.id);
-}
+  await insertPublicMetaData(user.id,uname,mail);
 
+}
+async function insertPublicMetaData(userID,name,mail) {
+  await supabase.from('userData').insert([{
+    avatarLink:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s",
+    uuid:userID,
+    displayName:name,
+    email:mail
+  }])
+}
 async function resendVerification(email) {
   const { error } = await supabase.auth.resend({
     type: "signup",
