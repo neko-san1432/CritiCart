@@ -7,83 +7,93 @@
 </div> 
 */
 import { supabase } from "../api/database.js";
-const foodSec = document.getElementById("food");
-const cosmeticsSec = document.getElementById("cosmetics");
-const appliancesSec = document.getElementById("appliances");
-const hnwSec = document.getElementById("hnw");
-const toySec = document.getElementById("toys");
-var products = [[], [], [], [], []];
-var food = "";
-var cosmetics = "";
-var toys = "";
-var hnw = "";
-var appliances = "";
+
+const sections = {
+  food: document.getElementById("food"),
+  cosmetics: document.getElementById("cosmetics"),
+  appliances: document.getElementById("appliances"),
+  hnw: document.getElementById("hnw"),
+  toys: document.getElementById("toys"),
+};
+
+const categoryIndexMap = {
+  food: 0,
+  cosmetics: 1,
+  appliances: 2,
+  hnw: 3,
+  toys: 4,
+};
+
+let products = [[], [], [], [], []];
+
+let htmlContent = {
+  food: "",
+  cosmetics: "",
+  appliances: "",
+  hnw: "",
+  toys: "",
+};
+
 function search_random_products() {
-  initRandomProducts();
-  if (products[0].length == 0) {
-    foodSec.innerHTML =
-      '<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>';
-  } else {
-  }
-  if (products[1].length == 0) {
-    cosmeticsSec.innerHTML =
-      '<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>';
-  }
-  if (products[2].length == 0) {
-    appliancesSec.innerHTML =
-      '<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>';
-  }
-  if (products[3].length == 0) {
-    hnwSec.innerHTML =
-      '<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>';
-  }
-  if (products[4].length == 0) {
-    toySec.innerHTML =
-      '<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>';
+  for (const category in sections) {
+    initCategory(category);
   }
 }
+
 search_random_products();
-function initRandomProducts() {}
 
-async function initFood() {
+async function initCategory(category) {
   const { data, error } = await supabase
-    .from("productsReview")
-    .select(
-      "productName,productType,productRating,productUserDesc,userID,likes,dislikes"
-    )
-    .eq("productType", "food")
+    .from("productReview")
+    .select("productName,productType,productRating,productDescription,userId,likes,dislikes")
+    .eq("productType", category)
     .limit(10);
+  const section = sections[category];
+  const index = categoryIndexMap[category];
   if (error) {
-    console.error("Error fetching products:", error);
-  } else {
-    const shuffled = data.sort(() => Math.random() - 0.5);
-    products[0] = shuffled.slice(0, 10);
+    console.error(`Error fetching ${category} products:`, error);
+    section.innerHTML = `<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>`;
+    return;
   }
 
-  // const { data2, error2 } = supabase.from("").select;
-  //update the image function here
-  let rating = 0;
-  for (let i = 0; i < products[0].length; i++) {
-    rating =
-      (products[0][i].productRating.qualityRating +
-        products[0][i].productRating.priceRating) /
-      2;
-    food += `<div class="product-holder">
-    <button class="food-product${i}"id = "f${i}">
-    <img src="" alt="${products[0][i].productName}">
-    <h3>${products[0][i].productName}</h3>
-    <p>${rating}</p>
-    <p>${products[0][i].productDescription}</p>
-    <p>likes ${products[0][i].likes}
-    <p>by ${getUserName(products[0][i].userID)}</p>
-    </button>
-    </div>`;
+  const shuffled = data.sort(() => Math.random() - 0.5);
+  products[index] = shuffled.slice(0, 10);
+
+  if (products[index].length === 0) {
+    section.innerHTML = `<div style="display: flex;width: 100%;height: 200px;justify-content: center;align-items:center;"><span>No items as of now</span></div>`;
+    return;
   }
+
+  for (let i = 0; i < products[index].length; i++) {
+    const prod = products[index][i];
+    const rating = (prod.productRating.qualityRating + prod.productRating.priceRating) / 2;
+    const userData = await getUserName(prod.userId);
+    const displayName = userData?.displayName || "Unknown";
+
+    htmlContent[category] += `
+      <div class="product-holder">
+        <button class="${category}-product${i}" id="f${index}-${i}">
+          <img src="" alt="${prod.productName}">
+          <h3>${prod.productName}</h3>
+          <p>${rating.toFixed(1)}</p>
+          <p>${prod.productDescription}</p>
+          <p>likes ${prod.likes}</p>
+          <p>by ${displayName}</p>
+        </button>
+      </div>`;
+  }
+  section.innerHTML = htmlContent[category];
 }
 async function getUserName(UUID) {
-  const { data, error } = await supabase.select().eq("uuid", UUID).single();
-  return data.displayName;
+  const { data, error } = await supabase
+    .from("userData")
+    .select("displayName")
+    .eq("udataId", UUID)
+    .single();
+  if (error) console.warn("User fetch error:", error);
+  return data;
 }
+
 export let selectedProduct = {
   name: "",
   qualityRating: 0,
@@ -92,8 +102,3 @@ export let selectedProduct = {
   comments: [],
   personUploads: "",
 };
-for (let i = 0; i < 10; i++) {
-  document.getElementById("f${i}").addEventListener("click", () => {
-    selectedProduct.name = "";
-  });
-}

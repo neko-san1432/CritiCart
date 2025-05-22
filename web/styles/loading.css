@@ -1,8 +1,11 @@
 .loader-container {
   margin-top: 50px;
   text-align: center;
-  border: solid;
   z-index: 2222;
+  width: 100%;
+  display:flex;
+  /* border: solid; */
+  flex-direction: column;
 }
 
 .spinner {

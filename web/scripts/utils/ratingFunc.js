@@ -26,23 +26,45 @@ function setupRating({
       else if (rating >= 2 && rating <= 2.9) sentiment = "Moderately satisfied";
       else if (rating >= 3 && rating <= 3.9) sentiment = "Satisfied";
       else if (rating >= 4 && rating <= 5) sentiment = "Extremely satisfied";
-
-      output.innerHTML =
-        "Rating: " + rating + "<br/>Satisfaction sentiment: " + sentiment;
+      if (containerId == "ratingContainer") {
+        output.innerHTML =
+          "Price rating: " +
+          rating +
+          "<br/>Satisfaction sentiment: " +
+          sentiment;
+      } else {
+        output.innerHTML =
+          "Quality rating: " +
+          rating +
+          "<br/>Satisfaction sentiment: " +
+          sentiment;
+      }
     }
   });
 
   container.addEventListener("mouseleave", () => {
-    if (!locked) {
-      fill.style.width = `0%`;
-      output.innerHTML = "";
+    if (containerId == "ratingContainer") {
+      if (!locked) {
+        fill.style.width = `0%`;
+        output.innerHTML =
+          '<span id="rating"> Price rating: 0.0 <br/> Satisfaction Sentiment: --- </span>';
+      }
+    } else {
+      if (!locked) {
+        fill.style.width = `0%`;
+        output.innerHTML =
+          '<span id="rating1"> Quality rating: 0.0 <br/> Satisfaction Sentiment: --- </span>';
+      }
     }
   });
 
   container.addEventListener("click", () => {
     locked = !locked;
     output.innerHTML =
-      "Rating: " + ratingVarRef.value + "<br/>Satisfaction sentiment: " + sentiment;
+      "Rating: " +
+      ratingVarRef.value +
+      "<br/>Satisfaction sentiment: " +
+      sentiment;
   });
 
   // Store locked state externally if needed

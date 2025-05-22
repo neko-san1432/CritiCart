@@ -6,15 +6,32 @@
     <link rel="stylesheet" href="/web/styles/initTheme.css" />
     <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
     <script type="module" src="/web/scripts/UI/interaction.js"></script>
-    <script type="module" src="/web/scripts/UI/sidePanelFuncForClient.js"></script>
-    <script type="module" src="/web/scripts/init/client/initUserRevProd.js"></script>
-    <script type="module" src="/web/scripts/init/panelDefault.js" defer></script>
+    <script
+      type="module"
+      src="/web/scripts/UI/sidePanelFuncForClient.js"
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/client/initUserRevProd.js"
+    ></script>
+    <script
+      type="module"
+      src="/web/scripts/init/panelDefault.js"
+      defer
+    ></script>
     <script type="module" src="/web/scripts/internet.js" defer></script>
     <script type="module" src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
-    <div id="errorPane" style="z-index:5;position:absolute;display: flex;justify-content: center;">
-    </div>
+    <div
+      id="errorPane"
+      style="
+        z-index: 5;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+      "
+    ></div>
     <div
       id="offline"
       style="
@@ -37,7 +54,7 @@
     </div>
     <div class="main-panel">
       <div class="left-panel">
-        <button class="panel-button" id = "home-logo">
+        <button class="panel-button" id="home-logo">
           <img src="" alt="logo" />
           <span>CritiCart</span>
         </button>
@@ -90,7 +107,7 @@
           </svg>
           <span>Home</span>
         </button>
-         
+
         <button class="panel-button" id="reviewed-product">
           <svg
             class="invert selected"
@@ -174,19 +191,22 @@
           <span>Logout</span>
         </button>
       </div>
-      <div class = "right-panel">
-        <div style="width: 100%;">
+      <div class="right-panel"></div>
+      <div class="right-panel"></div>
+      <div class="right-panel">
+        <div style="width: 100%">
           <h1>Your reviewed products</h1>
           <hr style="width: inherit; margin-right: 40px" />
         </div>
-        <div id ="main-container"></div>
+        <div id="main-container"></div>
       </div>
     </div>
+    <div id="pagination-controls"></div>
     <style>
       #reviewed-product {
         background-color: var(--base);
         color: var(--text);
       }
     </style>
-  </body>
+   </body>
 </html>

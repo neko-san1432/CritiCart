@@ -1,17 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Supabase Signup</title>
-  <script type = "module"src="./script.js"></script>
-</head>
-<body>
-  <h1>Register</h1>
-  <input type="email" id="email" placeholder="Email" /><br />
-  <input type="password" id="password" placeholder="Password" /><br />
-  <button id="signupBtn">Sign Up</button>
-
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Supabase Signup</title>
+  </head>
+  <body>
+    <style></style>
+    <div
+      style="border: solid; display: flex; justify-content: space-between"
+      onmouseenter="tick(true)"
+      onmouseleave="tick(false)"
+    >
+      <div style="display: flex">
+        <div style="height: 50px; width: 50px; display: flex">
+          <img
+            src=""
+            alt="hi"
+            style="border: solid; width: 50px; height: 50px"
+          />
+        </div>
+        <div
+          style="display: flex; flex-direction: column; justify-content: center"
+        >
+          <div>Name</div>
+          <div>Rating:</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <button id="edit" style="display: none; height: 50px; width: 50px">
+          edit
+        </button>
+        <button id="delete" style="display: none; height: 50px; width: 50px">
+          delete
+        </button>
+      </div>
+    </div>
+    <script>
+      function tick(bool) {
+        if (bool) {
+          document.getElementById("edit").style.display = "block";
+          document.getElementById("delete").style.display = "block";
+        } else {
+          document.getElementById("delete").style.display = "none";
+          document.getElementById("edit").style.display = "none";
+        }
+      }
+    </script>
+  </body>
 </html>
