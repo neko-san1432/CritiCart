@@ -20,7 +20,6 @@ document.getElementById("submit-review").addEventListener("click", async () => {
     console.error("⚠️ User not logged in", sessionError);
     return;
   }
-
   // Insert review
   const { data: insertData, error: insertError } = await supabase
     .from("productReview")
@@ -71,7 +70,6 @@ async function insertPictures(reviewId) {
     if (error) console.error("⚠️ Error uploading image:", file.name, error);
   }
 }
-
 // Insert tags
 async function insertTags(reviewId) {
   for (const tag of tags) {
