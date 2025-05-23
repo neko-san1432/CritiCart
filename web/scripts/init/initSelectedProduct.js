@@ -24,3 +24,7 @@ function initComments(data) {
   commentPane.innerHTML = comments;
 }
 function initReview(data) {}
+
+document.addEventListener('DOMContentLoaded',()=>{
+    initSelectedProduct()
+})
