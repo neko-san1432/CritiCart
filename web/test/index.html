@@ -1,51 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Supabase Signup</title>
-  </head>
-  <body>
-    <style></style>
-    <div
-      style="border: solid; display: flex; justify-content: space-between"
-      onmouseenter="tick(true)"
-      onmouseleave="tick(false)"
-    >
-      <div style="display: flex">
-        <div style="height: 50px; width: 50px; display: flex">
-          <img
-            src=""
-            alt="hi"
-            style="border: solid; width: 50px; height: 50px"
-          />
-        </div>
-        <div
-          style="display: flex; flex-direction: column; justify-content: center"
-        >
-          <div>Name</div>
-          <div>Rating:</div>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: center; align-items: center">
-        <button id="edit" style="display: none; height: 50px; width: 50px">
-          edit
-        </button>
-        <button id="delete" style="display: none; height: 50px; width: 50px">
-          delete
-        </button>
-      </div>
-    </div>
-    <script>
-      function tick(bool) {
-        if (bool) {
-          document.getElementById("edit").style.display = "block";
-          document.getElementById("delete").style.display = "block";
-        } else {
-          document.getElementById("delete").style.display = "none";
-          document.getElementById("edit").style.display = "none";
-        }
-      }
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Image Gallery with Thumbnails</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    #gallery {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    #gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    #gallery img.active {
+      display: block;
+    }
+
+    .controls {
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    .thumbnails img {
+      width: 100px;
+      height: 66px;
+      object-fit: cover;
+      cursor: pointer;
+      opacity: 0.6;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .thumbnails img.active-thumb {
+      opacity: 1;
+      border-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="gallery">
+    <img src="https://source.unsplash.com/600x400/?nature,water" class="active" alt="Image 1">
+    <img src="https://source.unsplash.com/600x400/?mountain,sky" alt="Image 2">
+    <img src="https://source.unsplash.com/600x400/?forest,trees" alt="Image 3">
+    <img src="https://source.unsplash.com/600x400/?desert,sand" alt="Image 4">
+  </div>
+
+  <div class="controls">
+    <button onclick="prevImage()">⟨ Prev</button>
+    <button onclick="nextImage()">Next ⟩</button>
+  </div>
+
+  <div class="thumbnails">
+    <img src="https://source.unsplash.com/100x66/?nature,water" onclick="goToImage(0)" class="active-thumb" alt="Thumb 1">
+    <img src="https://source.unsplash.com/100x66/?mountain,sky" onclick="goToImage(1)" alt="Thumb 2">
+    <img src="https://source.unsplash.com/100x66/?forest,trees" onclick="goToImage(2)" alt="Thumb 3">
+    <img src="https://source.unsplash.com/100x66/?desert,sand" onclick="goToImage(3)" alt="Thumb 4">
+  </div>
+
+  <script>
+    const images = document.querySelectorAll("#gallery img");
+    const thumbnails = document.querySelectorAll(".thumbnails img");
+    let index = 0;
+
+    function showImage(i) {
+      images.forEach(img => img.classList.remove("active"));
+      thumbnails.forEach(thumb => thumb.classList.remove("active-thumb"));
+      images[i].classList.add("active");
+      thumbnails[i].classList.add("active-thumb");
+    }
+
+    function nextImage() {
+      index = (index + 1) % images.length;
+      showImage(index);
+    }
+
+    function prevImage() {
+      index = (index - 1 + images.length) % images.length;
+      showImage(index);
+    }
+
+    function goToImage(i) {
+      index = i;
+      showImage(index);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    });
+  </script>
+
+</body>
 </html>

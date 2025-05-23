@@ -2,17 +2,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id = "product-title">X | CritiCart</title>
+    <title id="product-title">X | CritiCart</title>
     <link rel="stylesheet" href="/web/styles/initTheme.css" />
     <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
     <script type="module" src="/web/scripts/UI/interaction.js"></script>
-    <script type="module" src="/web/scripts/UI/sidePanelFuncForClient.js"></script>
+    <script
+      type="module"
+      src="/web/scripts/UI/sidePanelFuncForClient.js"
+    ></script>
     <script src="/web/scripts/init/panelDefault.js" defer></script>
     <script src="/web/scripts/internet.js" defer></script>
   </head>
   <body>
-    <div id="errorPane" style="z-index:5;position:absolute;display: flex;justify-content: center;">
-    </div>
+    <div
+      id="errorPane"
+      style="
+        z-index: 5;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+      "
+    ></div>
     <div
       id="offline"
       style="
@@ -88,7 +98,7 @@
           </svg>
           <span>Home</span>
         </button>
-         
+
         <button class="panel-button" id="reviewed-product">
           <svg
             class="invert"
@@ -173,14 +183,50 @@
         </button>
       </div>
       <div class="right-panel">
-        <div class="nav"><button class="backhome"></button></div>
-        <div id="reviewShowcase">
+        <div class="nav">
+          <button id="backhome" style="height: 50px; width: 50px">
+            <svg
+              class="invert"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              stroke-linejoin="round"
+              stroke-miterlimit="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m9.474 5.209s-4.501 4.505-6.254 6.259c-.147.146-.22.338-.22.53s.073.384.22.53c1.752 1.754 6.252 6.257 6.252 6.257.145.145.336.217.527.217.191-.001.383-.074.53-.221.293-.293.294-.766.004-1.057l-4.976-4.976h14.692c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.692l4.978-4.979c.289-.289.287-.761-.006-1.054-.147-.147-.339-.221-.53-.221-.191-.001-.38.071-.525.215z"
+                fill-rule="nonzero"
+              />
+            </svg>
+          </button>
         </div>
+        <div style="height: 150px; border: solid">
+          <div id="gallery"></div>
+          <div class="controls">
+            <button onclick="prevImage()">⟨ Prev</button>
+            <button onclick="nextImage()">Next ⟩</button>
+          </div>
+          <div class="thumbnails"></div>
+        </div>
+        <p id="productName"></p>
+        <details>
+          <summary id="totalRating"></summary>
+          <p id="qualRating"></p>
+          <p id="priceRating"></p>
+        </details>
+        <div id="reviewDesc"></div>
+        <a id="producURL"></a>
         <hr style="width: inherit; margin-right: 40px" />
-        <div id="picture-list"></div>
-        <span id ="productName"></span>
+        <button id="like" style="width: 50px; height: 50px"></button
+        ><button id="dislike" style="width: 50px; height: 50px"></button>
+
         <h2>Comments</h2>
         <div id="comments"></div>
+        <div>
+          <textarea name="" id="newComment"></textarea>
+          <button id="sendComment">Send</button>
+        </div>
       </div>
     </div>
     <style>
