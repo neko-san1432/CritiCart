@@ -1,4 +1,4 @@
-import { supabase } from "../api/database.js";
+import { supabase } from "../api/database.jscha";
 import { filesArray } from "../utils/fileUploadFunc.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
