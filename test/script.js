@@ -1,4 +1,4 @@
-import { supabase } from "/web/scripts/api/database.js";
+import { supabase } from "/scripts/api/database.js";
 
 async function fetchAllPanelConfigs() {
   const { data, error } = await supabase

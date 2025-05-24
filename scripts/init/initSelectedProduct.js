@@ -1,4 +1,4 @@
-import { supabase } from "/web/script/api/database.js";
+import { supabase } from "/script/api/database.js";
 
 const params = new URLSearchParams(window.location.search);
 const productID = params.get("productID");

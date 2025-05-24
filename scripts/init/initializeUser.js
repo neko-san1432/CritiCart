@@ -66,7 +66,7 @@ async function insertPanelConfig(userID) {
 
 // ─────────────── AUTH HANDLERS ───────────────
 async function loginWithGoogle() {
-  const redirectTo = `${window.location.origin}/web/pages/main-menu.html`;
+  const redirectTo = `${window.location.origin}/pages/main-menu.html`;
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: { redirectTo },
@@ -83,7 +83,7 @@ async function loginWithEmail(email, password) {
 
   const user = data.user;
   if (user?.email_confirmed_at) {
-    window.location.href = `${window.origin}/web/pages/main-menu.html`;
+    window.location.href = `${window.origin}/pages/main-menu.html`;
     checkUserOnLoad();
   } else {
     showError("Please verify your email before continuing.");
@@ -98,7 +98,7 @@ async function registerWithEmail(mail, pass, uname) {
     email:mail,
     password:pass,
     options: {
-      emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
+      emailRedirectTo: `${window.location.origin}/pages/main-menu.html`,
       data:{
         username:uname,
       }
@@ -124,7 +124,7 @@ async function resendVerification(email) {
     type: "signup",
     email,
     options: {
-      emailRedirectTo: `${window.location.origin}/web/pages/main-menu.html`,
+      emailRedirectTo: `${window.location.origin}/pages/main-menu.html`,
     },
   });
 

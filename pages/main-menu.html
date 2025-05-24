@@ -2,26 +2,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="profile-title">x | CritiCart</title>
-    <link rel="stylesheet" href="/web/styles/initTheme.css" />
-    <link rel="stylesheet" href="/web/styles/universalPageStyle.css" />
-    <link rel="stylesheet" href="/web/styles/profileButtonsStyles.css" />
-    <script type="module" src="/web/scripts/UI/interaction.js"></script>
+    <title>Welcome | CritiCart</title>
+    <link rel="stylesheet" href="/styles/initTheme.css" />
+    <link rel="stylesheet" href="/styles/universalPageStyle.css" />
+    <link rel="stylesheet" href="/styles/loading.css" />
+    <script type="module" src="/scripts/UI/interaction.js"></script>
     <script
       type="module"
-      src="/web/scripts/UI/sidePanelFuncForClient.js"
+      src="/scripts/UI/sidePanelFuncForClient.js"
     ></script>
     <script
       type="module"
-      src="/web/scripts/init/initUserProfile.js"
+      src="/scripts/init/initRandomProducts.js"
+    ></script>
+    <script
+      type="module"
+      src="/scripts/init/panelDefault.js"
       defer
     ></script>
-    <script
-      type="module"
-      src="/web/scripts/init/panelDefault.js"
-      defer
-    ></script>
-    <script type="module" src="/web/scripts/internet.js" defer></script>
+    <script type="module" src="/scripts/internet.js" defer></script>
   </head>
   <body>
     <div
@@ -75,8 +74,8 @@
               <path
                 d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"
               />
-            </svg></button
-          ><span></span>
+            </svg>
+          </button>
         </div>
         <button class="panel-button review-product">
           <svg
@@ -95,7 +94,7 @@
         </button>
         <button class="panel-button" id="home">
           <svg
-            class="invert"
+            class="invert selected"
             width="24"
             height="24"
             xmlns="http://www.w3.org/2000/svg"
@@ -195,171 +194,91 @@
       <div class="right-panel">
         <div
           style="
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            z-index: 5;
-            width: 50%;
-            height: 50%;
-          "
-          id="newA"
-        >
-          <input
-            type="file"
-            name=""
-            id="newAvatar"
-            onchange="img.src = window.URL.createObjectURL(this.files[0])"
-          />
-          <button id="submitNewAvatar">Submit</button>
-          <button id="cancel4">cancel</button>
-        </div>
-        <div
-          style="
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            z-index: 4;
-            width: 50%;
-            height: 50%;
-          "
-          id="newP"
-        >
-          <div
-            id="verifying"
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              position: absolute;
-              z-index: 3;
-              width: 50%;
-              height: 50%;
-            "
-          ></div>
-          <div id="enterNewPass">
-            <input type="text" id="newPass" />
-            <input type="text" id="newPass" />
-            <button id="submitNPass">Submit</button>
-          </div>
-
-          <button id="cancel3">cancel</button>
-        </div>
-        <div
-          style="
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            z-index: 2;
-            width: 50%;
-            height: 50%;
-          "
-          id="newE"
-        >
-          <input type="text" id="newEmail" />
-          <button id="submitNewEmail">Submit</button>
-          <button id="cancel2">cancel</button>
-        </div>
-        <div
-          style="
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            z-index: 1;
-            width: 50%;
-            height: 50%;
-          "
-          id="newN"
-        >
-          <button id="cancel1">cancel</button>
-          <input type="text" id="newName" />
-          <button id="submitNewName">Submit</button>
-        </div>
-        <div
-          style="
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            z-index: 0;
-            width: 100%;
-            height: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+            width: inherit;
           "
-          id="profile-container"
         >
-          <h1>User Profile</h1>
-          <div id="profile-details  ">
-            <div
+          <h1>Welcome</h1>
+          <div style="border: solid;display: flex;align-items: center;justify-content: center ;">
+            <button class="review-product" style="margin-right: 10px">
+              Review Product
+            </button>
+            <button id="profile2"style="width: 50px;height:50px;"></button>
+          </div>
+        </div>
+        <div class="container">
+          <div class="tinput">
+            <button
               style="
-                width: 100%;
-                height: 200px;
-                padding-right: 1000px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                margin-top: 0px;
+                right: 0px;
+                border: none;
+                z-index: 2;
               "
-              id="avatar"
             >
-              <div
-                style="
-                  width: 200px;
-                  height: 200px;
-                  border: solid;
-                  border-radius: 50%;
-                "
+              <svg
+                class="invert"
+                width="24"
+                height="24"
+                xmlns="http://www.w3.org/2000/svg"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
               >
-                <button
-                  style="
-                    width: 200px;
-                    height: 200px;
-                    z-index: 2;
-                    position: absolute;
-                    border-radius: 50%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                  "
-                  id="edit-avatar"
-                >
-                  <svg
-                    style="width: 36px; height: 36px"
-                    class="invert"
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
-                    stroke-linejoin="round"
-                    stroke-miterlimit="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 0-.229-.083-.466-.28-.662l-3.115-3.104c-.185-.185-.429-.277-.672-.277s-.486.092-.672.277l-11.606 11.566c-.569 1.763-1.555 4.823-1.626 5.081-.02.075-.029.15-.029.224 0 .461.349.848.765.848.511 0 .991-.189 5.369-1.681zm-3.27-3.342 2.137 2.137-3.168 1.046zm.955-1.166 10.114-10.079 2.335 2.327-10.099 10.101z"
-                      fill-rule="nonzero"
-                    />
-                  </svg>
-                </button>
-                <img
-                  id="avatar-pic"
-                  src=""
-                  alt="prof-pic"
-                  style="width: 200px; height: 200px; border-radius: 50%"
+                <path
+                  d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z"
                 />
-              </div>
-            </div>
-            <div style="display: flex; flex-direction: column">
-              <span id="current-name"></span>
-              <span id="current-email"></span>
-              <span id="current-userpass"></span>
-            </div>
+              </svg>
+            </button>
+            <input type="text" required placeholder="Search..." />
+          </div>
+        </div>
+        <br />
+        <hr style="width: inherit; margin-right: 20px" />
+        <h2>Reviewed Products</h2>
+        <h3>Food</h3>
+        <div class="product-holder-list" id="food">
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+        <h3>Cosmetics</h3>
+        <div class="product-holder-list" id="cosmetics">
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+        <h3>Appliances</h3>
+        <div class="product-holder-list" id="appliances">
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+        <h3>Health and Wellness</h3>
+        <div class="product-holder-list" id="hnw">
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+        <h3>Toys</h3>
+        <div class="product-holder-list" id="toys">
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Loading...</p>
           </div>
         </div>
       </div>
     </div>
-
     <style>
-      #profile {
+      #home {
         background-color: var(--base);
         color: var(--text);
       }

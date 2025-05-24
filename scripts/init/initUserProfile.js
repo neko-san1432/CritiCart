@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const editIcon = `
-  <svg class="invert" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" 
+  <svg style="width: 24px; height: 24px" class="invert" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" 
     stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path d="m9.134 19.319 11.587-11.588c.171-.171.279-.423.279-.684 
     0-.229-.083-.466-.28-.662l-3.115-3.104c-.185-.185-.429-.277-.672-.277s-.486.092-.672.277l-11.606 

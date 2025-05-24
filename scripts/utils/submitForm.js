@@ -53,7 +53,7 @@ document.getElementById("submit-review").addEventListener("click", async () => {
   console.log("✅ Review submitted with ID:", reviewID);
   setInterval(() => {
     windows.location.href =
-      window.location.origin + "/web/pages/main-menu.html";
+      window.location.origin + "/pages/main-menu.html";
   }, 5000);
 });
 

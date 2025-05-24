@@ -190,7 +190,7 @@ function attachEventListeners(category) {
     const element = document.getElementById(`${prefix}${index}-${i}`);
     if (!element) return;
     element.addEventListener("click", () => {
-      const url = new URL("/web/pages/product-preview.html", window.location.origin);
+      const url = new URL("/pages/product-preview.html", window.location.origin);
       url.searchParams.set("productID", prod.reviewId);
       window.location.href = url.toString();
     });
@@ -199,7 +199,7 @@ function attachEventListeners(category) {
   const moreBtn = document.getElementById(`${prefix}-more`);
   if (moreBtn) {
     moreBtn.addEventListener("click", () => {
-      const url = new URL("/web/pages/category.html", window.location.origin);
+      const url = new URL("/pages/category.html", window.location.origin);
       url.searchParams.set("category", category);
       window.location.href = url.toString();
     });

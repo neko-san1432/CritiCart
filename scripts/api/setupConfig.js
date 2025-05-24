@@ -30,7 +30,7 @@ async function checkAuthAndAddConfig() {
     }
   } else {
     alert("Login First!!!");
-    window.location.href = window.origin + "/web/index.html";
+    window.location.href = window.origin + "/index.html";
   }
 }
 async function checkIfExists(id) {
