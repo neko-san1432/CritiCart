@@ -47,25 +47,27 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${label}: ${value} <button id="${editId}">${editIcon}</button>`;
   }
 
-function createAvatarHTML(src, isEditable = false) {
-  const buttonHTML = isEditable
-    ? `<button id="edit-avatar" style="width: 200px; height: 200px; z-index: 2; position: absolute; border-radius: 50%; display: flex; justify-content: center; align-items: center;">${editIcon}</button>`
-    : "";
+  function createAvatarHTML(src, isEditable = false) {
+    const buttonHTML = isEditable
+      ? `<button id="edit-avatar" style="width: 200px; height: 200px; z-index: 2; position: absolute; border-radius: 50%; display: flex; justify-content: center; align-items: center;">${editIcon}</button>`
+      : "";
 
-  return `
+    return `
     <div style="width: 200px; height: 200px; border: solid; border-radius: 50%; position: relative;">
       ${buttonHTML}
       <img src="${src}" alt="prof-pic" style="width: 200px; height: 200px; border-radius: 50%;" />
     </div>`;
-}
+  }
 
   async function loadUserProfile() {
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
     if (error || !user) {
       console.error("Auth error:", error);
       return;
     }
-
     const isEmailUser = user.app_metadata?.provider === "email";
     const meta = user.user_metadata;
 
@@ -77,25 +79,74 @@ function createAvatarHTML(src, isEditable = false) {
     elements.email.innerHTML = createEditableLine("Email", email, "edit2");
     elements.avatar.innerHTML = createAvatarHTML(avatarLink, isEmailUser);
     if (isEmailUser) {
-      elements.password.innerHTML = createEditableLine("Password", "********", "edit4");
+      elements.password.innerHTML = createEditableLine(
+        "Password",
+        "********",
+        "edit4"
+      );
     }
 
     // Attach listeners after DOM injection
     attachEditListeners(isEmailUser);
+    initCounts();
+  }
+  async function initCounts() {
+    const { data, error: authError } = await supabase.auth.getUser();
+    if (authError || !data?.user) {
+      console.error("Auth error:", authError);
+      return;
+    }
+
+    const UUID = data.user.id;
+
+    // Count total reviews
+    const { count, error: countError } = await supabase
+      .from("productReview")
+      .select("*", { count: "exact", head: true })
+      .eq("userId", UUID);
+    if (countError) {
+      console.error("Error counting reviews:", countError);
+      return;
+    }
+    document.getElementById("totalReviews").innerHTML = `Total Reviews:<br/>${count}`;
+
+    // Get all likes and dislikes
+    const { data: reviews, error: reviewError } = await supabase
+      .from("productReview")
+      .select("likes, dislikes")
+      .eq("userId", UUID);
+    if (reviewError) {
+      console.error("Error fetching reviews:", reviewError);
+      return;
+    }
+
+    // Calculate total likes and dislikes
+    const totalLikes = reviews.reduce((sum, row) => sum + (row.likes || 0), 0);
+    const totalDislikes = reviews.reduce(
+      (sum, row) => sum + (row.dislikes || 0),
+      0
+    );
+
+    document.getElementById("totalLikes").innerHTML = `Total Likes:<br/>${totalLikes}`;
+    document.getElementById("totalDislikes").innerHTML = `Total Dislikes:<br/>${totalDislikes}`;
   }
 
   function attachEditListeners(isEmailUser) {
     document.getElementById("edit1").addEventListener("click", () => {
+      document.getElementById("changeMetadata").style.display = "flex";
       elements.newName.style.display = "flex";
     });
     document.getElementById("edit2").addEventListener("click", () => {
+      document.getElementById("changeMetadata").style.display = "flex";
       elements.newEmail.style.display = "flex";
     });
     if (isEmailUser) {
       document.getElementById("edit4").addEventListener("click", () => {
+        document.getElementById("changeMetadata").style.display = "flex";
         elements.newPass.style.display = "flex";
       });
       document.getElementById("edit-avatar").addEventListener("click", () => {
+        document.getElementById("changeMetadata").style.display = "flex";
         elements.newAvatar.style.display = "flex";
       });
     }
@@ -103,18 +154,22 @@ function createAvatarHTML(src, isEditable = false) {
 
   // Cancel buttons
   elements.cancel1.onclick = () => {
+    document.getElementById("changeMetadata").style.display = "none";
     elements.newName.style.display = "none";
     elements.newName.querySelector("input").value = "";
   };
   elements.cancel2.onclick = () => {
+    document.getElementById("changeMetadata").style.display = "none";
     elements.newEmail.style.display = "none";
     elements.newEmail.querySelector("input").value = "";
   };
   elements.cancel3.onclick = () => {
+    document.getElementById("changeMetadata").style.display = "none";
     elements.newPass.style.display = "none";
-    elements.newPass.querySelectorAll("input").forEach((el) => el.value = "");
+    elements.newPass.querySelectorAll("input").forEach((el) => (el.value = ""));
   };
   elements.cancel4.onclick = () => {
+    document.getElementById("changeMetadata").style.display = "none";
     elements.newAvatar.style.display = "none";
     elements.avatarFile.value = "";
   };
@@ -129,7 +184,9 @@ function createAvatarHTML(src, isEditable = false) {
   };
 
   elements.submitEmail.onclick = async () => {
-    await supabase.auth.updateUser({ email: elements.newEmail.querySelector("input").value });
+    await supabase.auth.updateUser({
+      email: elements.newEmail.querySelector("input").value,
+    });
     elements.newEmail.style.display = "none";
     loadUserProfile();
   };

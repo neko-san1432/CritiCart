@@ -134,9 +134,9 @@
       </div>
     </div>
 
-    <div class="right-panel">
-      <h1>Review a Product</h1>
-      <hr style="width: inherit; margin-right: 10px" />
+    <div class="right-panel" style="display: flex;flex-direction: column;" >
+      <h1 style="margin-left: 30px;">Review a Product</h1>
+      <hr style="width: 90%; " />
       <form id="protectedForm">
         <div class="file-upload-container">
           <input type="file" id="fileInput" accept="image/jpeg,image/png" multiple style="display: none">
@@ -152,7 +152,7 @@
         <br />
         <div class="container">
            <div class="tinput" >
-            <input type="text" required id= "pname"/>
+            <input type="text" required id= "pname" style="width: 400px;"/>
             <div class="labeline">Product name</div>
           </div>
         </div>
@@ -176,7 +176,7 @@
         <br />
         <div class="container">
           <div class="tinput">
-            <input type="text" required id="product-link"/>
+            <input type="text" required id="product-link" style="width: 500px;"/>
             <div class="labeline">Product link</div>
           </div>
         </div>
@@ -214,25 +214,25 @@
           </span>
         </div>
         <br />
-        <div class="container">
-          <div class="tinput">
-            <textarea name="product-desc" id="description" required></textarea>
-            <div class="labeline">Product Description</div>
-          </div>
-        </div>
-        <br />
         <div class="container" style="padding-left: 10px; padding-right: 10px">
           <div id="tags"></div>
         </div>
         <div class="container">
           <div class="tinput">
-            <input type="text" id="tagInput" required />
+            <input type="text" id="tagInput" style="width: 100px;" />
             <div class="labeline">Tags</div>
           </div>
         </div>
         <br />
         <div class="container">
-          <button style="border: solid; display: flex" id ="submit-review">
+          <div class="tinput">
+            <input type="text" id="tagInput" style="height: 300px;"required />
+            <div class="labeline">Product Description</div>
+          </div>
+        </div>
+        <br />
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+          <button style="border: solid; display: flex;margin-left: 30px;" id ="submit-review">
             Submit Review<svg class="invert" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round"
               stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -240,7 +240,7 @@
                 fill-rule="nonzero" />
             </svg>
           </button>
-        </div>
+
       </form>
     </div>
   </div>

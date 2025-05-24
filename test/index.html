@@ -2,88 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Search Highlight</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Resize Div</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    html, body {
+      margin: 0;
+      height: 100%;
+    }
+
+    .parent {
+      width: 80vw;        /* or 100% */
+      height: 80vh;       /* stretchable area */
+      margin: auto;
+      border: 3px solid #333;
+      resize: both;
+      overflow: auto;
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
-    input[type="text"] {
-      width: 100%;
+
+    .child {
+      background: lightblue;
+      width: 100%;           /* always fill parent width */
+      height: 50%;           /* adjusts to parent height */
+      box-sizing: border-box;
       padding: 10px;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      padding: 5px 0;
-      font-size: 18px;
-    }
-    .highlight {
-      background-color: yellow;
-      font-weight: bold;
+      border: 2px dashed navy;
     }
   </style>
 </head>
 <body>
 
-  <h2>Search and Highlight Characters</h2>
-  <input type="text" id="searchBox" placeholder="Type to search..." />
-
-  <ul id="searchResults">
-    <li>Apple</li>
-    <li>Banana</li>
-    <li>Grapes</li>
-    <li>Avocado</li>
-    <li>Blueberry</li>
-    <li>Mango</li>
-    <li>Pineapple</li>
-    <li>Orange</li>
-    <li>Strawberry</li>
-  </ul>
-
-  <script>
-    const searchBox = document.getElementById("searchBox");
-    const results = document.querySelectorAll("#searchResults li");
-
-    searchBox.addEventListener("input", () => {
-      const query = searchBox.value.toLowerCase();
-
-      results.forEach((item) => {
-        const originalText = item.textContent;
-        const lowerText = originalText.toLowerCase();
-
-        if (!query) {
-          item.innerHTML = originalText;
-          item.style.display = "";
-          return;
-        }
-
-        let highlighted = "";
-        let j = 0;
-
-        for (let i = 0; i < originalText.length; i++) {
-          if (j < query.length && lowerText[i] === query[j]) {
-            highlighted += `<span class="highlight">${originalText[i]}</span>`;
-            j++;
-          } else {
-            highlighted += originalText[i];
-          }
-        }
-
-        if (j === query.length) {
-          item.innerHTML = highlighted;
-          item.style.display = "";
-        } else {
-          item.style.display = "none";
-        }
-      });
-    });
-  </script>
+  <div class="parent">
+    <div class="child">I resize when the parent does.</div>
+  </div>
 
 </body>
 </html>

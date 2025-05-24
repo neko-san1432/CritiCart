@@ -7,20 +7,9 @@
     <link rel="stylesheet" href="/styles/universalPageStyle.css" />
     <link rel="stylesheet" href="/styles/profileButtonsStyles.css" />
     <script type="module" src="/scripts/UI/interaction.js"></script>
-    <script
-      type="module"
-      src="/scripts/UI/sidePanelFuncForClient.js"
-    ></script>
-    <script
-      type="module"
-      src="/scripts/init/initUserProfile.js"
-      defer
-    ></script>
-    <script
-      type="module"
-      src="/scripts/init/panelDefault.js"
-      defer
-    ></script>
+    <script type="module" src="/scripts/UI/sidePanelFuncForClient.js"></script>
+    <script type="module" src="/scripts/init/initUserProfile.js" defer></script>
+    <script type="module" src="/scripts/init/panelDefault.js" defer></script>
     <script type="module" src="/scripts/internet.js" defer></script>
   </head>
   <body>
@@ -192,18 +181,23 @@
           <span>Logout</span>
         </button>
       </div>
-      <div class="right-panel">
+      <div class="right-panel" style="display: flex;">
         <div
+        id="changeMetadata"
           style="
-            display: flex;
+          display: none;
             align-items: center;
             justify-content: center;
             height: 100%;
+            width:75%;
+            position: absolute;
+            z-index: 4;
+
           "
         >
           <div
             style="
-              display: flex;
+              display: none;
               align-items: center;
               justify-content: center;
               flex-direction: column;
@@ -217,12 +211,25 @@
             "
             id="newA"
           >
+            <p>Upload your new profile picture</p>
+            <img
+              id="preview"
+              alt="Image Preview"
+              style="
+                display: none;
+                max-width: 100px;
+                max-height: 100px;
+                margin-top: 10px;
+              "
+            />
+            <br />
             <input
               type="file"
-              name=""
               id="newAvatar"
-              onchange="img.src = window.URL.createObjectURL(this.files[0])"
+              style="height: 40px; width: 100%;border:none"
+              onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0]);document.getElementById('preview').style.display='block'"
             />
+
             <button
               id="submitNewAvatar"
               style="border: solid; width: 100px; height: 50px"
@@ -368,7 +375,6 @@
         </div>
         <div
           style="
-            display: none;
             position: absolute;
             z-index: 1;
             width: 100%;
@@ -376,16 +382,17 @@
           "
           id="profile-container"
         >
-          <h1>User Profile</h1>
-          <div id="profile-details  ">
+          <h1 style="margin-left: 30px;">User Profile</h1>
+          <hr style="width: 90%"/>
+          <div id="profile-details">
             <div
               style="
-                width: 75%;
+                width: 100%;
                 height: 200px;
-                padding-right: 1000px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                /* border: solid; */
               "
               id="avatar"
             >
@@ -439,17 +446,21 @@
               <span id="current-email"></span>
               <span id="current-userpass"></span>
             </div>
-            <div>
+            <hr style="width: 90%;" />
+            <div style="display: flex;flex-direction: row;justify-content: space-evenly;width: 100%;">
               <div
-                style="display: flex; flex-direction: column"
+                style="display: flex; flex-direction: column;justify-content: center;align-items: center;"
                 id="totalLikes"
               ></div>
+              <div style="width: 1px;background-color: var(--text);height: 200px;"></div>
               <div
-                style="display: flex; flex-direction: column"
+                style="display: flex; flex-direction: column;justify-content: center;align-items: center;"
                 id="totalDislikes"
               ></div>
+              <div style="width: 1px;background-color: var(--text);height: 200px;"></div>
+              
               <div
-                style="display: flex; flex-direction: column"
+                style="display: flex; flex-direction: column;justify-content: center;align-items: center;"
                 id="totalReviews"
               ></div>
             </div>
