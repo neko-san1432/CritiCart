@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitPass: document.getElementById("submitNPass"),
     submitAvatar: document.getElementById("submitNewAvatar"),
 
-    avatarImg: document.getElementById("avatar-pic"),
+    avatarImg: document.getElementById("avatarpic"),
   };
 
   const editIcon = `
@@ -64,16 +64,60 @@ document.addEventListener("DOMContentLoaded", () => {
       data: { user },
       error,
     } = await supabase.auth.getUser();
+
     if (error || !user) {
       console.error("Auth error:", error);
       return;
     }
+
     const isEmailUser = user.app_metadata?.provider === "email";
     const meta = user.user_metadata;
-
     const name = isEmailUser ? meta.display_name : meta.full_name;
-    const email = meta.email;
-    const avatarLink = isEmailUser ? meta.avatarLink : meta.avatar_url;
+    const email = user.email;
+
+    let avatarLink = "";
+
+    if (isEmailUser) {
+      // Get avatar path from the user's row
+      const { data: userData, error: error1 } = await supabase
+        .from("userData")
+        .select("avatarPath")
+        .eq("udataId", user.id)
+        .single();
+
+      if (error1 || !userData?.avatarPath) {
+        console.warn("No avatarPath found in userData:", error1);
+        avatarLink =
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s";
+      } else {
+        const filePath = userData.avatarPath; // Don't modify this; it's already the path inside the bucket
+        console.log("✅ Avatar path:", filePath);
+
+        // Generate signed URL
+        const { data: signedData, error: error2 } = await supabase.storage
+          .from("profilepic")
+          .createSignedUrl(filePath, 86400); // 1 day
+
+        if (error2 || !signedData?.signedUrl) {
+          console.error("❌ Failed to generate signed URL:", error2);
+          avatarLink =
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s";
+        } else {
+          avatarLink = signedData.signedUrl;
+          console.log("✅ Signed URL:", avatarLink);
+        }
+      }
+    } else {
+      // For Google or other providers
+      avatarLink =
+        meta.avatar_url ||
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s";
+    }
+
+    // You can now use avatarLink to set the profile picture
+    elements.avatarImg.src = avatarLink;
+
+    document.getElementById("avatarpic").src = avatarLink;
 
     elements.uname.innerHTML = createEditableLine("Name", name, "edit1");
     elements.email.innerHTML = createEditableLine("Email", email, "edit2");
@@ -108,7 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error counting reviews:", countError);
       return;
     }
-    document.getElementById("totalReviews").innerHTML = `Total Reviews:<br/>${count}`;
+    document.getElementById(
+      "totalReviews"
+    ).innerHTML = `Total Reviews:<br/><div style = "display:flex;justify-content: center;align-items:center;width:100%">${count}</div>`;
 
     // Get all likes and dislikes
     const { data: reviews, error: reviewError } = await supabase
@@ -126,9 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
       (sum, row) => sum + (row.dislikes || 0),
       0
     );
-
-    document.getElementById("totalLikes").innerHTML = `Total Likes:<br/>${totalLikes}`;
-    document.getElementById("totalDislikes").innerHTML = `Total Dislikes:<br/>${totalDislikes}`;
+    document.getElementById(
+      "totalLikes"
+    ).innerHTML = `Total Likes:<br/><div style = "display:flex;justify-content: center;align-items:center;width:100%">${totalLikes}</div>`;
+    document.getElementById(
+      "totalDislikes"
+    ).innerHTML = `Total Dislikes:<br/><div style = "display:flex;justify-content: center;align-items:center;width:100%">${totalDislikes}</div>`;
   }
 
   function attachEditListeners(isEmailUser) {
@@ -193,48 +242,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
   elements.submitPass.onclick = async () => {
     const np = elements.newPass.querySelector("#newPass").value;
-    const rnp = elements.newPass.querySelector("#rNewPass").value;
+    // const rnp = elements.newPass.querySelector("#rNewPass").value;
 
-    if (np !== rnp) {
-      alert("Passwords do not match.");
-      return;
-    }
+    // if (np !== rnp) {
+    //   alert("Passwords do not match.");
+    //   return;
+    // }
 
     await supabase.auth.updateUser({ password: np });
     elements.newPass.style.display = "none";
   };
 
   elements.submitAvatar.onclick = async () => {
-    const file = elements.avatarFile.files[0];
-    if (!file) return alert("Please select an image.");
+  const file = elements.avatarFile.files[0];
+  if (!file) return alert("Please select an image.");
 
-    const user = (await supabase.auth.getUser()).data.user;
-    const filePath = `avatars/${user.id}-${Date.now()}-${file.name}`;
+  const { data: authData, error: authError } = await supabase.auth.getUser();
+  const user = authData?.user;
+  if (authError || !user) {
+    console.error("Auth error:", authError);
+    return;
+  }
+  const filePath = `profilepic/${user.id}-${Date.now()}-${file.name}`;
 
-    const { error: uploadError } = await supabase.storage
+  // Attempt to remove the old avatar if it exists
+  const { data: oldData, error: fetchError } = await supabase
+    .from("userData")
+    .select("avatarPath")
+    .eq("udataId", user.id)
+    .single();
+
+  if (fetchError) {
+    console.warn("Couldn't fetch existing avatarPath:", fetchError);
+  } else if (oldData?.avatarPath) {
+    const { error: removeError } = await supabase.storage
       .from("profilepic")
-      .upload(filePath, file, {
-        cacheControl: "3600",
-        upsert: false,
-      });
+      .remove([oldData.avatarPath]);
 
-    if (uploadError) {
-      console.error("Upload failed:", uploadError);
-      return;
+    if (removeError) {
+      console.warn("Error removing old image:", removeError);
     }
+  }
 
-    //task: Update the updating of the profile avatar
+  // Upload new image
+  const { error: uploadError } = await supabase.storage
+    .from("profilepic")
+    .upload(filePath, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
 
-    const { data: signedUrlData } = await supabase.storage
-      .from("profilepic")
-      .createSignedUrl(filePath, 60);
+  if (uploadError) {
+    console.error("Upload failed:", uploadError);
+    return;
+  }
 
-    if (signedUrlData?.signedUrl) {
-      elements.avatarImg.src = signedUrlData.signedUrl;
-    }
+  // Update avatarPath in the database
+  const { error: updateError } = await supabase
+    .from("userData")
+    .update({ avatarPath: filePath })
+    .eq("udataId", user.id)
+    .single();
 
-    elements.newAvatar.style.display = "none";
-  };
+  if (updateError) {
+    console.error("Error updating avatarPath:", updateError);
+    return;
+  }
+
+  // Create signed URL for preview (no path replacement!)
+  const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+    .from("profilepic")
+    .createSignedUrl(filePath, 86400); // 1 day
+
+  if (signedUrlError || !signedUrlData?.signedUrl) {
+    console.error("Error creating signed URL:", signedUrlError);
+    return;
+  }
+
+  elements.avatarImg.src = signedUrlData.signedUrl;
+  console.log("✅ Avatar updated successfully.");
+  console.log("Signed URL:", signedUrlData.signedUrl);
+  console.log("File Path:", filePath);
+
+  location.reload(); 
+  // // optional, only if you want a hard refresh
+};
+
 
   // Initial load
   loadUserProfile();

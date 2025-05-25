@@ -60,7 +60,7 @@ document.getElementById("submit-review").addEventListener("click", async () => {
 // Upload images to Supabase Storage
 async function insertPictures(reviewId) {
   for (const file of filesArray) {
-    const filePath = `uploads/${Date.now()}_${file.name}`;
+    const filePath = `productimages/${Date.now()}_${file.name}`;
     const { error } = await supabase.storage
       .from("productimages")
       .upload(filePath, file, {
