@@ -63,8 +63,6 @@ async function userSidePanelUpdate(bool) {
 
     if (updateError) {
       console.error("Update failed:", updateError.message);
-    } else {
-      console.log("Update success:", updateData);
     }
   }
 }
@@ -98,8 +96,6 @@ async function userThemeUpdate(bool) {
 
     if (updateError) {
       console.error("Update failed:", updateError.message);
-    } else {
-      console.log("Update success:", updateData);
     }
   }
 }
