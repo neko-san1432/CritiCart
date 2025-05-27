@@ -96,7 +96,7 @@ function initReview(data, data1) {
 }
 
 async function initComments(comments) {
-  if (!Array.isArray(comments) || comments.length === 0) return;
+  if (!Array.isArray(comments)) return;
 
   const userIds = comments.map((c) => c.userId);
   // Fetch user display names
@@ -115,109 +115,198 @@ async function initComments(comments) {
     userData.map((user) => [user.udataId, user.displayName])
   );
 
-  // Generate HTML for each comment
   const commentPane = document.getElementById("comments");
+  
+  if (comments.length === 0) {
+    commentPane.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
+    return;
+  }
 
-  commentPane.innerHTML = comments
-    .map(async(comment, i) => {
+  // Generate HTML for each comment (await all promises before joining)
+  const commentHtmlArr = await Promise.all(
+    comments.map(async (comment, i) => {
       const name = nameMap[comment.userId] || "Anonymous";
-      const{data} = await supabase.from("likedComments").select("isLiked,isDisliked").eq("userId",user.id).eq("commentId",comment.id)
-      const svgLike = data.isLiked?SVG.liked:SVG.like
-      const svgDislike = data.isDisliked?SVG.disliked:SVG.dislike
+      let data = { isLiked: false, isDisliked: false };
+      
+      if (comment.commentId) {
+        const res = await supabase
+          .from("likedComments")
+          .select("isLiked,isDisliked")
+          .eq("userId", user.id)
+          .eq("commentId", comment.commentId)
+          .single();
+        if (res && res.data) data = res.data;
+      }
+
+      const svgLike = data.isLiked ? SVG.liked : SVG.like;
+      const svgDislike = data.isDisliked ? SVG.disliked : SVG.dislike;
+      
+      const date = new Date(comment.created_at);
+      const formattedDate = date.toLocaleDateString('en-US', {
+        year: 'numeric', 
+        month: 'short',
+        day: 'numeric'
+      });
+
       return `
-      <div style="width: 60%;">
-        <p><strong>${name}:</strong><br>${comment.comment}</p>
-        <button id="likeComment${i}" style="width:50px;height:50px">
-          ${svgLike} ${comment.likes}
-        </button>
-        <button id="dislikeComment${i}" style="width:50px;height:50px">
-          ${svgDislike} ${comment.dislikes}
-        </button>
-        <hr style="width: 100%;" />
-      </div>
-      <br>
-    `;
+        <div class="comment-item">
+          <div class="comment-header">
+            <strong>${name}</strong>
+            <span class="comment-date">${formattedDate}</span>
+          </div>
+          <div class="comment-content">${comment.comment}</div>
+          <div class="comment-actions">
+            <button id="likeComment${i}" class="vote-button">
+              ${svgLike} ${comment.likes || 0}
+            </button>
+            <button id="dislikeComment${i}" class="vote-button">
+              ${svgDislike} ${comment.dislikes || 0}
+            </button>
+          </div>
+          <hr class="comment-divider" />
+        </div>
+      `;
     })
-    .join("");
+  );
+
+  commentPane.innerHTML = commentHtmlArr.join("");
 
   // Add event listeners after DOM content is updated
   comments.forEach((comment, i) => {
     const likeBtn = document.getElementById(`likeComment${i}`);
     const dislikeBtn = document.getElementById(`dislikeComment${i}`);
-    likeBtn.addEventListener("click",async () => {
-      await handleVoteComment("like",i,comment.commentId)
-    });
-
-    dislikeBtn.addEventListener("click", async() => {
-      await handleVoteComment("like",i,comment.commentId)
-    });
+    
+    if (likeBtn) {
+      likeBtn.addEventListener("click", async () => {
+        if (comment.commentId) {
+          likeBtn.disabled = true;
+          await handleVoteComment("like", i, comment.commentId);
+          likeBtn.disabled = false;
+        }
+      });
+    }
+    
+    if (dislikeBtn) {
+      dislikeBtn.addEventListener("click", async () => {
+        if (comment.commentId) {
+          dislikeBtn.disabled = true;
+          await handleVoteComment("dislike", i, comment.commentId);
+          dislikeBtn.disabled = false;
+        }
+      });
+    }
   });
 }
-async function handleVoteComment(type,idx,idComm) {
+
+async function handleVoteComment(type, idx, idComm) {
+  if (!idComm) return;
   const isLike = type === "like";
   const field = isLike ? "isLiked" : "isDisliked";
   const oppField = isLike ? "isDisliked" : "isLiked";
   const counter = isLike ? "likes" : "dislikes";
-  const oppCounter = isLike ? "dislikes" : "likes"
-  const buttonname = isLike ? `likeComment${idx}`:`dislikeComment${idx}`;
-  const oppositeConfirm = isLike?`dislikeComment${idx}`:`likeComment${idx}`;
+  const oppCounter = isLike ? "dislikes" : "likes";
+
+  // Fetch current vote state
+  const { data: voteData, error: selectError } = await supabase
+    .from("likedComments")
+    .select("isLiked, isDisliked")
+    .eq("userId", user.id)
+    .eq("commentId", idComm)
+    .single();
+
+  // If no record, insert new with correct values
+  if (selectError || !voteData) {
+    const insertObj = {
+      userId: user.id,
+      commentId: idComm,
+      isLiked: isLike,
+      isDisliked: !isLike,
+    };
+    const { error: insertError } = await supabase
+      .from("likedComments")
+      .insert([insertObj]);
+    if (insertError) {
+      console.error("Error inserting data:", insertError);
+      return;
+    }
+    await updateCommentVoteCounts(isLike, true, false, idx, idComm);
+    return;
+  }
+
+  // Toggle logic: if already selected, unselect; if not, select and unselect the other
+  const toggled = !voteData[field];
+  const wasOppToggled = voteData[oppField];
+
+  // Update likedComments
+  const { error: updateError } = await supabase
+    .from("likedComments")
+    .update({ [field]: toggled, [oppField]: false })
+    .eq("userId", user.id)
+    .eq("commentId", idComm);
+
+  if (updateError) {
+    console.error("Error updating vote:", updateError);
+    return;
+  }
+
+  await updateCommentVoteCounts(isLike, toggled, wasOppToggled, idx, idComm);
+}
+
+async function updateCommentVoteCounts(isLike, toggled, wasOppToggled, idx, idComm) {  const counter = isLike ? "likes" : "dislikes";
+  const oppCounter = isLike ? "dislikes" : "likes";
+  const buttonId = isLike ? `likeComment${idx}` : `dislikeComment${idx}`;
+  const oppButtonId = isLike ? `dislikeComment${idx}` : `likeComment${idx}`;
+  const button = document.getElementById(buttonId);
+  const oppButton = document.getElementById(oppButtonId);
   const svg = isLike
     ? { default: SVG.like, toggled: SVG.liked }
     : { default: SVG.dislike, toggled: SVG.disliked };
-  const button = document.getElementById(buttonname);
-  const oppositeB = document.getElementById(oppositeConfirm);
-  const { data: voteData, error: selectError } = await supabase
-    .from("likedComments")
-    .select(field)
-    .eq("userId", user.id)
-    .eq("commentId", idComm)
-    .single();
-    const { data: voteDataOpp, error: selectErrorOpp } = await supabase
-    .from("likedComments")
-    .select(!field)
-    .eq("userId", user.id)
-    .eq("commentId", idComm)
-    .single();
+  const oppSvg = isLike
+    ? { default: SVG.dislike, toggled: SVG.disliked }
+    : { default: SVG.like, toggled: SVG.liked };
 
-  if (selectError || !voteData) {
-    const { error: insertError } = await supabase
-      .from("likedComments")
-      .insert([{ userId: user.id, commentId: idComm, [field]: true }]);
-    if (insertError) {
-      console.error("Error inserting data:", insertError);
-    }
-    return;
-  }
-
-  const toggled = !voteData[field];
-  const { error: updateError } = await supabase
-    .from("likedComments")
-    .update({ [field]: toggled })
-    .eq("userId", user.id)
-    .eq("commentId", idComm);
-
+  // Get current counts  
   const { data: countData, error: countError } = await supabase
     .from("comments")
-    .select(counter)
+    .select("likes, dislikes")
     .eq("commentId", idComm)
     .single();
 
-  const newCount = toggled ? countData[counter] + 1 : countData[counter] - 1;
-  const { error: countUpdateError } = await supabase
-    .from("comments")
-    .update({ [counter]: newCount })
-    .eq("commentId", idComm);
-
-  if (updateError || countError || countUpdateError) {
-    console.error(
-      "Error updating values:",
-      updateError || countError || countUpdateError
-    );
+  if (countError || !countData) {
+    console.error("Error fetching counts:", countError);
     return;
   }
 
-  button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
+  let newCount = countData[counter] || 0;
+  let newOppCount = countData[oppCounter] || 0;
+
+  // If toggled on, increment; if toggled off, decrement
+  if (toggled) newCount += 1;
+  else newCount -= 1;
+
+  // If the opposite was previously toggled, decrement it
+  if (wasOppToggled) newOppCount -= 1;
+
+  // Ensure counts don't go below 0
+  newCount = Math.max(0, newCount);
+  newOppCount = Math.max(0, newOppCount);
+
+  // Update counts in DB
+  const { error: countUpdateError } = await supabase
+    .from("comments")
+    .update({ [counter]: newCount, [oppCounter]: newOppCount })
+    .eq("commentId", idComm);
+
+  if (countUpdateError) {
+    console.error("Error updating counts:", countUpdateError);
+    return;
+  }
+
+  // Update UI for both buttons
+  if (button) button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
+  if (oppButton) oppButton.innerHTML = `${oppSvg.default} ${newOppCount}`;
 }
+
 async function initPictures(data) {
   if (!data) return;
   const gallery = document.getElementById("gallery");
@@ -290,74 +379,211 @@ document.getElementById("dislike").addEventListener("click", async () => {
 async function handleVote(type) {
   const isLike = type === "like";
   const field = isLike ? "isLiked" : "isDisliked";
+  const oppField = isLike ? "isDisliked" : "isLiked";
   const counter = isLike ? "likes" : "dislikes";
+  const oppCounter = isLike ? "dislikes" : "likes";
   const svg = isLike
     ? { default: SVG.like, toggled: SVG.liked }
     : { default: SVG.dislike, toggled: SVG.disliked };
+  const oppSvg = isLike
+    ? { default: SVG.dislike, toggled: SVG.disliked }
+    : { default: SVG.like, toggled: SVG.liked };
   const button = document.getElementById(type);
+  const oppButton = document.getElementById(isLike ? "dislike" : "like");
 
+  // Fetch current vote state
   const { data: voteData, error: selectError } = await supabase
     .from("likedProducts")
-    .select(field)
+    .select("isLiked, isDisliked")
     .eq("userId", user.id)
     .eq("reviewId", reviewID)
     .single();
 
+  // If no record, insert new with correct values
   if (selectError || !voteData) {
+    const insertObj = {
+      userId: user.id,
+      reviewId: reviewID,
+      isLiked: isLike,
+      isDisliked: !isLike,
+    };
     const { error: insertError } = await supabase
       .from("likedProducts")
-      .insert([{ userId: user.id, reviewId: reviewID, [field]: true }]);
+      .insert([insertObj]);
     if (insertError) {
       console.error("Error inserting data:", insertError);
+      return;
     }
+    await updateVoteCounts(isLike, true, false);
     return;
   }
 
+  // Toggle logic: if already selected, unselect; if not, select and unselect the other
   const toggled = !voteData[field];
+  const wasOppToggled = voteData[oppField];
+
+  // Update likedProducts
   const { error: updateError } = await supabase
     .from("likedProducts")
-    .update({ [field]: toggled })
+    .update({ [field]: toggled, [oppField]: false })
     .eq("userId", user.id)
     .eq("reviewId", reviewID);
 
-  const { data: countData, error: countError } = await supabase
-    .from("productReview")
-    .select(counter)
-    .eq("reviewId", reviewID)
-    .single();
-
-  const newCount = toggled ? countData[counter] + 1 : countData[counter] - 1;
-  const { error: countUpdateError } = await supabase
-    .from("productReview")
-    .update({ [counter]: newCount })
-    .eq("reviewId", reviewID);
-
-  if (updateError || countError || countUpdateError) {
-    console.error(
-      "Error updating values:",
-      updateError || countError || countUpdateError
-    );
+  if (updateError) {
+    console.error("Error updating vote:", updateError);
     return;
   }
 
-  button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
+  await updateVoteCounts(isLike, toggled, wasOppToggled);
 }
 
-document.getElementById("newComment").addEventListener("click", async () => {
-  let innerComment = document.getElementById("sendComment").value;
-  if (!innerComment === "") {
-    const { error: submissionError } = await supabase.from("comments").insert([
-      {
-        reviewID: reviewID,
-        userId: user.id,
-        comment: innerComment,
-      },
-    ]);
-    location.reload();
-    if (submissionError) {
-      console.error("Error inserting comment", submissionError);
-    }
-  } else {
-    console.error("Empty field");
+// Helper to update productReview counts and button UI
+async function updateVoteCounts(isLike, toggled, wasOppToggled) {
+  const counter = isLike ? "likes" : "dislikes";
+  const oppCounter = isLike ? "dislikes" : "likes";
+  const button = document.getElementById(isLike ? "like" : "dislike");
+  const oppButton = document.getElementById(isLike ? "dislike" : "like");
+  const svg = isLike
+    ? { default: SVG.like, toggled: SVG.liked }
+    : { default: SVG.dislike, toggled: SVG.disliked };
+  const oppSvg = isLike
+    ? { default: SVG.dislike, toggled: SVG.disliked }
+    : { default: SVG.like, toggled: SVG.liked };
+
+  // Get current counts
+  const { data: countData, error: countError } = await supabase
+    .from("productReview")
+    .select("likes, dislikes")
+    .eq("reviewId", reviewID)
+    .single();
+
+  if (countError || !countData) {
+    console.error("Error fetching counts:", countError);
+    return;
   }
-});
+
+  let newCount = countData[counter];
+  let newOppCount = countData[oppCounter];
+
+  // If toggled on, increment; if toggled off, decrement
+  if (toggled) newCount += 1;
+  else newCount -= 1;
+
+  // If the opposite was previously toggled, decrement it
+  if (wasOppToggled) newOppCount -= 1;
+
+  // Update counts in DB
+  const { error: countUpdateError } = await supabase
+    .from("productReview")
+    .update({ [counter]: newCount, [oppCounter]: newOppCount })
+    .eq("reviewId", reviewID);
+
+  if (countUpdateError) {
+    console.error("Error updating counts:", countUpdateError);
+    return;
+  }
+
+  // Update UI
+  button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
+  oppButton.innerHTML = `${oppSvg.default} ${newOppCount}`;
+}
+
+// Create a function to show feedback messages
+function showMessage(message, isError = false) {
+  const existingMsg = document.getElementById("commentFeedback");
+  if (existingMsg) existingMsg.remove();
+  
+  const msgElement = document.createElement("div");
+  msgElement.id = "commentFeedback";
+  msgElement.style.padding = "10px";
+  msgElement.style.marginTop = "10px";
+  msgElement.style.borderRadius = "4px";
+  msgElement.style.backgroundColor = isError ? "#ffe6e6" : "#e6ffe6";
+  msgElement.style.color = isError ? "#cc0000" : "#008000";
+  msgElement.textContent = message;
+  
+  const commentBox = document.getElementById("sendComment");
+  commentBox.parentNode.insertBefore(msgElement, commentBox.nextSibling);
+  
+  // Auto-hide message after 5 seconds
+  setTimeout(() => msgElement.remove(), 5000);
+}
+
+// Initialize comment submission functionality
+document.addEventListener("DOMContentLoaded", () => {
+  // Add event listeners for comment submission
+  const submitButton = document.getElementById("sendComment");
+  const commentInput = document.getElementById("newComment");
+
+  if (!submitButton || !commentInput) {
+    console.error("Comment form elements not found");
+    return;
+  }
+
+  const handleSubmit = async () => {
+    const commentText = commentInput.value.trim();
+  
+    // Validate input
+      if (commentText === "") {
+        showMessage("Please enter a comment", true);
+        return;
+      }
+  
+      if (commentText.length < 2) {
+        showMessage("Comment is too short", true);
+        return;
+      }
+      
+      // Disable button and show loading state
+      submitButton.disabled = true;
+      submitButton.textContent = "Posting...";
+      
+      try {
+        const { error: submissionError } = await supabase.from("comments").insert([
+          {
+            reviewId: reviewID,
+            userId: user.id,
+            comment: commentText,
+            likes: 0,
+            dislikes: 0,
+            created_at: new Date().toISOString()
+          },
+        ]);
+        
+        if (submissionError) {
+          throw submissionError;
+        }
+        
+        // Clear input and show success message
+        commentInput.value = "";
+        showMessage("Comment posted successfully!");
+        
+        // Refresh comments without full page reload
+        const { data: newComments, error: refreshError } = await supabase
+          .from("comments")
+          .select("*")
+          .eq("reviewId", reviewID);
+          
+        if (!refreshError && newComments) {
+          await initComments(newComments);
+        } else {
+          location.reload(); // Fallback to page reload if refresh fails
+        }
+      } catch (error) {
+        console.error("Error posting comment:", error);
+        showMessage("Failed to post comment. Please try again.", true);
+      } finally {
+        // Reset button state
+        submitButton.disabled = false;
+        submitButton.textContent = "Send";      }
+    };    // Add click event listener
+    submitButton.addEventListener("click", () => handleSubmit());
+
+    // Add enter key press event listener
+    commentInput.addEventListener("keypress", async (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        await handleSubmit();
+      }
+    });
+  });

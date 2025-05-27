@@ -267,14 +267,34 @@
         </button>
         <div>
           <h3>Add Comment</h3>
-          <textarea name="" id="newComment" style="width: 300px"></textarea>
-          <br /><br />
-          <button
-            id="sendComment"
-            style="border: solid; width: 50px; height: 20px"
-          >
-            Send
-          </button>
+          <div class="comment-form">
+            <textarea
+              name="comment"
+              id="newComment"
+              placeholder="Write your comment here..."
+              style="
+                width: 100%;
+                min-height: 100px;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+              "
+            ></textarea>
+            <button
+              id="sendComment"
+              style="
+                padding: 8px 16px;
+                border-radius: 4px;
+                border: none;
+                background-color: var(--base);
+                color: var(--text);
+                cursor: pointer;
+              "
+            >
+              Send
+            </button>
+          </div>
         </div>
         <br />
         <h2>Comments</h2>
