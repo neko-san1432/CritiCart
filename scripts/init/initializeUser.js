@@ -113,10 +113,10 @@ async function registerWithEmail(mail, pass, uname) {
 }
 async function insertPublicMetaData(userID,name,mail) {
   await supabase.from('userData').insert([{
-    avatarLink:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s",
-    uuid:userID,
-    displayName:name,
-    email:mail
+    udataId: userID,
+    displayName: name,
+    email: mail,
+    avatarPath: null // Initialize as null, will be set when user uploads an avatar
   }])
 }
 async function resendVerification(email) {

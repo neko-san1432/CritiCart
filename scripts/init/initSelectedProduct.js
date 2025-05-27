@@ -46,16 +46,22 @@ async function initSelectedProduct() {
         .single(),
       supabase.from("comments").select("*").eq("reviewId", reviewID),
       supabase.from("productImages").select("*").eq("reviewId", reviewID),
-    ]);
-    const { data: voteData, error: selectError } = await supabase
+    ]);    let voteData = {
+      isDisliked: false,
+      isLiked: false
+    };
+    
+    const { data: voteResult, error: selectError } = await supabase
       .from("likedProducts")
       .select("isLiked,isDisliked")
       .eq("userId", user.id)
       .eq("reviewId", reviewID)
       .single();
-    if (selectError) {
-      console.log("ehe");
+    
+    if (!selectError && voteResult) {
+      voteData = voteResult;
     }
+    console.log(reviewData)
     if (reviewError || commentError || imageError)
       throw reviewError || commentError || imageError;
 
@@ -87,10 +93,10 @@ function initReview(data, data1) {
   document.getElementById("dislike").innerHTML = `${
     data1.isDisliked ? SVG.disliked : SVG.dislike
   } ${data["dislikes"]}`;
-
   document.getElementById(
     "productURL"
   ).innerHTML = `<a href="${data.productURL}">${data.productURL}</a>`;
+  console.log(data.productURL)
   document.getElementById("reviewDate").innerHTML = createdAt;
   document.getElementById("cat").innerHTML = data.productType;
 }
@@ -124,18 +130,21 @@ async function initComments(comments) {
 
   // Generate HTML for each comment (await all promises before joining)
   const commentHtmlArr = await Promise.all(
-    comments.map(async (comment, i) => {
-      const name = nameMap[comment.userId] || "Anonymous";
+    comments.map(async (comment, i) => {      const name = nameMap[comment.userId] || "Anonymous";
+      // Default state is no votes
       let data = { isLiked: false, isDisliked: false };
       
       if (comment.commentId) {
-        const res = await supabase
+        const { data: likeData, error: likeError } = await supabase
           .from("likedComments")
           .select("isLiked,isDisliked")
           .eq("userId", user.id)
           .eq("commentId", comment.commentId)
           .single();
-        if (res && res.data) data = res.data;
+        // Only update state if we successfully get vote data
+        if (!likeError && likeData) {
+          data = likeData;
+        }
       }
 
       const svgLike = data.isLiked ? SVG.liked : SVG.like;

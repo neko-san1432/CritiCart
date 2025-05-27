@@ -75,6 +75,38 @@ function setupRating({
 export let ratingPrice = 0;
 export let ratingQuality = 0;
 
+export function setRatings(quality, price) {
+  ratingQuality = quality;
+  ratingPrice = price;
+
+  // Update the UI to reflect the ratings
+  const qualityFill = document.getElementById("fill1");
+  const priceFill = document.getElementById("fill");
+  const qualityOutput = document.getElementById("rating1");
+  const priceOutput = document.getElementById("rating");
+
+  if (qualityFill && qualityOutput) {
+    qualityFill.style.width = `${(quality / 5) * 100}%`;
+    let qualitySentiment = getSentiment(quality);
+    qualityOutput.innerHTML = `Quality rating: ${quality}<br/>Satisfaction sentiment: ${qualitySentiment}`;
+  }
+
+  if (priceFill && priceOutput) {
+    priceFill.style.width = `${(price / 5) * 100}%`;
+    let priceSentiment = getSentiment(price);
+    priceOutput.innerHTML = `Price rating: ${price}<br/>Satisfaction sentiment: ${priceSentiment}`;
+  }
+}
+
+function getSentiment(rating) {
+  if (rating >= 0 && rating <= 0.9) return "Extremely not satisfied";
+  else if (rating >= 1 && rating <= 1.9) return "Not satisfied";
+  else if (rating >= 2 && rating <= 2.9) return "Moderately satisfied";
+  else if (rating >= 3 && rating <= 3.9) return "Satisfied";
+  else if (rating >= 4 && rating <= 5) return "Extremely satisfied";
+  return "---";
+}
+
 // Run setup
 setupRating({
   containerId: "ratingContainer",

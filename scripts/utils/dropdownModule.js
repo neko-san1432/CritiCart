@@ -1,3 +1,5 @@
+export let selectedCategory = 'food'; // default category
+
 const dropdown = document.querySelector('.custom-dropdown');
 if (dropdown) {
   const toggle = dropdown.querySelector('.dropdown-toggle');
@@ -18,12 +20,18 @@ if (dropdown) {
     });
 
     // Handle option selection
-    options.forEach(option => {
-      option.addEventListener('click', () => {
+    options.forEach(option => {      option.addEventListener('click', () => {
+        const value = option.dataset.value;
+        selectedCategory = value;
         toggle.textContent = option.textContent + ' ▼';
         dropdown.classList.remove('active');
         toggle.setAttribute('aria-expanded', 'false');
-        console.log('Selected:', option.dataset.value);
+        
+        // Dispatch custom event for category change
+        const event = new CustomEvent('categoryChange', { 
+          detail: { category: value }
+        });
+        document.dispatchEvent(event);
       });
     });
 

@@ -75,6 +75,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const filePath = `uploads/${Date.now()}_${fileProf.name}`;
+    
+    // Upload new image
     const { error: uploadError } = await supabase.storage
       .from("profilepic")
       .upload(filePath, fileProf, {
@@ -87,18 +89,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const { data: publicData } = supabase.storage
-      .from("profilepic")
-      .getPublicUrl(filePath);
-    const publicUrl = publicData?.publicUrl;
-
+    // Update database with new avatar path
     const { error: dbError } = await supabase
       .from("userData")
-      .update({ avatarLink: publicUrl })
-      .eq("userId", user.id);
+      .update({ avatarPath: filePath })
+      .eq("udataId", user.id);
 
     if (dbError) {
-      console.error("❌ Failed to update avatar link:", dbError.message);
+      console.error("❌ Failed to update avatar path:", dbError.message);
     } else {
       console.log("✅ Avatar updated");
     }

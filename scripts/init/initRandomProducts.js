@@ -1,5 +1,77 @@
 import { supabase } from "../api/database.js";
 
+// Initialize profile picture and button functionality
+async function initializeProfileButton() {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const profilePic = document.getElementById('profilePicture2');
+    const profileButton = document.getElementById('profile2');
+    
+    // Get user profile picture
+    const { data: userData } = await supabase
+      .from('userData')
+      .select('avatarPath')
+      .eq('udataId', user.id)
+      .single();
+
+    if (userData?.avatarPath) {
+      // Generate signed URL for the profile picture
+      const { data } = await supabase.storage
+        .from('profilepic')
+        .createSignedUrl(userData.avatarPath, 86400); // 24 hours
+
+      if (data?.signedUrl) {
+        profilePic.src = data.signedUrl;
+      } else {
+        // Set default if URL creation fails
+        profilePic.src = '../assets/default-profile.png';
+      }
+    } else {
+      // Set default if no profile picture is set
+      profilePic.src = '../assets/default-profile.png';
+    }
+
+    // Add hover effect to profile button
+    profileButton.addEventListener('mouseenter', () => {
+      profileButton.style.transform = 'scale(1.05)';
+      profileButton.style.transition = 'transform 0.2s ease';
+    });
+    
+    profileButton.addEventListener('mouseleave', () => {
+      profileButton.style.transform = 'scale(1)';
+    });    // Add click event to redirect to profile page
+    profileButton.addEventListener('click', () => {
+      window.location.href = '../pages/user-profile.html';
+    });
+
+    // Set background color while loading
+    profilePic.addEventListener('load', () => {
+      profileButton.style.backgroundColor = 'transparent';
+    });
+
+    profilePic.addEventListener('error', () => {
+      console.warn('Failed to load profile picture, using default');
+      profilePic.src = '../assets/default-profile.png';
+      profileButton.style.backgroundColor = 'transparent';
+    });
+
+  } catch (error) {
+    console.error('Error initializing profile:', error);
+    const profilePic = document.getElementById('profilePicture2');
+    if (profilePic) {
+      profilePic.src = '../assets/default-profile.png';
+    }
+  }
+}
+
+// Call initialization when document is loaded
+document.addEventListener('DOMContentLoaded', async () => {
+  await initializeProfileButton();
+  searchRandomProducts();
+});
+
 const sections = {
   food: document.getElementById("food"),
   cosmetics: document.getElementById("cosmetics"),
@@ -112,19 +184,26 @@ async function initCategory(category) {
 }
 async function getProfilePics(userIds) {
   const profilePicPromises = userIds.map(async (userId) => {
-    const { data: profPath, erro1 } = await supabase
+    const { data: profData, error: dbError } = await supabase
       .from("userData")
       .select("avatarPath")
       .eq("udataId", userId)
       .single();
-    const path = profPath.avatarPath;
-    const { data, error } = await supabase.storage
-      .from("profilepic")
-      .createSignedUrl(path, 86400);
-    if (error) {
-      console.warn(`Failed to get profile pic for userId=${userId}:`, error);
+
+    if (dbError || !profData?.avatarPath) {
+      console.warn(`Failed to get avatarPath for userId=${userId}:`, dbError);
       return { userId, url: null };
     }
+
+    const { data, error } = await supabase.storage
+      .from("profilepic")
+      .createSignedUrl(profData.avatarPath, 86400);
+
+    if (error) {
+      console.warn(`Failed to get signed URL for userId=${userId}:`, error);
+      return { userId, url: null };
+    }
+
     return { userId, url: data.signedUrl };
   });
 
@@ -132,7 +211,7 @@ async function getProfilePics(userIds) {
 
   const profilePicMap = {};
   results.forEach(({ userId, url }) => {
-    profilePicMap[userId] = url;
+    profilePicMap[userId] = url || '../assets/default-profile.png';
   });
 
   return profilePicMap;

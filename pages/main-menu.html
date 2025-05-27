@@ -7,19 +7,9 @@
     <link rel="stylesheet" href="/styles/universalPageStyle.css" />
     <link rel="stylesheet" href="/styles/loading.css" />
     <script type="module" src="/scripts/UI/interaction.js"></script>
-    <script
-      type="module"
-      src="/scripts/UI/sidePanelFuncForClient.js"
-    ></script>
-    <script
-      type="module"
-      src="/scripts/init/initRandomProducts.js"
-    ></script>
-    <script
-      type="module"
-      src="/scripts/init/panelDefault.js"
-      defer
-    ></script>
+    <script type="module" src="/scripts/UI/sidePanelFuncForClient.js"></script>
+    <script type="module" src="/scripts/init/initRandomProducts.js"></script>
+    <script type="module" src="/scripts/init/panelDefault.js" defer></script>
     <script type="module" src="/scripts/internet.js" defer></script>
   </head>
   <body>
@@ -191,7 +181,7 @@
           <span>Logout</span>
         </button>
       </div>
-      <div class="right-panel" style="padding-left:30px ;">
+      <div class="right-panel" style="padding-left: 30px">
         <div
           style="
             display: flex;
@@ -201,11 +191,39 @@
           "
         >
           <h1>Welcome</h1>
-          <div style="border: solid;display: flex;align-items: center;justify-content: center ;">
-            <button class="review-product" style="margin-right: 10px">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding-right: 20px;
+            "
+          >
+            <button
+              class="review-product"
+              style="margin-right: 15px; border-radius: 5px; padding: 10px 20px"
+            >
               Review Product
             </button>
-            <button id="profile2"style="width: 50px;height:50px;"></button>
+            <button
+              id="profile2"
+              style="
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                overflow: hidden;
+                padding: 0;
+                cursor: pointer;
+                border: 2px solid var(--accent);
+              "
+            >
+              <img
+                id="profilePicture2"
+                src=""
+                alt="Profile"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </button>
           </div>
         </div>
         <div class="container">

@@ -2,6 +2,13 @@ const tagInput = document.getElementById('tagInput');
 const tagsContainer = document.getElementById('tags');
 export let tags = [];
 
+export function addTag(text) {
+  if (text && text.trim() !== '' && !tags.includes(text.trim())) {
+    tags.push(text.trim());
+    renderTags();
+  }
+}
+
 function createTagElement(text, index) {
   const tag = document.createElement('button');
   tag.className = 'tag';
@@ -19,13 +26,6 @@ function renderTags() {
   tags.forEach((tagText, index) => {
     tagsContainer.appendChild(createTagElement(tagText, index));
   });
-}
-
-function addTag(text) {
-  if (text.trim() !== '') {
-    tags.push(text.trim());
-    renderTags();
-  }
 }
 
 function editTag(index) {
