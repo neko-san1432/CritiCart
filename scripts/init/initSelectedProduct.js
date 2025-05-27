@@ -46,22 +46,23 @@ async function initSelectedProduct() {
         .single(),
       supabase.from("comments").select("*").eq("reviewId", reviewID),
       supabase.from("productImages").select("*").eq("reviewId", reviewID),
-    ]);    let voteData = {
+    ]);
+    let voteData = {
       isDisliked: false,
-      isLiked: false
+      isLiked: false,
     };
-    
+
     const { data: voteResult, error: selectError } = await supabase
       .from("likedProducts")
       .select("isLiked,isDisliked")
       .eq("userId", user.id)
       .eq("reviewId", reviewID)
       .single();
-    
+
     if (!selectError && voteResult) {
       voteData = voteResult;
     }
-    console.log(reviewData)
+    console.log(reviewData);
     if (reviewError || commentError || imageError)
       throw reviewError || commentError || imageError;
 
@@ -96,7 +97,7 @@ function initReview(data, data1) {
   document.getElementById(
     "productURL"
   ).innerHTML = `<a href="${data.productURL}">${data.productURL}</a>`;
-  console.log(data.productURL)
+  console.log(data.productURL);
   document.getElementById("reviewDate").innerHTML = createdAt;
   document.getElementById("cat").innerHTML = data.productType;
 }
@@ -122,39 +123,37 @@ async function initComments(comments) {
   );
 
   const commentPane = document.getElementById("comments");
-  
+
   if (comments.length === 0) {
-    commentPane.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
+    commentPane.innerHTML =
+      '<div class="no-comments">No comments yet. Be the first to comment!</div>';
     return;
   }
 
   // Generate HTML for each comment (await all promises before joining)
   const commentHtmlArr = await Promise.all(
-    comments.map(async (comment, i) => {      const name = nameMap[comment.userId] || "Anonymous";
-      // Default state is no votes
+    comments.map(async (comment, i) => {
+      const name = nameMap[comment.userId] || "Anonymous";
       let data = { isLiked: false, isDisliked: false };
-      
+
       if (comment.commentId) {
-        const { data: likeData, error: likeError } = await supabase
+        const res = await supabase
           .from("likedComments")
           .select("isLiked,isDisliked")
           .eq("userId", user.id)
           .eq("commentId", comment.commentId)
           .single();
-        // Only update state if we successfully get vote data
-        if (!likeError && likeData) {
-          data = likeData;
-        }
+        if (res && res.data) data = res.data;
       }
 
       const svgLike = data.isLiked ? SVG.liked : SVG.like;
       const svgDislike = data.isDisliked ? SVG.disliked : SVG.dislike;
-      
+
       const date = new Date(comment.created_at);
-      const formattedDate = date.toLocaleDateString('en-US', {
-        year: 'numeric', 
-        month: 'short',
-        day: 'numeric'
+      const formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
       });
 
       return `
@@ -184,7 +183,7 @@ async function initComments(comments) {
   comments.forEach((comment, i) => {
     const likeBtn = document.getElementById(`likeComment${i}`);
     const dislikeBtn = document.getElementById(`dislikeComment${i}`);
-    
+
     if (likeBtn) {
       likeBtn.addEventListener("click", async () => {
         if (comment.commentId) {
@@ -194,7 +193,7 @@ async function initComments(comments) {
         }
       });
     }
-    
+
     if (dislikeBtn) {
       dislikeBtn.addEventListener("click", async () => {
         if (comment.commentId) {
@@ -261,7 +260,14 @@ async function handleVoteComment(type, idx, idComm) {
   await updateCommentVoteCounts(isLike, toggled, wasOppToggled, idx, idComm);
 }
 
-async function updateCommentVoteCounts(isLike, toggled, wasOppToggled, idx, idComm) {  const counter = isLike ? "likes" : "dislikes";
+async function updateCommentVoteCounts(
+  isLike,
+  toggled,
+  wasOppToggled,
+  idx,
+  idComm
+) {
+  const counter = isLike ? "likes" : "dislikes";
   const oppCounter = isLike ? "dislikes" : "likes";
   const buttonId = isLike ? `likeComment${idx}` : `dislikeComment${idx}`;
   const oppButtonId = isLike ? `dislikeComment${idx}` : `likeComment${idx}`;
@@ -274,7 +280,7 @@ async function updateCommentVoteCounts(isLike, toggled, wasOppToggled, idx, idCo
     ? { default: SVG.dislike, toggled: SVG.disliked }
     : { default: SVG.like, toggled: SVG.liked };
 
-  // Get current counts  
+  // Get current counts
   const { data: countData, error: countError } = await supabase
     .from("comments")
     .select("likes, dislikes")
@@ -312,7 +318,8 @@ async function updateCommentVoteCounts(isLike, toggled, wasOppToggled, idx, idCo
   }
 
   // Update UI for both buttons
-  if (button) button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
+  if (button)
+    button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
   if (oppButton) oppButton.innerHTML = `${oppSvg.default} ${newOppCount}`;
 }
 
@@ -501,7 +508,7 @@ async function updateVoteCounts(isLike, toggled, wasOppToggled) {
 function showMessage(message, isError = false) {
   const existingMsg = document.getElementById("commentFeedback");
   if (existingMsg) existingMsg.remove();
-  
+
   const msgElement = document.createElement("div");
   msgElement.id = "commentFeedback";
   msgElement.style.padding = "10px";
@@ -510,10 +517,10 @@ function showMessage(message, isError = false) {
   msgElement.style.backgroundColor = isError ? "#ffe6e6" : "#e6ffe6";
   msgElement.style.color = isError ? "#cc0000" : "#008000";
   msgElement.textContent = message;
-  
+
   const commentBox = document.getElementById("sendComment");
   commentBox.parentNode.insertBefore(msgElement, commentBox.nextSibling);
-  
+
   // Auto-hide message after 5 seconds
   setTimeout(() => msgElement.remove(), 5000);
 }
@@ -531,68 +538,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const handleSubmit = async () => {
     const commentText = commentInput.value.trim();
-  
+
     // Validate input
-      if (commentText === "") {
-        showMessage("Please enter a comment", true);
-        return;
-      }
-  
-      if (commentText.length < 2) {
-        showMessage("Comment is too short", true);
-        return;
-      }
-      
-      // Disable button and show loading state
-      submitButton.disabled = true;
-      submitButton.textContent = "Posting...";
-      
-      try {
-        const { error: submissionError } = await supabase.from("comments").insert([
+    if (commentText === "") {
+      showMessage("Please enter a comment", true);
+      return;
+    }
+
+    if (commentText.length < 2) {
+      showMessage("Comment is too short", true);
+      return;
+    }
+
+    // Disable button and show loading state
+    submitButton.disabled = true;
+    submitButton.textContent = "Posting...";
+
+    try {
+      const { error: submissionError } = await supabase
+        .from("comments")
+        .insert([
           {
             reviewId: reviewID,
             userId: user.id,
             comment: commentText,
             likes: 0,
             dislikes: 0,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
           },
         ]);
-        
-        if (submissionError) {
-          throw submissionError;
-        }
-        
-        // Clear input and show success message
-        commentInput.value = "";
-        showMessage("Comment posted successfully!");
-        
-        // Refresh comments without full page reload
-        const { data: newComments, error: refreshError } = await supabase
-          .from("comments")
-          .select("*")
-          .eq("reviewId", reviewID);
-          
-        if (!refreshError && newComments) {
-          await initComments(newComments);
-        } else {
-          location.reload(); // Fallback to page reload if refresh fails
-        }
-      } catch (error) {
-        console.error("Error posting comment:", error);
-        showMessage("Failed to post comment. Please try again.", true);
-      } finally {
-        // Reset button state
-        submitButton.disabled = false;
-        submitButton.textContent = "Send";      }
-    };    // Add click event listener
-    submitButton.addEventListener("click", () => handleSubmit());
 
-    // Add enter key press event listener
-    commentInput.addEventListener("keypress", async (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        await handleSubmit();
+      if (submissionError) {
+        throw submissionError;
       }
-    });
+
+      // Clear input and show success message
+      commentInput.value = "";
+      showMessage("Comment posted successfully!");
+
+      // Refresh comments without full page reload
+      const { data: newComments, error: refreshError } = await supabase
+        .from("comments")
+        .select("*")
+        .eq("reviewId", reviewID);
+
+      if (!refreshError && newComments) {
+        await initComments(newComments);
+      } else {
+        location.reload(); // Fallback to page reload if refresh fails
+      }
+    } catch (error) {
+      console.error("Error posting comment:", error);
+      showMessage("Failed to post comment. Please try again.", true);
+    } finally {
+      // Reset button state
+      submitButton.disabled = false;
+      submitButton.textContent = "Send";
+    }
+  }; // Add click event listener
+  submitButton.addEventListener("click", () => handleSubmit());
+
+  // Add enter key press event listener
+  commentInput.addEventListener("keypress", async (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      await handleSubmit();
+    }
   });
+});
