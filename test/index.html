@@ -3,41 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auto Resize Div</title>
-  <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-    }
-
-    .parent {
-      width: 80vw;        /* or 100% */
-      height: 80vh;       /* stretchable area */
-      margin: auto;
-      border: 3px solid #333;
-      resize: both;
-      overflow: auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-    }
-
-    .child {
-      background: lightblue;
-      width: 100%;           /* always fill parent width */
-      height: 50%;           /* adjusts to parent height */
-      box-sizing: border-box;
-      padding: 10px;
-      border: 2px dashed navy;
-    }
-  </style>
+  <script type = "module"src="./script.js" defer></script>  
 </head>
 <body>
-
-  <div class="parent">
-    <div class="child">I resize when the parent does.</div>
-  </div>
-
+  <input type="text" id="tagSearch" placeholder="Search by tag..." />
+<div id="searchResults"></div>
 </body>
 </html>
