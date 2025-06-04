@@ -103,8 +103,6 @@ const htmlContent = {
   toys: "",
 };
 
-searchRandomProducts();
-
 function searchRandomProducts() {
   Object.keys(sections).forEach(initCategory);
 }
@@ -137,28 +135,36 @@ async function initCategory(category) {
     .select("imgPath,reviewId")
     .in("reviewId", reviewIds);
 
-  // if (imageError) {
-  //   console.error(`Error fetching ${category} images:`, imageError);
-  // }
 
   const imageMap = {};
   imageData?.forEach((img) => {
-    if (!imageMap[img.productId]) {
-      imageMap[img.productId] = img.imgPath;
+    if (!imageMap[img.reviewId]) {
+      imageMap[img.reviewId] = img.imgPath;
     }
   });
 
   const userIDs = selectedProducts.map((p) => p.userId);
   const profilePicMap = await getProfilePics(userIDs);
-
+  
+  // Get signed URLs for product images
+  const signedImageUrls = {};
+  for (const [reviewId, imgPath] of Object.entries(imageMap)) {
+    if (imgPath) {
+      const { data: signedData } = await supabase.storage
+        .from("productimages")
+        .createSignedUrl(imgPath, 86400);
+      if (signedData?.signedUrl) {
+        signedImageUrls[reviewId] = signedData.signedUrl;
+      }
+    }
+  }
   for (let i = 0; i < selectedProducts.length; i++) {
     const prod = selectedProducts[i];
     const rating =
       (prod.productRating.qualityRating + prod.productRating.priceRating) / 2;
     const userData = await getUserName(prod.userId);
-    const displayName = userData?.displayName || "Unknown";
-    const id = `${prefix}${index}-${i}`;
-    const thumb = imageMap[prod.reviewId] || "";
+    const displayName = userData?.displayName || "Unknown";    const id = `${prefix}${index}-${i}`;
+    const thumb = signedImageUrls[prod.reviewId] || "https://placehold.co/300x300?text=No+Image";
     const pic =
       profilePicMap[prod.userId] ||
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s";
@@ -204,8 +210,7 @@ async function getProfilePics(userIds) {
     }
 
     return { userId, url: data.signedUrl };
-  });
-
+  });  // Process results into a map
   const results = await Promise.all(profilePicPromises);
 
   const profilePicMap = {};

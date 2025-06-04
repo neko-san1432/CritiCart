@@ -3,6 +3,7 @@ const searchBar = document.getElementById("searchInput");
 const tagResults = document.getElementById("tagResults");
 document.addEventListener("DOMContentLoaded", () => {
   searchBar.addEventListener("input", (e) => {
+    
     const searchValue = e.target.value.trim();
     if (searchValue === "") {
       tagResults.innerHTML = "";
@@ -23,6 +24,10 @@ async function addTagFunction(keyword) {
     console.log("bruh");
   }
   tagResults.innerHTML = "";
+  if(data.length===0){
+    tagResults.style.display='none'
+    return;
+  }
   data.forEach((tag) => {
     const idx = tag.tag.toLowerCase().indexOf(keyword.toLowerCase());
     if (idx !== -1) {
@@ -43,3 +48,10 @@ async function addTagFunction(keyword) {
     }
   });
 }
+searchBar.addEventListener('keydown',async (e)=> {
+    if(e.key ==="Enter"){
+        const url = new URL("/pages/search.html", window.location.origin);
+        url.searchParams.set("tag",  e.target.value.trim());
+        window.location.href = url.toString();
+    }
+})

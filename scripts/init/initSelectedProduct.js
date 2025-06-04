@@ -62,7 +62,7 @@ async function initSelectedProduct() {
     if (!selectError && voteResult) {
       voteData = voteResult;
     }
-    console.log(reviewData);
+
     if (reviewError || commentError || imageError)
       throw reviewError || commentError || imageError;
 
@@ -97,7 +97,6 @@ function initReview(data, data1) {
   document.getElementById(
     "productURL"
   ).innerHTML = `<a href="${data.productURL}">${data.productURL}</a>`;
-  console.log(data.productURL);
   document.getElementById("reviewDate").innerHTML = createdAt;
   document.getElementById("cat").innerHTML = data.productType;
 }
@@ -322,18 +321,19 @@ async function updateCommentVoteCounts(
     button.innerHTML = `${toggled ? svg.toggled : svg.default} ${newCount}`;
   if (oppButton) oppButton.innerHTML = `${oppSvg.default} ${newOppCount}`;
 }
-
+document.getElementById("backhome").addEventListener("click", () => {
+  window.location.href = window.location.origin + "/pages/main-menu.html";
+});
 async function initPictures(data) {
   if (!data) return;
   const gallery = document.getElementById("gallery");
   const thumbnailPane = document.querySelector(".thumbnails");
   gallery.innerHTML = "";
   thumbnailPane.innerHTML = "";
-
   for (let i = 0; i < data.length; i++) {
-    const filePath = data[i].imgLink;
+    const filePath = data[i].imgPath;
     const { data: signed, error } = await supabase.storage
-      .from("product-images")
+      .from("productimages")
       .createSignedUrl(filePath, 86400);
 
     const imageUrl = signed?.signedUrl || "fallback.png";
@@ -342,10 +342,14 @@ async function initPictures(data) {
     const img = document.createElement("img");
     img.src = imageUrl;
     img.alt = `Image ${i}`;
+    // img.style.width = "200px  "
+    img.style.height = "100%";
     img.classList.toggle("active", i === 0);
     gallery.appendChild(img);
 
     const thumb = document.createElement("img");
+    thumb.style.width = "75px";
+    thumb.style.height = "75px";
     thumb.src = imageUrl;
     thumb.alt = `Thumbnail ${i}`;
     thumb.classList.add("thumb");

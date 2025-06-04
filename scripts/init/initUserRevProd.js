@@ -22,7 +22,51 @@ async function getUnreviewedProducts() {
   }
 
   userReviewedProducts = data || [];
+  await loadProductImages(userReviewedProducts);
   renderPage(); // draw the current page
+}
+
+async function loadProductImages(products) {
+  if (!products || products.length === 0) return;
+
+  const reviewIds = products.map(p => p.reviewId);
+  
+  // Get image paths
+  const { data: imageData, error: imageError } = await supabase
+    .from("productImages")
+    .select("imgPath,reviewId")
+    .in("reviewId", reviewIds);
+
+  if (imageError) {
+    console.warn("Error fetching product images:", imageError);
+    return;
+  }
+
+  // Create a map of reviewId to imgPath
+  const imageMap = {};
+  imageData?.forEach(img => {
+    if (!imageMap[img.reviewId]) {
+      imageMap[img.reviewId] = img.imgPath;
+    }
+  });
+
+  // Get signed URLs for all images
+  for (const product of products) {
+    const imgPath = imageMap[product.reviewId];
+    if (imgPath) {
+      try {
+        const { data } = await supabase.storage
+          .from("productimages")
+          .createSignedUrl(imgPath, 86400);
+        
+        if (data?.signedUrl) {
+          product.imageUrl = data.signedUrl;
+        }
+      } catch (error) {
+        console.warn(`Error getting signed URL for product ${product.reviewId}:`, error);
+      }
+    }
+  }
 }
 
 function renderPage() {
@@ -68,7 +112,7 @@ function renderPage() {
     wrapper.innerHTML = `
       <div style="display: flex; gap: 20px; width: 100%;" id="review-${review.reviewId}">
         <div style="width: 50px; height: 50px; display: flex">
-          <img src="" alt="Product" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;" />
+          <img src="${review.imageUrl || 'https://placehold.co/300x300?text=No+Image'}" alt="Product" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;" />
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; gap: 8px;">
           <div style="font-weight: bold">${review.productName}</div>

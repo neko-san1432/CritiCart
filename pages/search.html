@@ -5,6 +5,27 @@
     <title id="product-title">Search | CritiCart</title>
     <link rel="stylesheet" href="/styles/initTheme.css" />
     <link rel="stylesheet" href="/styles/universalPageStyle.css" />
+    <style>
+      .search-results {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+        padding: 16px;
+      }
+      .product-holder {
+        background-color: var(--base-lighter);
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .product-holder:hover {
+        transform: scale(1.02);
+      }
+      .search-product {
+        background-color: var(--base-lighter);
+      }
+    </style>
     <script type="module" src="/scripts/UI/interaction.js" defer></script>
     <script
       type="module"
@@ -14,6 +35,7 @@
     <script type="module" src="/scripts/init/panelDefault.js" defer></script>
     <script type="module" src="/scripts/internet.js" defer></script>
     <script type="module" src="/scripts/utils/searchFunc.js" defer></script>
+    <script type="module" src="/scripts/init/initSearch.js"></script>
   </head>
   <body>
     <div
@@ -184,9 +206,23 @@
           <span>Logout</span>
         </button>
       </div>
-      <div class="right-panel">
-        <div style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
-          <div style="display: flex; position: sticky; flex-direction: column;width: 90%;">
+      <div class="right-panel" style="display:flex;flex-direction:column">
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              position: sticky;
+              flex-direction: column;
+              width: 90%;
+            "
+          >
             <div class="container">
               <div class="tinput">
                 <button
@@ -236,9 +272,9 @@
               ></ul>
             </div>
           </div>
-          <button style="width: 50px;height: 50px;margin-bottom: 0;">
+          <button style="width: 50px; height: 50px; margin-bottom: 0">
             <svg
-            class="invert"
+              class="invert"
               width="24"
               height="24"
               xmlns="http://www.w3.org/2000/svg"
@@ -252,6 +288,10 @@
           </button>
         </div>
         <hr style="width: inherit; margin-left: 20px; margin-right: 20px" />
+        <div style="padding: 16px;">
+          <h2 id="taging" style="margin: 0;"></h2>
+          <div id="results" style="margin-top: 16px;"></div>
+        </div>
       </div>
     </div>
     <style>
