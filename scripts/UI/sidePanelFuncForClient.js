@@ -4,9 +4,10 @@ const user_reviewed_products = document.getElementById("reviewed-product");
 const profile = document.getElementById("profile");
 const logout = document.getElementById("logout");
 const homel = document.getElementById("home-logo");
+if(homel){
 homel.addEventListener('click',() => {
   window.location.href = window.origin+"/pages/main-menu.html";
-});
+});}
 
 review.forEach(f=>{
   f.addEventListener('click',() => {

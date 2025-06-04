@@ -15,7 +15,6 @@ async function initializeProfileButton() {
       .select('avatarPath')
       .eq('udataId', user.id)
       .single();
-
     if (userData?.avatarPath) {
       // Generate signed URL for the profile picture
       const { data } = await supabase.storage
@@ -26,11 +25,11 @@ async function initializeProfileButton() {
         profilePic.src = data.signedUrl;
       } else {
         // Set default if URL creation fails
-        profilePic.src = '../assets/default-profile.png';
+        profilePic.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A';
       }
     } else {
       // Set default if no profile picture is set
-      profilePic.src = '../assets/default-profile.png';
+      profilePic.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A';
     }
 
     // Add hover effect to profile button
@@ -53,7 +52,7 @@ async function initializeProfileButton() {
 
     profilePic.addEventListener('error', () => {
       console.warn('Failed to load profile picture, using default');
-      profilePic.src = '../assets/default-profile.png';
+      profilePic.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A';
       profileButton.style.backgroundColor = 'transparent';
     });
 
@@ -61,7 +60,7 @@ async function initializeProfileButton() {
     console.error('Error initializing profile:', error);
     const profilePic = document.getElementById('profilePicture2');
     if (profilePic) {
-      profilePic.src = '../assets/default-profile.png';
+      profilePic.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A';
     }
   }
 }
@@ -135,17 +134,17 @@ async function initCategory(category) {
   const reviewIds = selectedProducts.map((p) => p.reviewId);
   const { data: imageData, error: imageError } = await supabase
     .from("productImages")
-    .select("imgLink,productId")
-    .in("productId", reviewIds);
+    .select("imgPath,reviewId")
+    .in("reviewId", reviewIds);
 
-  if (imageError) {
-    console.error(`Error fetching ${category} images:`, imageError);
-  }
+  // if (imageError) {
+  //   console.error(`Error fetching ${category} images:`, imageError);
+  // }
 
   const imageMap = {};
   imageData?.forEach((img) => {
     if (!imageMap[img.productId]) {
-      imageMap[img.productId] = img.imgLink;
+      imageMap[img.productId] = img.imgPath;
     }
   });
 
@@ -159,7 +158,7 @@ async function initCategory(category) {
     const userData = await getUserName(prod.userId);
     const displayName = userData?.displayName || "Unknown";
     const id = `${prefix}${index}-${i}`;
-    const thumb = imageMap[prod.reviewId] || "https://via.placeholder.com/150";
+    const thumb = imageMap[prod.reviewId] || "";
     const pic =
       profilePicMap[prod.userId] ||
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A&s";
@@ -194,7 +193,7 @@ async function getProfilePics(userIds) {
       console.warn(`Failed to get avatarPath for userId=${userId}:`, dbError);
       return { userId, url: null };
     }
-
+    if (profData.avatarPath==="N/A"){return{ userId, url: null }}
     const { data, error } = await supabase.storage
       .from("profilepic")
       .createSignedUrl(profData.avatarPath, 86400);
@@ -211,7 +210,7 @@ async function getProfilePics(userIds) {
 
   const profilePicMap = {};
   results.forEach(({ userId, url }) => {
-    profilePicMap[userId] = url || '../assets/default-profile.png';
+    profilePicMap[userId] = url || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4RZl4rXT_nAjdeMz0EhJMnulkobm_5TQU-A';
   });
 
   return profilePicMap;
@@ -324,7 +323,7 @@ function attachEventListeners(category) {
   const moreBtn = document.getElementById(`${prefix}-more`);
   if (moreBtn) {
     moreBtn.addEventListener("click", () => {
-      const url = new URL("/pages/category.html", window.location.origin);
+      const url = new URL("/pages/search.html", window.location.origin);
       url.searchParams.set("category", category);
       window.location.href = url.toString();
     });
