@@ -41,7 +41,7 @@ function initRecaptcha() {
   reCAPTCHA_login = grecaptcha.render("captcha-login", {
     sitekey: "6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr",
   });
-
+``
   reCAPTCHA_register = grecaptcha.render("captcha-register", {
     sitekey: "6Ld36wkrAAAAAPzVNRDG5ghTy_ZhhjyhZJY2lelr",
   });
