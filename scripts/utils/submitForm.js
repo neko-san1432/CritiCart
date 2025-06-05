@@ -11,7 +11,7 @@ reviewID = urlParams.get('reviewID');
 
 // Function to fetch and populate review data
 async function fetchReviewData() {
-  if (!reviewID) return;
+  if (!reviewID || !document.getElementById('submit-review')) return;
 
   try {
     // Fetch review data
@@ -19,18 +19,25 @@ async function fetchReviewData() {
       .from('productReview')
       .select('*')
       .eq('reviewId', reviewID)
-      .single();
-
-    if (reviewError) throw reviewError;
-
-    // Populate form fields
-    document.getElementById('pname').value = review.productName;
-    document.getElementById('description').value = review.productDescription;
-    document.getElementById('product-link').value = review.productURL;
+      .single();    if (reviewError) throw reviewError;
     
-    // Set selected category
+    // Populate form fields
+    const pnameField = document.getElementById('pname');
+    const descField = document.getElementById('description');
+    const linkField = document.getElementById('product-link');
+    
+    if (pnameField) pnameField.value = review.productName;
+    if (descField) descField.value = review.productDescription;
+    if (linkField) linkField.value = review.productURL;
+      // Set selected category
     if (review.productType) {
-      selectedCategory = review.productType;
+      // Dispatch a category change event instead of direct assignment
+      const categoryChangeEvent = new CustomEvent('categoryChange', {
+        detail: { category: review.productType }
+      });
+      document.dispatchEvent(categoryChangeEvent);
+      
+      // Update dropdown UI
       const dropdownButton = document.querySelector('.dropdown-toggle');
       const categoryOption = document.querySelector(`.dropdown-option[data-value="${review.productType}"]`);
       if (dropdownButton && categoryOption) {
@@ -50,29 +57,76 @@ async function fetchReviewData() {
       .eq('reviewId', reviewID);
 
     if (!imageError && imageData) {
+      console.log("Found existing images:", imageData);
       for (const image of imageData) {
         const { data: signedUrl } = await supabase.storage
-          .from('product-images')
-          .createSignedUrl(image.imgLink, 3600);
+          .from('productimages')
+          .createSignedUrl(image.imgPath, 3600);
           
         if (signedUrl) {
+          console.log("Got signed URL for image:", signedUrl);
           // Add to file preview using the fileUploadFunc's addFileToPreview
           const response = await fetch(signedUrl.signedUrl);
           const blob = await response.blob();
-          const file = new File([blob], image.imgLink.split('/').pop(), { type: blob.type });
+          const file = new File([blob], image.imgPath.split('/').pop(), { type: blob.type });
           filesArray.push(file);
-          const previewsDiv = document.getElementById('filePreviews');
-          if (previewsDiv) {
+          const previewsDiv = document.getElementById('filePreviews');          if (previewsDiv) {
             const imgContainer = document.createElement('div');
             imgContainer.className = 'file-preview';
-            imgContainer.innerHTML = `
-              <img src="${signedUrl.signedUrl}" alt="Preview">
-              <button class="remove-file" data-path="${image.imgLink}">×</button>
-            `;
+            const img = document.createElement('img');
+            img.src = signedUrl.signedUrl;
+            img.alt = "Preview";
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.innerHTML = '×';
+            deleteBtn.dataset.path = image.imgPath;            deleteBtn.addEventListener('click', async (e) => {
+              e.stopPropagation();
+              if (window.confirm('Are you sure you want to remove this image?')) {
+                try {
+                  // Remove from Supabase storage
+                  const { error: deleteError } = await supabase.storage
+                    .from('productimages')
+                    .remove([image.imgPath]);
+                  
+                  if (deleteError) {
+                    throw new Error('Failed to delete image from storage: ' + deleteError.message);
+                  }
+                  
+                  // Remove from database
+                  const { error: dbError } = await supabase
+                    .from('productImages')
+                    .delete()
+                    .eq('imgPath', image.imgPath);
+                    
+                  if (dbError) {
+                    throw new Error('Failed to delete image from database: ' + dbError.message);
+                  }
+                  
+                  // Remove from UI with animation
+                  imgContainer.style.transition = 'opacity 0.3s ease';
+                  imgContainer.style.opacity = '0';
+                  setTimeout(() => {
+                    imgContainer.remove();
+                    filesArray = filesArray.filter(f => f.name !== image.imgPath.split('/').pop());
+                  }, 300);
+                } catch (error) {
+                  console.error('Error deleting image:', error);
+                  alert('Failed to delete image: ' + error.message);
+                }
+              }
+            });
+            
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(deleteBtn);
             previewsDiv.appendChild(imgContainer);
           }
+        } else {
+          console.error("Failed to get signed URL for image:", image.imgPath);
         }
       }
+    } else {
+      console.warn("No existing images found or error:", imageError);
     }
 
     // Fetch and set tags
@@ -139,6 +193,7 @@ document.getElementById("submit-review").addEventListener("click", async (e) => 
       qualityRating: ratingQuality,
       priceRating: ratingPrice,
     },
+    category: selectedCategory
   };
 
   let result;
@@ -178,26 +233,25 @@ document.getElementById("submit-review").addEventListener("click", async (e) => 
   }
   console.log(`✅ Review ${isEdit ? 'updated' : 'submitted'} with ID:`, reviewID);
   setTimeout(() => {
-    window.location.href = '../pages/your-reviewed-products.html';
+    window.location.href = '../pages/main-menu.html';
   }, 2000);
 });
 
 // Upload images to Supabase Storage
 async function insertPictures(reviewId) {
-  const reviewFolder = `reviews/${reviewId}`;
-  
-  // If editing, first delete existing images
+  const reviewFolder = `${reviewId}`;
+    // If editing, first delete existing images
   if (isEdit) {
     const { data: existingImages } = await supabase
       .from('productImages')
-      .select('imgLink')
+      .select('imgPath')
       .eq('reviewId', reviewId);
     
     if (existingImages && existingImages.length > 0) {
       // Delete files from storage
-      const filesToDelete = existingImages.map(img => img.imgLink);
+      const filesToDelete = existingImages.map(img => img.imgPath);
       const { error: deleteError } = await supabase.storage
-        .from("product-images")
+        .from("productimages")
         .remove(filesToDelete);
         
       if (deleteError) {
@@ -212,14 +266,12 @@ async function insertPictures(reviewId) {
     }
   }
 
-  // Upload new images
-  const uploadedFiles = [];
+  // Upload new images  const uploadedFiles = [];
   for (const file of filesArray) {
     const timestamp = Date.now();
-    const filePath = `${reviewFolder}/${timestamp}_${file.name}`;
+    const filePath = `${reviewId}/${file.name}`;
     
-    const { error: uploadError } = await supabase.storage
-      .from("product-images")
+    const { error: uploadError } = await supabase.storage      .from("productimages")
       .upload(filePath, file, {
         cacheControl: "3600",
         upsert: true,
@@ -228,14 +280,13 @@ async function insertPictures(reviewId) {
     if (uploadError) {
       console.error("⚠️ Error uploading image:", file.name, uploadError);
       continue;
-    }
-
-    // Store file information in the database
+    }    // Store file information in the database
     const { error: dbError } = await supabase
       .from("productImages")
       .insert([{
         reviewId: reviewId,
-        imgLink: filePath
+        imgPath: filePath,
+        category: selectedCategory
       }]);
 
     if (dbError) {
@@ -247,6 +298,7 @@ async function insertPictures(reviewId) {
   
   return uploadedFiles;
 }
+
 // Insert tags
 async function insertTags(reviewId) {
   for (const tag of tags) {

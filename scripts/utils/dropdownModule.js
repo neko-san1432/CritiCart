@@ -1,5 +1,10 @@
 export let selectedCategory = 'food'; // default category
 
+// Listen for categoryChange events
+document.addEventListener('categoryChange', (e) => {
+  selectedCategory = e.detail.category;
+});
+
 const dropdown = document.querySelector('.custom-dropdown');
 if (dropdown) {
   const toggle = dropdown.querySelector('.dropdown-toggle');
