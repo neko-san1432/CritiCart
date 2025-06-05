@@ -187,4 +187,4 @@ document.getElementById("closeVerify").addEventListener("click", () => {
   document.querySelector(".boxy").style.display = "flex";
 });
 
-loginWithEmail("client@gmail.com","14321432")
+// loginWithEmail("client@gmail.com","14321432")
